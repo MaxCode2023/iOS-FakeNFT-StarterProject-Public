@@ -34,6 +34,7 @@
 		B203B0B42A420C09008D474B /* GetUserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0B32A420C09008D474B /* GetUserRequest.swift */; };
 		B203B0B62A420E61008D474B /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0B52A420E61008D474B /* UserService.swift */; };
 		B203B0B82A420EF2008D474B /* UserServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0B72A420EF2008D474B /* UserServiceImpl.swift */; };
+		B203B0BA2A42146D008D474B /* UserRatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0B92A42146D008D474B /* UserRatingCell.swift */; };
 		B2BAE4942A40C95C00951719 /* statitic_plan.md in Resources */ = {isa = PBXBuildFile; fileRef = B2BAE4932A40C95C00951719 /* statitic_plan.md */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,7 @@
 		B203B0B32A420C09008D474B /* GetUserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserRequest.swift; sourceTree = "<group>"; };
 		B203B0B52A420E61008D474B /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		B203B0B72A420EF2008D474B /* UserServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceImpl.swift; sourceTree = "<group>"; };
+		B203B0B92A42146D008D474B /* UserRatingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRatingCell.swift; sourceTree = "<group>"; };
 		B2BAE4932A40C95C00951719 /* statitic_plan.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = statitic_plan.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -273,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				B203B0AE2A41FE11008D474B /* RatingViewController.swift */,
+				B203B0B92A42146D008D474B /* UserRatingCell.swift */,
 			);
 			path = Raiting;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				B203B0BA2A42146D008D474B /* UserRatingCell.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
 				B203B0B42A420C09008D474B /* GetUserRequest.swift in Sources */,
