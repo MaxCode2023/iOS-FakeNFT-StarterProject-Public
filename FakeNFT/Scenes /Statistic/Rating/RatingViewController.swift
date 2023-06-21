@@ -117,4 +117,19 @@ extension RatingViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let userId = userList[indexPath.row].id
+        
+        if let userId = Int(userId) {
+            navigateToRatingProfile(userId: Int(userId))
+        }
+    }
+    
+    private func navigateToRatingProfile(userId: Int) {
+        let vc = RatingProfileViewController()
+        vc.userId = userId
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
 }

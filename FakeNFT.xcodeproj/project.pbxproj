@@ -38,6 +38,7 @@
 		B2BAE4942A40C95C00951719 /* statitic_plan.md in Resources */ = {isa = PBXBuildFile; fileRef = B2BAE4932A40C95C00951719 /* statitic_plan.md */; };
 		E663CDC82A42F09E00C7A1C4 /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E663CDC72A42F09E00C7A1C4 /* RatingViewModel.swift */; };
 		E663CDCA2A42F11200C7A1C4 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E663CDC92A42F11200C7A1C4 /* Observable.swift */; };
+		E6CF57D42A42FF9600E0C8AB /* RatingProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CF57D32A42FF9600E0C8AB /* RatingProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		B2BAE4932A40C95C00951719 /* statitic_plan.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = statitic_plan.md; sourceTree = "<group>"; };
 		E663CDC72A42F09E00C7A1C4 /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModel.swift; sourceTree = "<group>"; };
 		E663CDC92A42F11200C7A1C4 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		E6CF57D32A42FF9600E0C8AB /* RatingProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				B203B0AD2A41FDFE008D474B /* Rating */,
+				E6CF57D22A42FF6E00E0C8AB /* RatingProfile */,
 			);
 			path = Statistic;
 			sourceTree = "<group>";
@@ -309,6 +312,14 @@
 				E663CDC72A42F09E00C7A1C4 /* RatingViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E6CF57D22A42FF6E00E0C8AB /* RatingProfile */ = {
+			isa = PBXGroup;
+			children = (
+				E6CF57D32A42FF9600E0C8AB /* RatingProfileViewController.swift */,
+			);
+			path = RatingProfile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -482,6 +493,7 @@
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				E663CDC82A42F09E00C7A1C4 /* RatingViewModel.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
+				E6CF57D42A42FF9600E0C8AB /* RatingProfileViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				B203B0AF2A41FE11008D474B /* RatingViewController.swift in Sources */,
 				B203B0B12A41FEC3008D474B /* GetUserListRequest.swift in Sources */,

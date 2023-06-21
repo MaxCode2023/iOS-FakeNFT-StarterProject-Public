@@ -68,6 +68,7 @@ class UserRatingCell: UITableViewCell, ReuseIdentifying {
         ratingScoreLabel.font = .headline3
         ratingScoreLabel.textColor = .YPBlack
         ratingScoreLabel.numberOfLines = 1
+        ratingScoreLabel.textAlignment = .right
     }
     
     private func setUpConstraints() {
@@ -99,6 +100,7 @@ class UserRatingCell: UITableViewCell, ReuseIdentifying {
             nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8),
             ratingScoreLabel.trailingAnchor.constraint(equalTo: backgroundCardView.trailingAnchor, constant: -16),
             nameLabel.trailingAnchor.constraint(equalTo: ratingScoreLabel.leadingAnchor, constant: -26),
+            ratingScoreLabel.widthAnchor.constraint(equalToConstant: 40)
         ])
     }
         
