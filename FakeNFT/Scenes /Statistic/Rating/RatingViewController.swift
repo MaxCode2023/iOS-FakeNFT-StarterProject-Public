@@ -20,6 +20,24 @@ final class RatingViewController: UIViewController {
         
         setUpConstraints()
         configureViews()
+        
+        presentSortDialog()
+    }
+    
+    private func presentSortDialog() {
+        let sortDialog = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        
+        sortDialog.addAction(UIAlertAction(title: "По имени", style: .default) { _ in
+            //TODO
+        })
+        sortDialog.addAction(UIAlertAction(title: "По рейтингу", style: .default) { _ in
+            //TODO
+        })
+        sortDialog.addAction(UIAlertAction(title: "Закрыть", style: .cancel) { _ in
+            //TODO
+        })
+        
+        present(sortDialog, animated: true)
     }
     
     private func configureViews() {
