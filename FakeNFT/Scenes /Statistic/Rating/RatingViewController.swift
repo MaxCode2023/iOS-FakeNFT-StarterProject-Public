@@ -27,15 +27,10 @@ final class RatingViewController: UIViewController {
         configureViews()
         
         bind()
-        
-        sortImageButton.addTarget(self, action: #selector(clickSort), for: .touchUpInside)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        
         ProgressHUD.show()
         viewModel.getUserList()
+        
+        sortImageButton.addTarget(self, action: #selector(clickSort), for: .touchUpInside)
     }
     
     private func bind() {
@@ -66,12 +61,6 @@ final class RatingViewController: UIViewController {
         sortDialog.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
         
         present(sortDialog, animated: true)
-    }
-    
-    private func presentErrorDialog(message: String?) {
-        let errorDialog = UIAlertController(title: "Ошибка!", message: message, preferredStyle: .alert)
-        errorDialog.addAction(UIAlertAction(title: "Ок", style: .default))
-        present(errorDialog, animated: true)
     }
     
     private func configureViews() {
@@ -128,8 +117,7 @@ extension RatingViewController: UITableViewDelegate, UITableViewDataSource {
     private func navigateToRatingProfile(userId: Int) {
         let vc = RatingProfileViewController()
         vc.userId = userId
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
 }
