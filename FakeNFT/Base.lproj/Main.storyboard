@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x8A-Mu-ndU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x8A-Mu-ndU">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -132,24 +132,8 @@
                     <view key="view" contentMode="scaleToFill" id="F9g-gd-wrv">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Статистика" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLD-QU-GF5">
-                                <rect key="frame" x="16" y="159" width="361" height="64"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="I1N-69-hsd"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="5Kp-Ha-3xc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="YLD-QU-GF5" firstAttribute="leading" secondItem="5Kp-Ha-3xc" secondAttribute="leading" constant="16" id="Mu2-x1-MQI"/>
-                            <constraint firstItem="YLD-QU-GF5" firstAttribute="top" secondItem="5Kp-Ha-3xc" secondAttribute="top" constant="100" id="Zpd-k7-wpa"/>
-                            <constraint firstItem="5Kp-Ha-3xc" firstAttribute="trailing" secondItem="YLD-QU-GF5" secondAttribute="trailing" constant="16" id="nRx-wH-Ra1"/>
-                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Статистика" image="flag.2.crossed.fill" catalog="system" id="xgD-9Y-EGT"/>
                 </viewController>

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class UserRatingCell: UITableViewCell, ReuseIdentifying {
         
@@ -31,9 +32,21 @@ class UserRatingCell: UITableViewCell, ReuseIdentifying {
         setUpConstraints()
         configureViews()
         
-        indexLabel.text = "12"
-        nameLabel.text = "test Name"
-        ratingScoreLabel.text = "121"
+        indexLabel.text = "\(index + 1)"
+        nameLabel.text = user?.name
+        ratingScoreLabel.text = user?.rating
+        
+        if let avatarUrl = user?.avatar,
+           let avatarUrl = URL(string: avatarUrl) {
+            loadAvatar(url: avatarUrl)
+        }
+    }
+    
+    private func loadAvatar(url: URL) {
+        let processor = RoundCornerImageProcessor(cornerRadius: 100)
+        avatarImageView.kf.setImage(
+            with: url,
+            options: [.processor(processor), .cacheSerializer(FormatIndicatedCacheSerializer.png)])
     }
     
     private func configureViews() {
@@ -46,10 +59,15 @@ class UserRatingCell: UITableViewCell, ReuseIdentifying {
         
         indexLabel.font = .caption1
         indexLabel.textColor = .YPBlack
+        indexLabel.numberOfLines = 1
+        
         nameLabel.font = .headline3
-        indexLabel.textColor = .YPBlack
+        nameLabel.textColor = .YPBlack
+        nameLabel.numberOfLines = 1
+        
         ratingScoreLabel.font = .headline3
-        indexLabel.textColor = .YPBlack
+        ratingScoreLabel.textColor = .YPBlack
+        ratingScoreLabel.numberOfLines = 1
     }
     
     private func setUpConstraints() {
