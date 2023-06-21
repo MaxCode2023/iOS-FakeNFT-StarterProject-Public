@@ -8,7 +8,7 @@
 import UIKit
 
 final class RatingViewController: UIViewController {
- 
+    
     private let sortImageView = UIImageView()
     private let ratingTableView = UITableView()
     
@@ -18,15 +18,22 @@ final class RatingViewController: UIViewController {
         view.addSubview(sortImageView)
         view.addSubview(ratingTableView)
         
+        setUpConstraints()
+        configureViews()
+    }
+    
+    private func configureViews() {
         ratingTableView.dataSource = self
         ratingTableView.delegate = self
         ratingTableView.register(UserRatingCell.self)
         ratingTableView.separatorStyle = .none
         
+        sortImageView.image = UIImage(named: "sortIcon")
+    }
+    
+    private func setUpConstraints() {
         sortImageView.translatesAutoresizingMaskIntoConstraints = false
         ratingTableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        sortImageView.image = UIImage(named: "sortIcon")
         
         NSLayoutConstraint.activate([
             sortImageView.heightAnchor.constraint(equalToConstant: 42),

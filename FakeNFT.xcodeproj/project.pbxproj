@@ -266,18 +266,18 @@
 		B203B0AC2A41FDE4008D474B /* Statistic */ = {
 			isa = PBXGroup;
 			children = (
-				B203B0AD2A41FDFE008D474B /* Raiting */,
+				B203B0AD2A41FDFE008D474B /* Rating */,
 			);
 			path = Statistic;
 			sourceTree = "<group>";
 		};
-		B203B0AD2A41FDFE008D474B /* Raiting */ = {
+		B203B0AD2A41FDFE008D474B /* Rating */ = {
 			isa = PBXGroup;
 			children = (
 				B203B0AE2A41FE11008D474B /* RatingViewController.swift */,
 				B203B0B92A42146D008D474B /* UserRatingCell.swift */,
 			);
-			path = Raiting;
+			path = Rating;
 			sourceTree = "<group>";
 		};
 		B203B0B22A420BF6008D474B /* Statistic */ = {

@@ -19,21 +19,40 @@ class UserRatingCell: UITableViewCell, ReuseIdentifying {
     
     func configure(index: Int, user: User?) {
         selectionStyle = .none
-        contentView.addSubview(mainStackView)
         
+        contentView.addSubview(mainStackView)
         mainStackView.addArrangedSubview(indexLabel)
         mainStackView.addArrangedSubview(backgroundCardView)
-        mainStackView.axis = .horizontal
-        mainStackView.spacing = 8
-        mainStackView.alignment = .center
         
         backgroundCardView.addSubview(avatarImageView)
         backgroundCardView.addSubview(nameLabel)
         backgroundCardView.addSubview(ratingScoreLabel)
         
+        setUpConstraints()
+        configureViews()
+        
+        indexLabel.text = "12"
+        nameLabel.text = "test Name"
+        ratingScoreLabel.text = "121"
+    }
+    
+    private func configureViews() {
+        mainStackView.axis = .horizontal
+        mainStackView.spacing = 8
+        mainStackView.alignment = .center
+        
         backgroundCardView.backgroundColor = .YPLightGrey
         backgroundCardView.layer.cornerRadius = 12
         
+        indexLabel.font = .caption1
+        indexLabel.textColor = .YPBlack
+        nameLabel.font = .headline3
+        indexLabel.textColor = .YPBlack
+        ratingScoreLabel.font = .headline3
+        indexLabel.textColor = .YPBlack
+    }
+    
+    private func setUpConstraints() {
         backgroundCardView.translatesAutoresizingMaskIntoConstraints = false
         indexLabel.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -63,18 +82,6 @@ class UserRatingCell: UITableViewCell, ReuseIdentifying {
             ratingScoreLabel.trailingAnchor.constraint(equalTo: backgroundCardView.trailingAnchor, constant: -16),
             nameLabel.trailingAnchor.constraint(equalTo: ratingScoreLabel.leadingAnchor, constant: -26),
         ])
-        
-        indexLabel.text = "12"
-        indexLabel.font = .caption1
-        indexLabel.textColor = .YPBlack
-        
-        nameLabel.text = "test Name"
-        nameLabel.font = .headline3
-        indexLabel.textColor = .YPBlack
-        
-        ratingScoreLabel.text = "121"
-        ratingScoreLabel.font = .headline3
-        indexLabel.textColor = .YPBlack
     }
-    
+        
 }
