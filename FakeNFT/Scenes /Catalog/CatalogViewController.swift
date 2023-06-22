@@ -1,6 +1,7 @@
 import UIKit
 
 final class CatalogViewController: UIViewController {
+    var viewModel: CatalogViewModel
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -11,6 +12,16 @@ final class CatalogViewController: UIViewController {
         
         return tableView
     }()
+    
+    init(viewModel: CatalogViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        self.viewModel = CatalogViewModel(alertModel: nil)
+        super.init(coder: aDecoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,13 +34,18 @@ final class CatalogViewController: UIViewController {
         )
         navigationItem.rightBarButtonItem?.tintColor = .black
         
+        viewModel.$alertModel.bind { [weak self] alertModel in
+            guard let self, let alertModel else { return }
+            AlertPresenter().show(controller: self, model: alertModel)
+        }
+        
         addSubViews()
         addConstraints()
     }
     
     @objc
     private func sortButtonTapped() {
-        
+        viewModel.showAlertToSort()
     }
     
     private func addConstraints() {
