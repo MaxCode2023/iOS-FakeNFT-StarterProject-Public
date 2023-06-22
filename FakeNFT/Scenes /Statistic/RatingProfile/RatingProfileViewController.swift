@@ -12,6 +12,8 @@ import Kingfisher
 final class RatingProfileViewController: UIViewController {
     
     var userId: Int? = nil
+    private var user: User? = nil
+
     private let viewModel = RatingProfileViewModel()
     
     private let backButton = UIButton()
@@ -50,11 +52,7 @@ final class RatingProfileViewController: UIViewController {
         }
         
         backButton.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        tabBarController?.tabBar.isHidden = false
+        websiteButton.addTarget(self, action: #selector(navigateToWebsite), for: .touchUpInside)
     }
     
     private func bind() {
@@ -73,6 +71,7 @@ final class RatingProfileViewController: UIViewController {
     }
     
     private func updateUserInfo(user: User) {
+        self.user = user
         nameLabel.text = user.name
         descriptionLabel.text = user.description
         nftCollectionCountLabel.text = "(\(user.nfts.count))"
@@ -87,6 +86,18 @@ final class RatingProfileViewController: UIViewController {
     
     @objc private func navigateBack() {
         navigationController?.popViewController(animated: true)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    @objc private func navigateToWebsite() {
+        if let websiteUrl = user?.website,
+           let websiteUrl = URL(string: websiteUrl) {
+            let vc = WebsiteProfileViewController()
+            vc.websiteUrl = websiteUrl
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            presentErrorDialog(message: nil)
+        }
     }
     
     private func setUpConstraints() {

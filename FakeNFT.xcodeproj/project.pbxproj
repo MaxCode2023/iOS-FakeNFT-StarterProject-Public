@@ -38,6 +38,7 @@
 		B2BAE4942A40C95C00951719 /* statitic_plan.md in Resources */ = {isa = PBXBuildFile; fileRef = B2BAE4932A40C95C00951719 /* statitic_plan.md */; };
 		B2EE81EB2A4365E7003822E3 /* ViewControllerAlertExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EE81EA2A4365E7003822E3 /* ViewControllerAlertExt.swift */; };
 		B2EE81EE2A436632003822E3 /* RatingProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EE81ED2A436632003822E3 /* RatingProfileViewModel.swift */; };
+		E65913202A440A14007E6B58 /* WebsiteProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E659131F2A440A14007E6B58 /* WebsiteProfileViewController.swift */; };
 		E663CDC82A42F09E00C7A1C4 /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E663CDC72A42F09E00C7A1C4 /* RatingViewModel.swift */; };
 		E663CDCA2A42F11200C7A1C4 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E663CDC92A42F11200C7A1C4 /* Observable.swift */; };
 		E6CF57D42A42FF9600E0C8AB /* RatingProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CF57D32A42FF9600E0C8AB /* RatingProfileViewController.swift */; };
@@ -94,6 +95,7 @@
 		B2BAE4932A40C95C00951719 /* statitic_plan.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = statitic_plan.md; sourceTree = "<group>"; };
 		B2EE81EA2A4365E7003822E3 /* ViewControllerAlertExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerAlertExt.swift; sourceTree = "<group>"; };
 		B2EE81ED2A436632003822E3 /* RatingProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingProfileViewModel.swift; sourceTree = "<group>"; };
+		E659131F2A440A14007E6B58 /* WebsiteProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteProfileViewController.swift; sourceTree = "<group>"; };
 		E663CDC72A42F09E00C7A1C4 /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModel.swift; sourceTree = "<group>"; };
 		E663CDC92A42F11200C7A1C4 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		E6CF57D32A42FF9600E0C8AB /* RatingProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingProfileViewController.swift; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 			children = (
 				B2EE81EC2A43661A003822E3 /* ViewModel */,
 				E6CF57D32A42FF9600E0C8AB /* RatingProfileViewController.swift */,
+				E659131F2A440A14007E6B58 /* WebsiteProfileViewController.swift */,
 			);
 			path = RatingProfile;
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				B203B0B82A420EF2008D474B /* UserServiceImpl.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
+				E65913202A440A14007E6B58 /* WebsiteProfileViewController.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				B203B0BA2A42146D008D474B /* UserRatingCell.swift in Sources */,
