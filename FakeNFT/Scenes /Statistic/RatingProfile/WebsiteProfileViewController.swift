@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import ProgressHUD
 
 final class WebsiteProfileViewController: UIViewController {
     
@@ -24,6 +25,9 @@ final class WebsiteProfileViewController: UIViewController {
         setUpConstraints()
         
         if let websiteUrl = websiteUrl {
+            ProgressHUD.show()
+            webView.navigationDelegate = self
+            
             DispatchQueue.main.async { [weak self] in
                 let request = URLRequest(url: websiteUrl)
                 self?.webView.load(request)
@@ -55,4 +59,11 @@ final class WebsiteProfileViewController: UIViewController {
         ])
     }
     
+}
+
+extension WebsiteProfileViewController: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        ProgressHUD.dismiss()
+    }
 }
