@@ -10,7 +10,7 @@ class NftServiceImpl: NftService {
     private let client = DefaultNetworkClient()
     
     func getNft(nftId: Int, onCompletion: @escaping (Result<Nft, Error>) -> Void) {
-        let request = GetNftRequest(userId: nftId)
+        let request = GetNftRequest(nftId: nftId)
         
         client.send(request: request, type: Nft.self, onResponse: onCompletion)
     }
