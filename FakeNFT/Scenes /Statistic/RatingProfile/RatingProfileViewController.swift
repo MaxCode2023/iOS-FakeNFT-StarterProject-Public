@@ -53,6 +53,9 @@ final class RatingProfileViewController: UIViewController {
         
         backButton.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
         websiteButton.addTarget(self, action: #selector(navigateToWebsite), for: .touchUpInside)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(navigateToCollection))
+        nftCollectionView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     private func bind() {
@@ -97,6 +100,20 @@ final class RatingProfileViewController: UIViewController {
             navigationController?.pushViewController(vc, animated: true)
         } else {
             presentErrorDialog(message: nil)
+        }
+    }
+    
+    @objc private func navigateToCollection() {
+        guard let user = user else {
+            presentErrorDialog(message: nil)
+            return
+        }
+        
+        if user.nfts.isEmpty {
+            presentErrorDialog(message: "Коллекция пуста")
+        } else {
+            let vc = ProfileCollectionViewController()
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
     

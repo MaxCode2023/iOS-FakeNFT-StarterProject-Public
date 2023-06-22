@@ -39,6 +39,7 @@
 		B2EE81EB2A4365E7003822E3 /* ViewControllerAlertExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EE81EA2A4365E7003822E3 /* ViewControllerAlertExt.swift */; };
 		B2EE81EE2A436632003822E3 /* RatingProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EE81ED2A436632003822E3 /* RatingProfileViewModel.swift */; };
 		E65913202A440A14007E6B58 /* WebsiteProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E659131F2A440A14007E6B58 /* WebsiteProfileViewController.swift */; };
+		E65913232A440EBD007E6B58 /* ProfileCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65913222A440EBD007E6B58 /* ProfileCollectionViewController.swift */; };
 		E663CDC82A42F09E00C7A1C4 /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E663CDC72A42F09E00C7A1C4 /* RatingViewModel.swift */; };
 		E663CDCA2A42F11200C7A1C4 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E663CDC92A42F11200C7A1C4 /* Observable.swift */; };
 		E6CF57D42A42FF9600E0C8AB /* RatingProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CF57D32A42FF9600E0C8AB /* RatingProfileViewController.swift */; };
@@ -96,6 +97,7 @@
 		B2EE81EA2A4365E7003822E3 /* ViewControllerAlertExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerAlertExt.swift; sourceTree = "<group>"; };
 		B2EE81ED2A436632003822E3 /* RatingProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingProfileViewModel.swift; sourceTree = "<group>"; };
 		E659131F2A440A14007E6B58 /* WebsiteProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteProfileViewController.swift; sourceTree = "<group>"; };
+		E65913222A440EBD007E6B58 /* ProfileCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewController.swift; sourceTree = "<group>"; };
 		E663CDC72A42F09E00C7A1C4 /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModel.swift; sourceTree = "<group>"; };
 		E663CDC92A42F11200C7A1C4 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		E6CF57D32A42FF9600E0C8AB /* RatingProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingProfileViewController.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 			children = (
 				B203B0AD2A41FDFE008D474B /* Rating */,
 				E6CF57D22A42FF6E00E0C8AB /* RatingProfile */,
+				E65913212A440E9C007E6B58 /* ProfileCollection */,
 			);
 			path = Statistic;
 			sourceTree = "<group>";
@@ -319,6 +322,14 @@
 				B2EE81ED2A436632003822E3 /* RatingProfileViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E65913212A440E9C007E6B58 /* ProfileCollection */ = {
+			isa = PBXGroup;
+			children = (
+				E65913222A440EBD007E6B58 /* ProfileCollectionViewController.swift */,
+			);
+			path = ProfileCollection;
 			sourceTree = "<group>";
 		};
 		E663CDC62A42F08F00C7A1C4 /* ViewModel */ = {
@@ -512,6 +523,7 @@
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				E6CF57D42A42FF9600E0C8AB /* RatingProfileViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
+				E65913232A440EBD007E6B58 /* ProfileCollectionViewController.swift in Sources */,
 				B203B0AF2A41FE11008D474B /* RatingViewController.swift in Sources */,
 				B203B0B12A41FEC3008D474B /* GetUserListRequest.swift in Sources */,
 				B203B0AA2A41FD5D008D474B /* User.swift in Sources */,
