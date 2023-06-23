@@ -36,7 +36,9 @@ final class CatalogViewController: UIViewController {
         viewModel.$nftCollections.bind { [weak self] nftCollections in
             guard let self else { return }
             self.nftCollections = nftCollections
-            self.tableView.reloadData()
+            UIView.transition(with: tableView, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                self.tableView.reloadData()
+            }, completion: nil)
         }
         
         setupSortButton()

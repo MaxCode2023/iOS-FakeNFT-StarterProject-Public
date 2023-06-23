@@ -1,11 +1,6 @@
 import Foundation
 import ProgressHUD
 
-enum SortType {
-    case name
-    case count
-}
-
 final class CatalogViewModel {
     private let nftCollectionsService: NftCollectionService = NftCollectionServiceImpl()
     
@@ -28,21 +23,17 @@ final class CatalogViewModel {
             message: "SORTING".localized,
             buttonTextFirst: "SORTING_BY_NAME".localized,
             completionFirst: { [weak self] _ in
-                self?.sort()
+                self?.sortByName()
             },
             buttonTextSecond: "SORTING_BY_COUNT".localized,
             completionSecond: { [weak self] _ in
-                self?.sort()
+                self?.sortByNFTCount()
             },
             cancelText: "CLOSE".localized,
             cancelCompletion: nil
         )
         
         self.alertModel = alertModel
-    }
-    
-    private func sort() {
-        
     }
     
     func getNftCollections() {
@@ -59,5 +50,17 @@ final class CatalogViewModel {
                 }
             }
         })
+    }
+    
+    private func sortByName() {
+        nftCollections.sort { (collection1, collection2) in
+            return collection1.name.localizedCaseInsensitiveCompare(collection2.name) == .orderedAscending
+        }
+    }
+
+    private func sortByNFTCount() {
+        nftCollections.sort { (collection1, collection2) in
+            return collection1.nfts.count < collection2.nfts.count
+        }
     }
 }
