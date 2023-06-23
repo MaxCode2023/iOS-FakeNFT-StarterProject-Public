@@ -109,12 +109,12 @@ final class RatingProfileViewController: UIViewController {
             return
         }
         
-        if user.nfts.isEmpty {
-            presentErrorDialog(message: "Коллекция пуста")
-        } else {
+//        if user.nfts.isEmpty {
+//            presentErrorDialog(message: "Коллекция пуста")
+//        } else {
             let vc = ProfileCollectionViewController()
             navigationController?.pushViewController(vc, animated: true)
-        }
+//        }
     }
     
     private func setUpConstraints() {
