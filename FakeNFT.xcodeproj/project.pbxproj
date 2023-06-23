@@ -33,6 +33,9 @@
 		62CB01C52A45BE2F00B84274 /* GetProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CB01C42A45BE2F00B84274 /* GetProfileRequest.swift */; };
 		62CB01C82A45BECB00B84274 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CB01C72A45BECB00B84274 /* Profile.swift */; };
 		62CB01CB2A45D48800B84274 /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CB01CA2A45D48800B84274 /* ProfileRepository.swift */; };
+		62CB01CD2A45D60600B84274 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CB01CC2A45D60600B84274 /* ProfileViewModel.swift */; };
+		62CB01CF2A45E43C00B84274 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CB01CE2A45E43C00B84274 /* Observable.swift */; };
+		62CB01D32A45E4E200B84274 /* ProfileViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CB01D22A45E4E200B84274 /* ProfileViewState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +84,9 @@
 		62CB01C42A45BE2F00B84274 /* GetProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProfileRequest.swift; sourceTree = "<group>"; };
 		62CB01C72A45BECB00B84274 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		62CB01CA2A45D48800B84274 /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
+		62CB01CC2A45D60600B84274 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		62CB01CE2A45E43C00B84274 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		62CB01D22A45E4E200B84274 /* ProfileViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +210,7 @@
 		3F6806C929CBBCAF00B4F915 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				62CB01D02A45E4C600B84274 /* Presentation */,
 				3F6806D829CC979D00B4F915 /* Network */,
 			);
 			path = Models;
@@ -215,6 +222,7 @@
 				3F6806CF29CBBDB100B4F915 /* NetworkClient */,
 				3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */,
 				3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */,
+				62CB01CE2A45E43C00B84274 /* Observable.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -252,6 +260,7 @@
 			children = (
 				62CB01BD2A445CBC00B84274 /* ProfileViewController.swift */,
 				62CB01BF2A44B44600B84274 /* ProfileTableViewCell.swift */,
+				62CB01CC2A45D60600B84274 /* ProfileViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -278,6 +287,22 @@
 				62CB01CA2A45D48800B84274 /* ProfileRepository.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		62CB01D02A45E4C600B84274 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				62CB01D12A45E4D200B84274 /* Profile */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		62CB01D12A45E4D200B84274 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				62CB01D22A45E4E200B84274 /* ProfileViewState.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -451,10 +476,13 @@
 				62CB01BE2A445CBC00B84274 /* ProfileViewController.swift in Sources */,
 				62CB01C82A45BECB00B84274 /* Profile.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
+				62CB01CF2A45E43C00B84274 /* Observable.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
+				62CB01D32A45E4E200B84274 /* ProfileViewState.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
+				62CB01CD2A45D60600B84274 /* ProfileViewModel.swift in Sources */,
 				62CB01C52A45BE2F00B84274 /* GetProfileRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,

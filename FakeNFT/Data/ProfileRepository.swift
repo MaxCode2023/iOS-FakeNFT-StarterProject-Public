@@ -6,5 +6,13 @@
 //
 
 final class ProfileRepository {
+    static let shared = ProfileRepository()
+    
     private let profileService = ProfileService.shared
+    
+    private init() {}
+    
+    func getProfile(onCompletion: @escaping (Result<Profile, Error>) -> Void) {
+        return profileService.getProfile(onCompletion: onCompletion)
+    }
 }
