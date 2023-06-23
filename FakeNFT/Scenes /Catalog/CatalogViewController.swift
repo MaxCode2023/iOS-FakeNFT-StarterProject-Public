@@ -81,9 +81,12 @@ final class CatalogViewController: UIViewController {
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        let nftCollection = nftCollections[indexPath.row]
+        let nftCollectionVC = NftCollectionViewController(nftCollection: nftCollection)
+        navigationController?.pushViewController(nftCollectionVC, animated: true)
     }
 }
-
 
 extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
