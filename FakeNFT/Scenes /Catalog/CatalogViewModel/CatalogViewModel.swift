@@ -1,4 +1,5 @@
 import Foundation
+import ProgressHUD
 
 enum SortType {
     case name
@@ -45,12 +46,15 @@ final class CatalogViewModel {
     }
     
     func getNftCollections() {
+        UIBlockingProgressHUD.show()
         nftCollectionsService.getNftCollections(onCompletion: { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let nftCollections):
+                    UIBlockingProgressHUD.dismiss()
                     self?.nftCollections = nftCollections
                 case .failure(let error):
+                    UIBlockingProgressHUD.dismiss()
                     self?.errorMessage = error.localizedDescription
                 }
             }
