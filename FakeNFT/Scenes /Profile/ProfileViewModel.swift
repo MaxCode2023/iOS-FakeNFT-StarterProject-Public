@@ -21,7 +21,15 @@ final class ProfileViewModel {
             
             switch result {
             case .success(let profile):
-                self.profileViewState = ProfileViewState.content(.init(profile: profile))
+                self.profileViewState = ProfileViewState.content(.init(
+                    name: profile.name,
+                    description: profile.description,
+                    avatar: profile.avatar,
+                    website: profile.website,
+                    cellTitles: [
+                        "Мои NFT (\(profile.nfts.count))", "Избранные NFT (\(profile.likes.count))", "О разработчике"
+                    ]
+                ))
             case .failure:
                 self.profileViewState = ProfileViewState.error("Не удалось загрузить данные профиля:(")
             }

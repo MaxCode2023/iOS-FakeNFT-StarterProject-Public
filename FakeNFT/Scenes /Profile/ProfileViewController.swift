@@ -6,14 +6,16 @@
 //
 
 import UIKit
+import ProgressHUD
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     private static let countTableRows = 3
     private static let heightTableCell = CGFloat(54)
     
-    private var currentTableCellTitles = [
-        "Мои NFT ?", "Избранные NFT ?", "О разработчике"
-    ]
+    private let viewModel: ProfileViewModel
+    
+    private var currentTableCellTitles: Array<String> = []
     
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
@@ -73,9 +75,19 @@ final class ProfileViewController: UIViewController {
         return profileTableView
     }()
     
+    init(viewModel: ProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        initObservers()
     }
     
     @objc private func onEditIconClick() {
@@ -120,6 +132,63 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
+    private func initObservers() {
+        viewModel.$profileViewState.bind { [weak self] viewState in
+            guard let self = self else { return }
+            
+            self.renderState(viewState: viewState)
+        }
+    }
+    
+    private func renderState(viewState: ProfileViewState) {
+        switch viewState {
+        case .loading:
+            showProgress()
+        case .content(let profileData):
+            renderProfileData(profile: profileData)
+        case .error(let errorString):
+            showError(errorString: errorString)
+        }
+    }
+    
+    private func showProgress() {
+        DispatchQueue.main.async {
+            UIApplication.shared.windows.first?.isUserInteractionEnabled = false
+            ProgressHUD.show()
+        }
+    }
+    
+    private func hideProgress() {
+        DispatchQueue.main.async {
+            UIApplication.shared.windows.first?.isUserInteractionEnabled = false
+            ProgressHUD.dismiss()
+        }
+    }
+    
+    private func renderProfileData(profile: ProfileViewState.ProfileData) {
+        hideProgress()
+        nameLabel.text = profile.name
+        descriptionLabel.text = profile.description
+        urlButton.setTitle(profile.website, for: UIControl.State.normal)
+        avatarImageView.kf.setImage(with: URL(string: profile.avatar))
+        currentTableCellTitles = profile.cellTitles
+        profileTableView.reloadData()
+    }
+    
+    private func showError(errorString: String) {
+        hideProgress()
+        let alert = UIAlertController(
+            title: "Что-то пошло не так",
+            message: errorString,
+            preferredStyle: .alert)
+
+        let action = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        alert.addAction(action)
+
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 // MARK: - UITableViewDataSource
