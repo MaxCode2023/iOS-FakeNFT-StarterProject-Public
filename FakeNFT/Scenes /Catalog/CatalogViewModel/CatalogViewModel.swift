@@ -6,9 +6,16 @@ enum SortType {
 }
 
 final class CatalogViewModel {
+    private let nftCollectionsService: NftCollectionService = NftCollectionServiceImpl()
     
     @Observable
     private(set) var alertModel: AlertModel?
+    
+    @Observable
+    private(set) var nftCollections: [NftCollection] = []
+    
+    @Observable
+    private(set) var errorMessage: String? = nil
     
     init(alertModel: AlertModel?) {
         self.alertModel = alertModel
@@ -35,5 +42,18 @@ final class CatalogViewModel {
     
     private func sort() {
         
+    }
+    
+    func getNftCollections() {
+        nftCollectionsService.getNftCollections(onCompletion: { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let nftCollections):
+                    self?.nftCollections = nftCollections
+                case .failure(let error):
+                    self?.errorMessage = error.localizedDescription
+                }
+            }
+        })
     }
 }

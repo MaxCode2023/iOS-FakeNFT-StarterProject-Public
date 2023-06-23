@@ -2,8 +2,6 @@ import UIKit
 
 extension UIFont {
     enum AppFonts: String {
-//        case regular = "SFProText-Regular"
-//        case medium = "YSDisplay-Medium"
         case bold = "SFProText-Bold"
     }
 

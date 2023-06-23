@@ -2,6 +2,7 @@ import UIKit
 
 final class CatalogViewController: UIViewController {
     var viewModel: CatalogViewModel
+    private var nftCollections = [NftCollection]()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -17,7 +18,7 @@ final class CatalogViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         self.viewModel = CatalogViewModel(alertModel: nil)
         super.init(coder: aDecoder)
@@ -26,19 +27,19 @@ final class CatalogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "sort"),
-            style: .plain,
-            target: self,
-            action: #selector(sortButtonTapped)
-        )
-        navigationItem.rightBarButtonItem?.tintColor = .black
-        
         viewModel.$alertModel.bind { [weak self] alertModel in
             guard let self, let alertModel else { return }
             AlertPresenter().show(controller: self, model: alertModel)
         }
         
+        viewModel.getNftCollections()
+        viewModel.$nftCollections.bind { [weak self] nftCollections in
+            guard let self else { return }
+            self.nftCollections = nftCollections
+            self.tableView.reloadData()
+        }
+        
+        setupSortButton()
         addSubViews()
         addConstraints()
     }
@@ -46,6 +47,16 @@ final class CatalogViewController: UIViewController {
     @objc
     private func sortButtonTapped() {
         viewModel.showAlertToSort()
+    }
+    
+    private func setupSortButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(named: "sort"),
+            style: .plain,
+            target: self,
+            action: #selector(sortButtonTapped)
+        )
+        navigationItem.rightBarButtonItem?.tintColor = .black
     }
     
     private func addConstraints() {
@@ -74,14 +85,13 @@ extension CatalogViewController: UITableViewDelegate {
 
 extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        nftCollections.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CatalogTableViewCell.identifier, for: indexPath) as? CatalogTableViewCell else { return UITableViewCell() }
+        cell.configure(by: nftCollections[indexPath.row])
         
         return cell
     }
-    
-    
 }

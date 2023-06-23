@@ -1,44 +1,13 @@
 import UIKit
+import Kingfisher
 
 final class CatalogTableViewCell: UITableViewCell {
     static let identifier = "catalogCell"
     
-    private lazy var nftImageStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [nftOneImageView, nftTwoImageView, nftThreeImageView])
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 0
-        stackView.alignment = .center
-        stackView.layer.cornerRadius = 12
-        stackView.backgroundColor = .green
-        stackView.clipsToBounds = true
-        
-        return stackView
-    }()
-    
-    private lazy var nftOneImageView: UIImageView = {
-        let image = UIImage(named: "1")
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .center
-        imageView.clipsToBounds = true
-        
-        
-        return imageView
-    }()
-    
-    private lazy var nftTwoImageView: UIImageView = {
-        let image = UIImage(named: "2")
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .center
-        imageView.clipsToBounds = true
-        
-        return imageView
-    }()
-    
-    private lazy var nftThreeImageView: UIImageView = {
-        let image = UIImage(named: "3")
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .center
+    private lazy var nftCollectionCoverImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 12
         imageView.clipsToBounds = true
         
         return imageView
@@ -46,18 +15,23 @@ final class CatalogTableViewCell: UITableViewCell {
     
     private lazy var nftCollectionNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Peach (11)"
         label.font = UIFont.appFont(.bold, withSize: 17)
-        label.textColor = .black//UIColor(named: "YP-Gray")
+        label.textColor = .black
         
         return label
     }()
-   
+    
+    private lazy var nftCollectionCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.appFont(.bold, withSize: 17)
+        label.textColor = .black
+        
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-//        self.backgroundColor = 
-//        contentView.backgroundColor = .orange//UIColor(named: "YP-LightBlack")
         addSubViews()
         addConstraints()
     }
@@ -68,40 +42,63 @@ final class CatalogTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-
     }
     
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//
-//        let margins = UIEdgeInsets(top: 21, left: 0, bottom: 0, right: 0)
-//        contentView.frame = contentView.frame.inset(by: margins)
-//        contentView.layer.cornerRadius = 24
-//    }
+    func configure(by nftCollection: NftCollection) {
+        nftCollectionNameLabel.text = nftCollection.name
+        nftCollectionCountLabel.text = " (\(nftCollection.nfts.count))"
+        
+        guard
+            let encodedStringUrl = nftCollection.cover.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            ),
+            let url = URL(string: encodedStringUrl)
+        else {
+            return
+        }
+        
+        loadCover(from: url)
+    }
+    
+    private func loadCover(from url: URL) {
+        nftCollectionCoverImageView.kf.indicatorType = .activity
+        nftCollectionCoverImageView.kf.setImage(
+            with: url,
+            options: [.cacheSerializer(FormatIndicatedCacheSerializer.png)]
+        ) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(_):
+                nftCollectionCoverImageView.kf.indicatorType = .none
+            case .failure(_):
+                nftCollectionCoverImageView.kf.indicatorType = .none
+            }
+        }
+    }
     
     private func addConstraints() {
-        nftImageStackView.translatesAutoresizingMaskIntoConstraints = false
+        nftCollectionCoverImageView.translatesAutoresizingMaskIntoConstraints = false
         nftCollectionNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nftCollectionCountLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
+            nftCollectionCoverImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            nftCollectionCoverImageView.heightAnchor.constraint(equalToConstant: 140),
+            nftCollectionCoverImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            nftCollectionCoverImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
-            nftImageStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            nftImageStackView.heightAnchor.constraint(equalToConstant: 140),
-//            nftImageStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            nftImageStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            nftImageStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            
-            nftCollectionNameLabel.topAnchor.constraint(equalTo: nftImageStackView.bottomAnchor, constant: 4),
+            nftCollectionNameLabel.topAnchor.constraint(equalTo: nftCollectionCoverImageView.bottomAnchor, constant: 4),
             nftCollectionNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
-            nftCollectionNameLabel.leadingAnchor.constraint(equalTo: nftImageStackView.leadingAnchor),
-//            nftCollectionNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            nftCollectionNameLabel.leadingAnchor.constraint(equalTo: nftCollectionCoverImageView.leadingAnchor),
+            
+            nftCollectionCountLabel.bottomAnchor.constraint(equalTo: nftCollectionNameLabel.bottomAnchor),
+            nftCollectionCountLabel.leadingAnchor.constraint(equalTo: nftCollectionNameLabel.trailingAnchor),
         ])
     }
     
     private func addSubViews() {
-        contentView.addSubview(nftImageStackView)
+        contentView.addSubview(nftCollectionCoverImageView)
         contentView.addSubview(nftCollectionNameLabel)
+        contentView.addSubview(nftCollectionCountLabel)
     }
-    
-    
 }
