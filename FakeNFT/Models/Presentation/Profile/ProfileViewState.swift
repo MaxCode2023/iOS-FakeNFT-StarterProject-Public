@@ -8,7 +8,11 @@
 enum ProfileViewState {
     
     struct ProfileData {
-        let profile: Profile
+        let name: String
+        let description: String
+        let avatar: String
+        let website: String
+        let cellTitles: [String]
     }
     
     case loading
