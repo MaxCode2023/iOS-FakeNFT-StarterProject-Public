@@ -6,8 +6,14 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class ProfileCollectionViewController: UIViewController {
+    
+    var nftIds: [Int] = []
+    
+    private let viewModel = ProfileCollectionViewModel()
+    private var nftList: [Nft] = []
     
     private let backButton = UIButton()
     private let titleLabel = UILabel()
@@ -30,11 +36,27 @@ final class ProfileCollectionViewController: UIViewController {
         setUpConstraints()
         configureViews()
         
+        bind()
+        ProgressHUD.show()
+        viewModel.getNftCollection(nftIdList: nftIds)
+        
         backButton.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
     }
     
     @objc private func navigateBack() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    private func bind() {
+        viewModel.$nftList.bind(action: { [weak self] nftList in
+            ProgressHUD.dismiss()
+            self?.nftList = nftList
+            self?.nftCollectionView.reloadData()
+        })
+        viewModel.$errorMessage.bind { [weak self] errorMessage in
+            ProgressHUD.dismiss()
+            self?.presentErrorDialog(message: errorMessage)
+        }
     }
     
     private func configureViews() {
@@ -76,15 +98,14 @@ final class ProfileCollectionViewController: UIViewController {
 
 extension ProfileCollectionViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
+        return nftList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: NftCollectionCell = nftCollectionView.dequeueReusableCell(indexPath: indexPath)
         
-        cell.configure()
-//        let index = indexPath.row
-//        cell.configure(index: index, user: userList[index])
+        cell.configure(nft: nftList[indexPath.row])
+        cell.delegate = self
         
         return cell
     }
@@ -103,4 +124,12 @@ extension ProfileCollectionViewController: UICollectionViewDelegate, UICollectio
         return params.cellVerticalSpacing
     }
 
+}
+
+extension ProfileCollectionViewController: NftCollectionCellDelegate {
+    func onAddToCart(nftName: String) {
+        let alert = UIAlertController(title: "NFT \(nftName) добавлена в корзину", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ОК", style: .default))
+        present(alert, animated: true)
+    }
 }
