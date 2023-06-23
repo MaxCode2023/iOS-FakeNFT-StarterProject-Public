@@ -30,6 +30,9 @@ extension UIColor {
 
     // Background Colors
     static let background = UIColor.white
+    
+    // Tint colors
+    static let tintPrimary = UIColor.black
 
     // Text Colors
     static let textPrimary = UIColor.black
