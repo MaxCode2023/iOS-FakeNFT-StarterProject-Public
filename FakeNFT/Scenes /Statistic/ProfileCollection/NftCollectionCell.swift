@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 final class NftCollectionCell: UICollectionViewCell, ReuseIdentifying {
     
@@ -26,20 +25,12 @@ final class NftCollectionCell: UICollectionViewCell, ReuseIdentifying {
     func configure(nft: Nft) {
         self.nft = nft
         
-        contentView.addSubview(nftImageView)
-        contentView.addSubview(likeButton)
-        contentView.addSubview(ratingStackView)
-        contentView.addSubview(nftNameLabel)
-        contentView.addSubview(nftPriceLabel)
-        contentView.addSubview(addToCartButton)
+        addViews()
         setUpConstraints()
         
         if let image = nft.images.first,
            let url = URL(string: image) {
-            let processor = RoundCornerImageProcessor(cornerRadius: 120)
-            nftImageView.kf.setImage(
-                with: url,
-                options: [.processor(processor), .cacheSerializer(FormatIndicatedCacheSerializer.png)])
+            nftImageView.loadImage(url: url, cornerRadius: 120)
         }
         
         ratingStackView.axis = .horizontal
@@ -75,9 +66,18 @@ final class NftCollectionCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     @objc private func likeTapped() {
+        isLiked.toggle()
         let imageName = isLiked ? "likeIcon" : "likeDisabledIcon"
         likeButton.setImage(UIImage(named: imageName), for: .normal)
-        isLiked.toggle()
+    }
+    
+    private func addViews() {
+        contentView.addSubview(nftImageView)
+        contentView.addSubview(likeButton)
+        contentView.addSubview(ratingStackView)
+        contentView.addSubview(nftNameLabel)
+        contentView.addSubview(nftPriceLabel)
+        contentView.addSubview(addToCartButton)
     }
     
     private func setUpConstraints() {
@@ -93,10 +93,10 @@ final class NftCollectionCell: UICollectionViewCell, ReuseIdentifying {
             nftImageView.heightAnchor.constraint(equalToConstant: 108),
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             
-            likeButton.topAnchor.constraint(equalTo: contentView.topAnchor),
-            likeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
-            likeButton.widthAnchor.constraint(equalToConstant: 42),
-            likeButton.heightAnchor.constraint(equalToConstant: 42),
+            likeButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            likeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            likeButton.widthAnchor.constraint(equalToConstant: 21),
+            likeButton.heightAnchor.constraint(equalToConstant: 18),
             
             ratingStackView.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 8),
             ratingStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

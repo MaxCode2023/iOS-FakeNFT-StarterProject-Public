@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class UserRatingCell: UITableViewCell, ReuseIdentifying {
         
@@ -21,14 +20,7 @@ class UserRatingCell: UITableViewCell, ReuseIdentifying {
     func configure(index: Int, user: User?) {
         selectionStyle = .none
         
-        contentView.addSubview(mainStackView)
-        mainStackView.addArrangedSubview(indexLabel)
-        mainStackView.addArrangedSubview(backgroundCardView)
-        
-        backgroundCardView.addSubview(avatarImageView)
-        backgroundCardView.addSubview(nameLabel)
-        backgroundCardView.addSubview(ratingScoreLabel)
-        
+        addViews()
         setUpConstraints()
         configureViews()
         
@@ -38,15 +30,8 @@ class UserRatingCell: UITableViewCell, ReuseIdentifying {
         
         if let avatarUrl = user?.avatar,
            let avatarUrl = URL(string: avatarUrl) {
-            loadAvatar(url: avatarUrl)
+            avatarImageView.loadImage(url: avatarUrl, cornerRadius: 100)
         }
-    }
-    
-    private func loadAvatar(url: URL) {
-        let processor = RoundCornerImageProcessor(cornerRadius: 100)
-        avatarImageView.kf.setImage(
-            with: url,
-            options: [.processor(processor), .cacheSerializer(FormatIndicatedCacheSerializer.png)])
     }
     
     private func configureViews() {
@@ -69,6 +54,16 @@ class UserRatingCell: UITableViewCell, ReuseIdentifying {
         ratingScoreLabel.textColor = .YPBlack
         ratingScoreLabel.numberOfLines = 1
         ratingScoreLabel.textAlignment = .right
+    }
+    
+    private func addViews() {
+        contentView.addSubview(mainStackView)
+        mainStackView.addArrangedSubview(indexLabel)
+        mainStackView.addArrangedSubview(backgroundCardView)
+        
+        backgroundCardView.addSubview(avatarImageView)
+        backgroundCardView.addSubview(nameLabel)
+        backgroundCardView.addSubview(ratingScoreLabel)
     }
     
     private func setUpConstraints() {

@@ -7,7 +7,6 @@
 
 import UIKit
 import ProgressHUD
-import Kingfisher
 
 final class RatingProfileViewController: UIViewController {
     
@@ -31,31 +30,15 @@ final class RatingProfileViewController: UIViewController {
         view.backgroundColor = .white
         tabBarController?.tabBar.isHidden = true
         
-        view.addSubview(backButton)
-        view.addSubview(avatarImageView)
-        view.addSubview(nameLabel)
-        view.addSubview(descriptionLabel)
-        view.addSubview(websiteButton)
-        view.addSubview(nftCollectionView)
-        nftCollectionView.addSubview(nftCollectionLabel)
-        nftCollectionView.addSubview(nftCollectionCountLabel)
-        nftCollectionView.addSubview(forwardImageView)
-        
+        addViews()
         setUpConstraints()
         configureViews()
         
         bind()
-        
         if let userId = userId {
             ProgressHUD.show()
             viewModel.getUser(userId: userId)
         }
-        
-        backButton.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
-        websiteButton.addTarget(self, action: #selector(navigateToWebsite), for: .touchUpInside)
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(navigateToCollection))
-        nftCollectionView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     private func bind() {
@@ -80,11 +63,43 @@ final class RatingProfileViewController: UIViewController {
         nftCollectionCountLabel.text = "(\(user.nfts.count))"
         
         if let url = URL(string: user.avatar) {
-            let processor = RoundCornerImageProcessor(cornerRadius: 100)
-            avatarImageView.kf.setImage(
-                with: url,
-                options: [.processor(processor), .cacheSerializer(FormatIndicatedCacheSerializer.png)])
+            avatarImageView.loadImage(url: url, cornerRadius: 100)
         }
+    }
+    
+    private func configureViews() {
+        backButton.setImage(UIImage(named: "backIcon"), for: .normal)
+        backButton.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
+        
+        nameLabel.font = .headline3
+        nameLabel.textColor = .YPBlack
+        nameLabel.numberOfLines = 1
+        
+        descriptionLabel.font = .caption2
+        descriptionLabel.textColor = .YPBlack
+        descriptionLabel.numberOfLines = 0
+        
+        websiteButton.layer.cornerRadius = 16
+        websiteButton.layer.borderWidth = 1
+        websiteButton.layer.borderColor = UIColor.YPBlack.cgColor
+        websiteButton.setTitle("Перейти на сайт пользователя", for: .normal)
+        websiteButton.setTitleColor(.YPBlack, for: .normal)
+        websiteButton.titleLabel?.font = .caption1
+        websiteButton.addTarget(self, action: #selector(navigateToWebsite), for: .touchUpInside)
+        
+        nftCollectionCountLabel.font = .bodyBold
+        nftCollectionCountLabel.textColor = .YPBlack
+        nftCollectionCountLabel.numberOfLines = 1
+        
+        nftCollectionLabel.text = "Коллекция NFT"
+        nftCollectionLabel.font = .bodyBold
+        nftCollectionLabel.textColor = .YPBlack
+        nftCollectionLabel.numberOfLines = 1
+        
+        forwardImageView.image = UIImage(named: "forwardIcon")
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(navigateToCollection))
+        nftCollectionView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     @objc private func navigateBack() {
@@ -116,6 +131,18 @@ final class RatingProfileViewController: UIViewController {
             vc.nftIds = user.nfts.map { Int($0) ?? 0 }
             navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    private func addViews() {
+        view.addSubview(backButton)
+        view.addSubview(avatarImageView)
+        view.addSubview(nameLabel)
+        view.addSubview(descriptionLabel)
+        view.addSubview(websiteButton)
+        view.addSubview(nftCollectionView)
+        nftCollectionView.addSubview(nftCollectionLabel)
+        nftCollectionView.addSubview(nftCollectionCountLabel)
+        nftCollectionView.addSubview(forwardImageView)
     }
     
     private func setUpConstraints() {
@@ -171,36 +198,6 @@ final class RatingProfileViewController: UIViewController {
             forwardImageView.bottomAnchor.constraint(equalTo: nftCollectionView.bottomAnchor, constant: -16),
             forwardImageView.trailingAnchor.constraint(equalTo: nftCollectionView.trailingAnchor)
         ])
-    }
-    
-    private func configureViews() {
-        backButton.setImage(UIImage(named: "backIcon"), for: .normal)
-        
-        nameLabel.font = .headline3
-        nameLabel.textColor = .YPBlack
-        nameLabel.numberOfLines = 1
-        
-        descriptionLabel.font = .caption2
-        descriptionLabel.textColor = .YPBlack
-        descriptionLabel.numberOfLines = 0
-        
-        websiteButton.layer.cornerRadius = 16
-        websiteButton.layer.borderWidth = 1
-        websiteButton.layer.borderColor = UIColor.YPBlack.cgColor
-        websiteButton.setTitle("Перейти на сайт пользователя", for: .normal)
-        websiteButton.setTitleColor(.YPBlack, for: .normal)
-        websiteButton.titleLabel?.font = .caption1
-        
-        nftCollectionCountLabel.font = .bodyBold
-        nftCollectionCountLabel.textColor = .YPBlack
-        nftCollectionCountLabel.numberOfLines = 1
-        
-        nftCollectionLabel.text = "Коллекция NFT"
-        nftCollectionLabel.font = .bodyBold
-        nftCollectionLabel.textColor = .YPBlack
-        nftCollectionLabel.numberOfLines = 1
-        
-        forwardImageView.image = UIImage(named: "forwardIcon")
     }
     
 }

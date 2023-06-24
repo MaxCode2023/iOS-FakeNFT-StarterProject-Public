@@ -20,17 +20,13 @@ final class RatingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(sortImageButton)
-        view.addSubview(ratingTableView)
-        
+        addViews()
         setUpConstraints()
         configureViews()
         
         bind()
         ProgressHUD.show()
         viewModel.getUserList()
-        
-        sortImageButton.addTarget(self, action: #selector(clickSort), for: .touchUpInside)
     }
     
     private func bind() {
@@ -45,11 +41,20 @@ final class RatingViewController: UIViewController {
         }
     }
     
-    @objc private func clickSort() {
-        presentSortDialog()
+    private func configureViews() {
+        ratingTableView.dataSource = self
+        ratingTableView.delegate = self
+        ratingTableView.register(UserRatingCell.self)
+        ratingTableView.separatorStyle = .none
+        
+        ratingTableView.refreshControl = UIRefreshControl()
+        ratingTableView.refreshControl?.addTarget(self, action: #selector(refreshRating), for: .valueChanged)
+        
+        sortImageButton.setImage(UIImage(named: "sortIcon"), for: .normal)
+        sortImageButton.addTarget(self, action: #selector(clickSort), for: .touchUpInside)
     }
     
-    private func presentSortDialog() {
+    @objc private func clickSort() {
         let sortDialog = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
         
         sortDialog.addAction(UIAlertAction(title: "По имени", style: .default) { [weak self]_ in
@@ -63,13 +68,14 @@ final class RatingViewController: UIViewController {
         present(sortDialog, animated: true)
     }
     
-    private func configureViews() {
-        ratingTableView.dataSource = self
-        ratingTableView.delegate = self
-        ratingTableView.register(UserRatingCell.self)
-        ratingTableView.separatorStyle = .none
-        
-        sortImageButton.setImage(UIImage(named: "sortIcon"), for: .normal)
+    @objc private func refreshRating() {
+        ratingTableView.refreshControl?.endRefreshing()
+        viewModel.getUserList()
+    }
+    
+    private func addViews() {
+        view.addSubview(sortImageButton)
+        view.addSubview(ratingTableView)
     }
     
     private func setUpConstraints() {

@@ -29,18 +29,13 @@ final class ProfileCollectionViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        view.addSubview(backButton)
-        view.addSubview(titleLabel)
-        view.addSubview(nftCollectionView)
-        
+        addViews()
         setUpConstraints()
         configureViews()
         
         bind()
         ProgressHUD.show()
         viewModel.getNftCollection(nftIdList: nftIds)
-        
-        backButton.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
     }
     
     @objc private func navigateBack() {
@@ -61,6 +56,7 @@ final class ProfileCollectionViewController: UIViewController {
     
     private func configureViews() {
         backButton.setImage(UIImage(named: "backIcon"), for: .normal)
+        backButton.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
         
         titleLabel.font = .bodyBold
         titleLabel.textColor = .YPBlack
@@ -72,6 +68,13 @@ final class ProfileCollectionViewController: UIViewController {
         nftCollectionView.dataSource = self
         nftCollectionView.register(NftCollectionCell.self)
     }
+    
+    private func addViews() {
+        view.addSubview(backButton)
+        view.addSubview(titleLabel)
+        view.addSubview(nftCollectionView)
+    }
+    
     private func setUpConstraints() {
         backButton.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

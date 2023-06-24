@@ -20,9 +20,9 @@ final class WebsiteProfileViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        view.addSubview(webView)
-        view.addSubview(backButton)
+        addViews()
         setUpConstraints()
+        configureViews()
         
         if let websiteUrl = websiteUrl {
             ProgressHUD.show()
@@ -33,13 +33,20 @@ final class WebsiteProfileViewController: UIViewController {
                 self?.webView.load(request)
             }
         }
-        
-        backButton.setImage(UIImage(named: "backIcon"), for: .normal)
-        backButton.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
     }
     
     @objc private func navigateBack() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    private func configureViews() {
+        backButton.setImage(UIImage(named: "backIcon"), for: .normal)
+        backButton.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
+    }
+    
+    private func addViews() {
+        view.addSubview(webView)
+        view.addSubview(backButton)
     }
     
     private func setUpConstraints() {
