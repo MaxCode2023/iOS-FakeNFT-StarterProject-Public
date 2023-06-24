@@ -40,6 +40,7 @@
 		A3133F5D2A44D34700342E6B /* GetNftCollectionById.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3133F5C2A44D34700342E6B /* GetNftCollectionById.swift */; };
 		A3133F5F2A45E14C00342E6B /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3133F5E2A45E14C00342E6B /* UIBlockingProgressHUD.swift */; };
 		A3133F622A45E88E00342E6B /* NftCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3133F612A45E88E00342E6B /* NftCollectionViewController.swift */; };
+		A3133F672A46FE2500342E6B /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A3133F662A46FE2500342E6B /* SF-Pro-Text-Regular.otf */; };
 		A3D77A6A2A44737700B142D2 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D77A692A44737700B142D2 /* UIFont+Extensions.swift */; };
 		A3FB9E9F2A4331F200491E7D /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB9E9E2A4331F200491E7D /* CatalogViewController.swift */; };
 		A3FB9EA12A4421D400491E7D /* CatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB9EA02A4421D400491E7D /* CatalogTableViewCell.swift */; };
@@ -100,6 +101,7 @@
 		A3133F5C2A44D34700342E6B /* GetNftCollectionById.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNftCollectionById.swift; sourceTree = "<group>"; };
 		A3133F5E2A45E14C00342E6B /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		A3133F612A45E88E00342E6B /* NftCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftCollectionViewController.swift; sourceTree = "<group>"; };
+		A3133F662A46FE2500342E6B /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		A3D77A692A44737700B142D2 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		A3FB9E9C2A43200B00491E7D /* catalog_plan.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = catalog_plan.md; sourceTree = "<group>"; };
 		A3FB9E9E2A4331F200491E7D /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 			isa = PBXGroup;
 			children = (
 				A3133F442A4477EB00342E6B /* SF-Pro-Text-Bold.otf */,
+				A3133F662A46FE2500342E6B /* SF-Pro-Text-Regular.otf */,
 				3F6806A429CBBAF200B4F915 /* Info.plist */,
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
 				3F6806A129CBBAF200B4F915 /* LaunchScreen.storyboard */,
@@ -477,6 +480,7 @@
 				A3133F4D2A44831900342E6B /* Localizable.strings in Resources */,
 				3F68069E29CBBAF100B4F915 /* Main.storyboard in Resources */,
 				B2BAE4942A40C95C00951719 /* statitic_plan.md in Resources */,
+				A3133F672A46FE2500342E6B /* SF-Pro-Text-Regular.otf in Resources */,
 				B203B0A62A41FAA5008D474B /* _swiftlint.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

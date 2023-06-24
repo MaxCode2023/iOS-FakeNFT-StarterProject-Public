@@ -3,6 +3,7 @@ import UIKit
 extension UIFont {
     enum AppFonts: String {
         case bold = "SFProText-Bold"
+        case regular = "SFProText-REGULAR"
     }
 
     static func appFont(_ style: AppFonts, withSize size: CGFloat) -> UIFont {
