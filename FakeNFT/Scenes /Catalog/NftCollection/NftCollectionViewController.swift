@@ -1,14 +1,15 @@
 import UIKit
+import Kingfisher
 
 final class NftCollectionViewController: UIViewController {
-    private let nftCollection: NftCollection
+    private var nftCollection: NftCollection
     
     private lazy var nftCoverImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 12
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .red
+        imageView.backgroundColor = .systemGray
         
         return imageView
     }()
@@ -17,7 +18,6 @@ final class NftCollectionViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.appFont(.bold, withSize: 22)
         label.textColor = .black
-        label.text = "label.text"
         
         return label
     }()
@@ -33,7 +33,6 @@ final class NftCollectionViewController: UIViewController {
     
     private lazy var authorDescriprionButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("John Doe", for: .normal)
         button.backgroundColor = .clear
         
         return button
@@ -70,6 +69,39 @@ final class NftCollectionViewController: UIViewController {
         setupBackBarButtonItem()
         addSubViews()
         addConstraints()
+        config()
+    }
+    
+    private func config() {
+        nftCollectionNameLabel.text = nftCollection.name
+        nftCollectionDescription.text = nftCollection.description
+        authorDescriprionButton.setTitle(nftCollection.author, for: .normal)
+        loadCover(from: nftCollection.cover)
+    }
+    
+    private func loadCover(from stringUrl: String) {
+        guard
+            let encodedStringUrl = stringUrl.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            ),
+            let url = URL(string: encodedStringUrl)
+        else {
+            return
+        }
+        
+        nftCoverImageView.kf.indicatorType = .activity
+        nftCoverImageView.kf.setImage(
+            with: url,
+            options: [.cacheSerializer(FormatIndicatedCacheSerializer.png)]
+        ) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(_):
+                nftCoverImageView.kf.indicatorType = .none
+            case .failure(_):
+                nftCoverImageView.kf.indicatorType = .none
+            }
+        }
     }
     
     private func setupBackBarButtonItem() {

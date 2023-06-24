@@ -32,7 +32,6 @@ final class CatalogViewController: UIViewController {
             AlertPresenter().show(controller: self, model: alertModel)
         }
         
-        viewModel.getNftCollections()
         viewModel.$nftCollections.bind { [weak self] nftCollections in
             guard let self else { return }
             self.nftCollections = nftCollections
@@ -41,6 +40,7 @@ final class CatalogViewController: UIViewController {
             }, completion: nil)
         }
         
+        viewModel.getNftCollections()
         setupSortButton()
         addSubViews()
         addConstraints()

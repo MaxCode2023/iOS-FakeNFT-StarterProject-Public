@@ -47,9 +47,12 @@ final class CatalogTableViewCell: UITableViewCell {
     func configure(by nftCollection: NftCollection) {
         nftCollectionNameLabel.text = nftCollection.name
         nftCollectionCountLabel.text = " (\(nftCollection.nfts.count))"
-        
+        loadCover(from: nftCollection.cover)
+    }
+    
+    private func loadCover(from stringUrl: String) {
         guard
-            let encodedStringUrl = nftCollection.cover.addingPercentEncoding(
+            let encodedStringUrl = stringUrl.addingPercentEncoding(
                 withAllowedCharacters: .urlQueryAllowed
             ),
             let url = URL(string: encodedStringUrl)
@@ -57,10 +60,6 @@ final class CatalogTableViewCell: UITableViewCell {
             return
         }
         
-        loadCover(from: url)
-    }
-    
-    private func loadCover(from url: URL) {
         nftCollectionCoverImageView.kf.indicatorType = .activity
         nftCollectionCoverImageView.kf.setImage(
             with: url,
