@@ -67,8 +67,25 @@ final class NftCollectionViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        setupBackBarButtonItem()
         addSubViews()
         addConstraints()
+    }
+    
+    private func setupBackBarButtonItem() {
+        let backButton = UIButton(type: .custom)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        
+        let backButtonImageView = UIImageView(image: UIImage(named: "backButton"))
+        let imageSize = CGSize(width: 24, height: 24)
+        backButtonImageView.frame = CGRect(origin: .zero, size: imageSize)
+        backButton.addSubview(backButtonImageView)
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
     
     private func addSubViews() {
