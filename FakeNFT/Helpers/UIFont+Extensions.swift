@@ -4,6 +4,7 @@ extension UIFont {
     enum AppFonts: String {
         case bold = "SFProText-Bold"
         case regular = "SFProText-REGULAR"
+        case medium = "SFProText-Medium"
     }
 
     static func appFont(_ style: AppFonts, withSize size: CGFloat) -> UIFont {

@@ -3,6 +3,15 @@ import Kingfisher
 
 final class NftCollectionViewController: UIViewController {
     private var nftCollection: NftCollection
+    private var collectionViewHeightConstraint = NSLayoutConstraint()
+    
+    private lazy var scrollView: UIScrollView = {
+        let scroll = UIScrollView(frame: view.bounds)
+        scroll.backgroundColor = .white
+        scroll.contentInsetAdjustmentBehavior = .never
+        
+        return scroll
+    }()
     
     private lazy var nftCoverImageView: UIImageView = {
         let imageView = UIImageView()
@@ -52,6 +61,20 @@ final class NftCollectionViewController: UIViewController {
         return textView
     }()
     
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: UICollectionViewFlowLayout()
+        )
+        collectionView.register(NftCollectionViewCell.self, forCellWithReuseIdentifier: NftCollectionViewCell.identifier)
+        collectionView.backgroundColor = .white
+        collectionView.isScrollEnabled = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        return collectionView
+    }()
+    
     init(nftCollection: NftCollection) {
         self.nftCollection = nftCollection
         super.init(nibName: nil, bundle: nil)
@@ -64,12 +87,18 @@ final class NftCollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tabBarController?.tabBar.isHidden = true
         view.backgroundColor = .white
         
         setupBackBarButtonItem()
         addSubViews()
         addConstraints()
         config()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionViewHeightConstraint.constant = collectionView.collectionViewLayout.collectionViewContentSize.height
     }
     
     private func config() {
@@ -118,32 +147,43 @@ final class NftCollectionViewController: UIViewController {
     
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
+        tabBarController?.tabBar.isHidden = false
     }
     
     private func addSubViews() {
-        view.addSubview(nftCoverImageView)
-        view.addSubview(nftCollectionNameLabel)
-        view.addSubview(authorNftCollectionLabel)
-        view.addSubview(authorDescriprionButton)
-        view.addSubview(nftCollectionDescription)
+        view.addSubview(scrollView)
+        scrollView.addSubview(nftCoverImageView)
+        scrollView.addSubview(nftCollectionNameLabel)
+        scrollView.addSubview(authorNftCollectionLabel)
+        scrollView.addSubview(authorDescriprionButton)
+        scrollView.addSubview(nftCollectionDescription)
+        scrollView.addSubview(collectionView)
     }
     
     private func addConstraints() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         nftCoverImageView.translatesAutoresizingMaskIntoConstraints = false
         nftCollectionNameLabel.translatesAutoresizingMaskIntoConstraints = false
         authorNftCollectionLabel.translatesAutoresizingMaskIntoConstraints = false
         authorDescriprionButton.translatesAutoresizingMaskIntoConstraints = false
         nftCollectionDescription.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            nftCoverImageView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            
+            nftCoverImageView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             nftCoverImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             nftCoverImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            nftCoverImageView.heightAnchor.constraint(equalToConstant: 310),
+            nftCoverImageView.heightAnchor.constraint(equalToConstant: view.frame.height / 812 * 310),
             
             nftCollectionNameLabel.topAnchor.constraint(equalTo: nftCoverImageView.bottomAnchor, constant: 16),
-            nftCollectionNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            nftCollectionNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            nftCollectionNameLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            nftCollectionNameLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             
             authorNftCollectionLabel.topAnchor.constraint(equalTo: nftCollectionNameLabel.bottomAnchor, constant: 13),
             authorNftCollectionLabel.leadingAnchor.constraint(equalTo: nftCollectionNameLabel.leadingAnchor),
@@ -154,6 +194,53 @@ final class NftCollectionViewController: UIViewController {
             nftCollectionDescription.topAnchor.constraint(equalTo: authorNftCollectionLabel.bottomAnchor, constant: 5),
             nftCollectionDescription.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             nftCollectionDescription.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            collectionView.topAnchor.constraint(equalTo: nftCollectionDescription.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 20),
         ])
+        
+        collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 0)
+        collectionViewHeightConstraint.isActive = true
+    }
+}
+
+
+extension NftCollectionViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return nftCollection.nfts.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NftCollectionViewCell.identifier, for: indexPath) as? NftCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.config(with: nftCollection.nfts[indexPath.item])
+        
+        return cell
+    }
+}
+
+extension NftCollectionViewController: UICollectionViewDelegate {
+
+}
+
+extension NftCollectionViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        
+            return UIEdgeInsets(top: 24, left: 16, bottom: 54, right: 16)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (collectionView.bounds.width - (16+10+10+16)) / 3, height: 192)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
     }
 }
