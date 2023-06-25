@@ -1,7 +1,7 @@
 import UIKit
 
 final class CatalogViewController: UIViewController {
-    var viewModel: CatalogViewModel
+    private var viewModel: CatalogViewModel
     private var nftCollections = [NftCollection]()
     
     private lazy var tableView: UITableView = {

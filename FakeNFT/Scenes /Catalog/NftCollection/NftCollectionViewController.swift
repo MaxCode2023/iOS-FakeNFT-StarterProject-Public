@@ -4,6 +4,8 @@ import Kingfisher
 final class NftCollectionViewController: UIViewController {
     private var nftCollection: NftCollection
     private var collectionViewHeightConstraint = NSLayoutConstraint()
+    private var viewModel = NftCollectionViewModel()
+    private var nftItems = [NftItem]()
     
     private lazy var scrollView: UIScrollView = {
         let scroll = UIScrollView(frame: view.bounds)
@@ -89,6 +91,19 @@ final class NftCollectionViewController: UIViewController {
         
         tabBarController?.tabBar.isHidden = true
         view.backgroundColor = .white
+        
+        viewModel.$nftItems.bind { [weak self] nftItems in
+            guard let self else { return }
+            self.nftItems = nftItems.filter { self.nftCollection.nfts.contains($0.id) }
+            
+            collectionView.reloadData()
+            
+            DispatchQueue.main.async {
+                self.collectionViewHeightConstraint.constant = self.collectionView.collectionViewLayout.collectionViewContentSize.height
+            }
+        }
+        
+        viewModel.getNftItems()
         
         setupBackBarButtonItem()
         addSubViews()
@@ -210,13 +225,13 @@ final class NftCollectionViewController: UIViewController {
 extension NftCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return nftCollection.nfts.count
+        return nftItems.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NftCollectionViewCell.identifier, for: indexPath) as? NftCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.config(with: nftCollection.nfts[indexPath.item])
+        cell.config(with: nftItems[indexPath.row])
         
         return cell
     }
@@ -228,8 +243,7 @@ extension NftCollectionViewController: UICollectionViewDelegate {
 
 extension NftCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        
-            return UIEdgeInsets(top: 24, left: 16, bottom: 54, right: 16)
+        return UIEdgeInsets(top: 24, left: 16, bottom: 54, right: 16)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

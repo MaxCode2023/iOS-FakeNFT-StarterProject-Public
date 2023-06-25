@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 final class NftCollectionViewCell: UICollectionViewCell {
     static let identifier = "collectionCell"
@@ -20,17 +21,11 @@ final class NftCollectionViewCell: UICollectionViewCell {
         stackView.distribution = .fillProportionally
         stackView.spacing = 2
         
-       
-        for _ in 1...5 {
-            let imageView = UIImageView(image: UIImage(named: "star.empty"))
-            stackView.addArrangedSubview(imageView)
-        }
         return stackView
     }()
     
     private lazy var nftNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Archie"
         label.font = UIFont.appFont(.bold, withSize: 17)
         label.textColor = .black
         
@@ -39,7 +34,6 @@ final class NftCollectionViewCell: UICollectionViewCell {
     
     private lazy var priceNftLabel: UILabel = {
         let label = UILabel()
-        label.text = "100 $"
         label.font = UIFont.appFont(.medium, withSize: 10)
         label.textColor = .black
         
@@ -50,7 +44,7 @@ final class NftCollectionViewCell: UICollectionViewCell {
         let button = UIButton(type: .system)
         button.backgroundColor = .clear
         button.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
-        button.setImage(UIImage(named: "cart.full"), for: .normal)
+        button.setImage(UIImage(named: "cart.empty"), for: .normal)
         button.tintColor = .black
         
         return button
@@ -76,8 +70,51 @@ final class NftCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func config(with nft: String) {
-        nftNameLabel.text = nft
+    func config(with nft: NftItem) {
+        nftNameLabel.text = nft.name
+        priceNftLabel.text = String(nft.price) + " ETH"
+        setupRating(nft: nft)
+        loadCover(from: nft.images.first)
+    }
+    
+    private func loadCover(from stringUrl: String?) {
+        guard
+            let nftUrl = stringUrl,
+            let encodedStringUrl = nftUrl.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            ),
+            let url = URL(string: encodedStringUrl)
+        else {
+            return
+        }
+        
+        nftImageView.kf.indicatorType = .activity
+        nftImageView.kf.setImage(
+            with: url,
+            options: [.cacheSerializer(FormatIndicatedCacheSerializer.png)]
+        ) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(_):
+                nftImageView.kf.indicatorType = .none
+            case .failure(_):
+                nftImageView.kf.indicatorType = .none
+            }
+        }
+    }
+    
+    private func setupRating(nft: NftItem) {
+        (1...nft.rating).forEach { _ in
+            let imageView = UIImageView(image: UIImage(named: "star.full"))
+            starsStackView.addArrangedSubview(imageView)
+        }
+        
+        if nft.rating < 5 {
+            (1...(5 - nft.rating)).forEach { _ in
+                let imageView = UIImageView(image: UIImage(named: "star.empty"))
+                starsStackView.addArrangedSubview(imageView)
+            }
+        }
     }
     
     @objc private func cartButtonTapped() {
