@@ -3,6 +3,8 @@ import Kingfisher
 
 final class NftCollectionViewCell: UICollectionViewCell {
     static let identifier = "collectionCell"
+    private var isLiked = false
+    private var isAddToCart = false
     
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
@@ -118,11 +120,15 @@ final class NftCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func cartButtonTapped() {
-        
+        isAddToCart.toggle()
+        let imageName = isAddToCart ? "cart.full" : "cart.empty"
+        cartButton.setImage(UIImage(named: imageName), for: .normal)
     }
     
     @objc private func likeButtonTapped() {
-        
+        isLiked.toggle()
+        let imageName = isLiked ? "like.full" : "like.empty"
+        likeButton.setImage(UIImage(named: imageName), for: .normal)
     }
     
     private func addSubviews() {
