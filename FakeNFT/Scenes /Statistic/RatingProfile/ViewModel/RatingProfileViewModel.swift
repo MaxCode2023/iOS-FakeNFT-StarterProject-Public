@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RatingProfileViewModel {
+final class RatingProfileViewModel {
     
     @Observable
     private(set) var user: User? = nil

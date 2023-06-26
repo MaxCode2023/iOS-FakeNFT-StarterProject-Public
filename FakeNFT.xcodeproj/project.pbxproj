@@ -219,7 +219,8 @@
 			isa = PBXGroup;
 			children = (
 				3FC8C38F29D245250081F015 /* Requests */,
-				E690B4BC2A448092009E223B /* Statistic */,
+				E6F0FA002A4989C900DCCD44 /* Nft */,
+				E6F0F9FF2A4989C500DCCD44 /* User */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -277,7 +278,8 @@
 		3F6806D829CC979D00B4F915 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				B203B0AB2A41FDD1008D474B /* Statistic */,
+				E6F0F9FC2A49899500DCCD44 /* Nft */,
+				E6F0F9FB2A49898F00DCCD44 /* User */,
 				3F6806CA29CBBCC700B4F915 /* ExampleNetworkModel.swift */,
 			);
 			path = Network;
@@ -286,19 +288,11 @@
 		3FC8C38F29D245250081F015 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				B203B0B22A420BF6008D474B /* Statistic */,
+				E6F0F9FE2A4989A500DCCD44 /* Nft */,
+				E6F0F9FD2A4989A000DCCD44 /* User */,
 				3FC8C39029D2453B0081F015 /* ExampleRequest.swift */,
 			);
 			path = Requests;
-			sourceTree = "<group>";
-		};
-		B203B0AB2A41FDD1008D474B /* Statistic */ = {
-			isa = PBXGroup;
-			children = (
-				B203B0A92A41FD5D008D474B /* User.swift */,
-				E690B4B82A447FCC009E223B /* Nft.swift */,
-			);
-			path = Statistic;
 			sourceTree = "<group>";
 		};
 		B203B0AC2A41FDE4008D474B /* Statistic */ = {
@@ -320,16 +314,6 @@
 				B203B0B92A42146D008D474B /* UserRatingCell.swift */,
 			);
 			path = Rating;
-			sourceTree = "<group>";
-		};
-		B203B0B22A420BF6008D474B /* Statistic */ = {
-			isa = PBXGroup;
-			children = (
-				B203B0B02A41FEC3008D474B /* GetUserListRequest.swift */,
-				B203B0B32A420C09008D474B /* GetUserRequest.swift */,
-				E690B4BA2A44804C009E223B /* GetNftRequest.swift */,
-			);
-			path = Statistic;
 			sourceTree = "<group>";
 		};
 		B2BAE4922A40C94000951719 /* Decomposition */ = {
@@ -383,17 +367,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		E690B4BC2A448092009E223B /* Statistic */ = {
-			isa = PBXGroup;
-			children = (
-				B203B0B52A420E61008D474B /* UserService.swift */,
-				B203B0B72A420EF2008D474B /* UserServiceImpl.swift */,
-				E690B4BD2A4480A1009E223B /* NftService.swift */,
-				E690B4BF2A4480AA009E223B /* NftServiceImpl.swift */,
-			);
-			path = Statistic;
-			sourceTree = "<group>";
-		};
 		E6CF57D22A42FF6E00E0C8AB /* RatingProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -402,6 +375,57 @@
 				E659131F2A440A14007E6B58 /* WebsiteProfileViewController.swift */,
 			);
 			path = RatingProfile;
+			sourceTree = "<group>";
+		};
+		E6F0F9FB2A49898F00DCCD44 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				B203B0A92A41FD5D008D474B /* User.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		E6F0F9FC2A49899500DCCD44 /* Nft */ = {
+			isa = PBXGroup;
+			children = (
+				E690B4B82A447FCC009E223B /* Nft.swift */,
+			);
+			path = Nft;
+			sourceTree = "<group>";
+		};
+		E6F0F9FD2A4989A000DCCD44 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				B203B0B02A41FEC3008D474B /* GetUserListRequest.swift */,
+				B203B0B32A420C09008D474B /* GetUserRequest.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		E6F0F9FE2A4989A500DCCD44 /* Nft */ = {
+			isa = PBXGroup;
+			children = (
+				E690B4BA2A44804C009E223B /* GetNftRequest.swift */,
+			);
+			path = Nft;
+			sourceTree = "<group>";
+		};
+		E6F0F9FF2A4989C500DCCD44 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				B203B0B52A420E61008D474B /* UserService.swift */,
+				B203B0B72A420EF2008D474B /* UserServiceImpl.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		E6F0FA002A4989C900DCCD44 /* Nft */ = {
+			isa = PBXGroup;
+			children = (
+				E690B4BD2A4480A1009E223B /* NftService.swift */,
+				E690B4BF2A4480AA009E223B /* NftServiceImpl.swift */,
+			);
+			path = Nft;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

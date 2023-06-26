@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RatingViewModel {
+final class RatingViewModel {
     
     @Observable
     private(set) var userList: [User] = []

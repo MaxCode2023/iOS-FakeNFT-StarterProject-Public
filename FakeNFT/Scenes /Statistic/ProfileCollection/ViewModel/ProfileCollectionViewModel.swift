@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ProfileCollectionViewModel {
+final class ProfileCollectionViewModel {
     
     @Observable
     private(set) var nftList: [Nft] = []

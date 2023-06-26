@@ -20,9 +20,9 @@ final class ProfileCollectionViewController: UIViewController {
     
     private var nftCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let params: GeometricParams = GeometricParams(cellCount: 3,
-                                                          leftInset: 0,
-                                                          rightInset: 0,
-                                                          cellHorizontalSpacing: 9,
+                                                          leftInset: 9,
+                                                          rightInset: 9,
+                                                          cellHorizontalSpacing: 0,
                                                           cellVerticalSpacing: 8)
     
     override func viewDidLoad() {
