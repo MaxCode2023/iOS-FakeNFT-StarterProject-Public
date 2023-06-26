@@ -8,15 +8,15 @@
 import Foundation
 
 class RatingProfileViewModel {
-    
+
     @Observable
-    private(set) var user: User? = nil
-    
+    private(set) var user: User?
+
     @Observable
-    private(set) var errorMessage: String? = nil
-    
+    private(set) var errorMessage: String?
+
     private let userService: UserService = UserServiceImpl()
-    
+
     func getUser(userId: Int) {
         userService.getUser(userId: userId) { [weak self] result in
             DispatchQueue.main.async {
@@ -29,5 +29,5 @@ class RatingProfileViewModel {
             }
         }
     }
-    
+
 }

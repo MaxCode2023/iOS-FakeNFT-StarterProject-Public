@@ -8,15 +8,15 @@
 import Foundation
 
 class ProfileCollectionViewModel {
-    
+
     @Observable
     private(set) var nftList: [Nft] = []
-    
+
     @Observable
-    private(set) var errorMessage: String? = nil
-    
-    private let nftService: NftService = NftServiceImpl()
-    
+    private(set) var errorMessage: String?
+
+    private let nftService: NftService = NftServiceImpl.shared
+
     func getNftCollection(nftIdList: [Int]) {
         nftService.getNftList(nftIds: nftIdList) { [weak self] result in
             DispatchQueue.main.async {
@@ -29,5 +29,5 @@ class ProfileCollectionViewModel {
             }
         }
     }
-    
+
 }

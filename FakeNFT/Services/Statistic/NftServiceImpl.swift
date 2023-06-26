@@ -8,13 +8,16 @@
 import Foundation
 
 class NftServiceImpl: NftService {
-    
+    static let shared = NftServiceImpl()
+
     private let client = DefaultNetworkClient()
     
+    private init() { }
+
     func getNftList(nftIds: [Int], onCompletion: @escaping (Result<[Nft], Error>) -> Void) {
         var nfts: [Nft] = []
         let group = DispatchGroup()
-        
+
         for nftId in nftIds {
             group.enter()
             getNft(nftId: nftId) { result in
@@ -28,7 +31,7 @@ class NftServiceImpl: NftService {
                 group.leave()
             }
         }
-        
+
         group.notify(queue: .main) {
             onCompletion(.success(nfts))
         }
@@ -36,8 +39,8 @@ class NftServiceImpl: NftService {
 
     func getNft(nftId: Int, onCompletion: @escaping (Result<Nft, Error>) -> Void) {
         let request = GetNftRequest(nftId: nftId)
-        
+
         client.send(request: request, type: Nft.self, onResponse: onCompletion)
     }
-    
+
 }

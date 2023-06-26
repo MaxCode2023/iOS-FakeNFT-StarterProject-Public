@@ -8,15 +8,15 @@
 import Foundation
 
 class RatingViewModel {
-    
+
     @Observable
     private(set) var userList: [User] = []
-    
+
     @Observable
-    private(set) var errorMessage: String? = nil
-    
+    private(set) var errorMessage: String?
+
     private let userService: UserService = UserServiceImpl()
-    
+
     func getUserList() {
         userService.getUserList { [weak self] result in
             DispatchQueue.main.async {
@@ -30,23 +30,23 @@ class RatingViewModel {
             }
         }
     }
-    
+
     func sortByName() {
         let sortedList = userList.sorted { user1, user2 in
             user1.name < user2.name
         }
         self.userList = sortedList
     }
-    
+
     func sortByRating() {
         let sortedList = sortByRating(userList: userList)
         self.userList = sortedList
     }
-    
+
     private func sortByRating(userList: [User]) -> [User] {
         userList.sorted { user1, user2 in
             (Int(user1.rating) ?? 0) > (Int(user2.rating) ?? 0)
         }
     }
-    
+
 }
