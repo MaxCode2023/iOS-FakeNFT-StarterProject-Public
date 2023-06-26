@@ -88,7 +88,7 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         initObservers()
-        
+
         viewModel.onViewCreated()
     }
 
@@ -191,6 +191,18 @@ final class ProfileViewController: UIViewController {
 
         present(alert, animated: true, completion: nil)
     }
+
+    private func navigateToMyNft() {
+        let viewModel = MyNftViewModel()
+        let myNftVc = MyNftViewController(viewModel: viewModel)
+        navigationController?.pushViewController(myNftVc, animated: true)
+    }
+
+    private func navigateToFavoriteNft() {
+        let viewModel = FavoriteNftViewModel()
+        let favoriteNftVc = FavoritesNftViewController(viewModel: viewModel)
+        navigationController?.pushViewController(favoriteNftVc, animated: true)
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -216,7 +228,12 @@ extension ProfileViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: - Реализовать логику перехода
+        // TODO: - Задача на рефакторинг: вынести логику перехода в отдельную сущность, куда переходить вынести во ViewModel
+        switch indexPath.row {
+        case 0: navigateToMyNft()
+        case 1: navigateToFavoriteNft()
+        default: return
+        }
     }
 
 }
