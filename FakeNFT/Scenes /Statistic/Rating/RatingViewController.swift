@@ -10,15 +10,17 @@ import ProgressHUD
 
 final class RatingViewController: UIViewController {
     
-    private let sortImageButton = UIButton()
+    private let sortButton = UIButton()
     private let ratingTableView = UITableView()
     
     private let viewModel = RatingViewModel()
+    private var sortAlertPresenter: SortAlertPresenter? = nil
     
     private var userList: [User] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.sortAlertPresenter = SortAlertPresenter(viewController: self)
         
         addViews()
         setUpConstraints()
@@ -50,22 +52,16 @@ final class RatingViewController: UIViewController {
         ratingTableView.refreshControl = UIRefreshControl()
         ratingTableView.refreshControl?.addTarget(self, action: #selector(refreshRating), for: .valueChanged)
         
-        sortImageButton.setImage(UIImage(named: "sortIcon"), for: .normal)
-        sortImageButton.addTarget(self, action: #selector(clickSort), for: .touchUpInside)
+        sortButton.setImage(UIImage(named: "sortIcon"), for: .normal)
+        sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     }
     
-    @objc private func clickSort() {
-        let sortDialog = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
-        
-        sortDialog.addAction(UIAlertAction(title: "По имени", style: .default) { [weak self]_ in
+    @objc private func sortButtonTapped() {
+        sortAlertPresenter?.presentSortDialog(onNameSort: { [weak self] in
             self?.viewModel.sortByName()
-        })
-        sortDialog.addAction(UIAlertAction(title: "По рейтингу", style: .default) { [weak self] _ in
+        }, onRatingSort: { [weak self] in
             self?.viewModel.sortByRating()
         })
-        sortDialog.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
-        
-        present(sortDialog, animated: true)
     }
     
     @objc private func refreshRating() {
@@ -74,21 +70,21 @@ final class RatingViewController: UIViewController {
     }
     
     private func addViews() {
-        view.addSubview(sortImageButton)
+        view.addSubview(sortButton)
         view.addSubview(ratingTableView)
     }
     
     private func setUpConstraints() {
-        sortImageButton.translatesAutoresizingMaskIntoConstraints = false
+        sortButton.translatesAutoresizingMaskIntoConstraints = false
         ratingTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            sortImageButton.heightAnchor.constraint(equalToConstant: 42),
-            sortImageButton.widthAnchor.constraint(equalToConstant: 42),
-            sortImageButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
-            sortImageButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
+            sortButton.heightAnchor.constraint(equalToConstant: 42),
+            sortButton.widthAnchor.constraint(equalToConstant: 42),
+            sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
+            sortButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
             
-            ratingTableView.topAnchor.constraint(equalTo: sortImageButton.bottomAnchor, constant: 20),
+            ratingTableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20),
             ratingTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
             ratingTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             ratingTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
@@ -121,8 +117,7 @@ extension RatingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     private func navigateToRatingProfile(userId: Int) {
-        let vc = RatingProfileViewController()
-        vc.userId = userId
+        let vc = RatingProfileViewController(userId: userId)
         navigationController?.pushViewController(vc, animated: true)
     }
     

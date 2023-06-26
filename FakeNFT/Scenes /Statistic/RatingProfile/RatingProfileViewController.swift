@@ -10,7 +10,7 @@ import ProgressHUD
 
 final class RatingProfileViewController: UIViewController {
     
-    var userId: Int? = nil
+    private let userId: Int
     private var user: User? = nil
 
     private let viewModel = RatingProfileViewModel()
@@ -20,10 +20,19 @@ final class RatingProfileViewController: UIViewController {
     private let nameLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let websiteButton = UIButton()
-    private let nftCollectionView = UIView()
+    private let nftCollectionContainer = UIView()
     private let nftCollectionLabel = UILabel()
     private let nftCollectionCountLabel = UILabel()
     private let forwardImageView = UIImageView()
+    
+    init(userId: Int) {
+        self.userId = userId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,10 +44,8 @@ final class RatingProfileViewController: UIViewController {
         configureViews()
         
         bind()
-        if let userId = userId {
-            ProgressHUD.show()
-            viewModel.getUser(userId: userId)
-        }
+        ProgressHUD.show()
+        viewModel.getUser(userId: userId)
     }
     
     private func bind() {
@@ -99,7 +106,7 @@ final class RatingProfileViewController: UIViewController {
         forwardImageView.image = UIImage(named: "forwardIcon")
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(navigateToCollection))
-        nftCollectionView.addGestureRecognizer(tapGestureRecognizer)
+        nftCollectionContainer.addGestureRecognizer(tapGestureRecognizer)
     }
     
     @objc private func navigateBack() {
@@ -139,10 +146,10 @@ final class RatingProfileViewController: UIViewController {
         view.addSubview(nameLabel)
         view.addSubview(descriptionLabel)
         view.addSubview(websiteButton)
-        view.addSubview(nftCollectionView)
-        nftCollectionView.addSubview(nftCollectionLabel)
-        nftCollectionView.addSubview(nftCollectionCountLabel)
-        nftCollectionView.addSubview(forwardImageView)
+        view.addSubview(nftCollectionContainer)
+        nftCollectionContainer.addSubview(nftCollectionLabel)
+        nftCollectionContainer.addSubview(nftCollectionCountLabel)
+        nftCollectionContainer.addSubview(forwardImageView)
     }
     
     private func setUpConstraints() {
@@ -151,7 +158,7 @@ final class RatingProfileViewController: UIViewController {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         websiteButton.translatesAutoresizingMaskIntoConstraints = false
-        nftCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        nftCollectionContainer.translatesAutoresizingMaskIntoConstraints = false
         nftCollectionLabel.translatesAutoresizingMaskIntoConstraints = false
         nftCollectionCountLabel.translatesAutoresizingMaskIntoConstraints = false
         forwardImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -180,23 +187,24 @@ final class RatingProfileViewController: UIViewController {
             websiteButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             websiteButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            nftCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            nftCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            nftCollectionView.topAnchor.constraint(equalTo: websiteButton.bottomAnchor, constant: 40),
+            nftCollectionContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            nftCollectionContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            nftCollectionContainer.topAnchor.constraint(equalTo: websiteButton.bottomAnchor, constant: 40),
+            nftCollectionContainer.heightAnchor.constraint(equalToConstant: 54),
             
-            nftCollectionLabel.topAnchor.constraint(equalTo: nftCollectionView.topAnchor, constant: 16),
-            nftCollectionLabel.bottomAnchor.constraint(equalTo: nftCollectionView.bottomAnchor, constant: -16),
-            nftCollectionLabel.leadingAnchor.constraint(equalTo: nftCollectionView.leadingAnchor, constant: 0),
+            nftCollectionLabel.topAnchor.constraint(equalTo: nftCollectionContainer.topAnchor, constant: 16),
+            nftCollectionLabel.bottomAnchor.constraint(equalTo: nftCollectionContainer.bottomAnchor, constant: -16),
+            nftCollectionLabel.leadingAnchor.constraint(equalTo: nftCollectionContainer.leadingAnchor, constant: 0),
             
-            nftCollectionCountLabel.topAnchor.constraint(equalTo: nftCollectionView.topAnchor, constant: 16),
-            nftCollectionCountLabel.bottomAnchor.constraint(equalTo: nftCollectionView.bottomAnchor, constant: -16),
+            nftCollectionCountLabel.topAnchor.constraint(equalTo: nftCollectionContainer.topAnchor, constant: 16),
+            nftCollectionCountLabel.bottomAnchor.constraint(equalTo: nftCollectionContainer.bottomAnchor, constant: -16),
             nftCollectionCountLabel.leadingAnchor.constraint(equalTo: nftCollectionLabel.trailingAnchor, constant: 8),
             
             forwardImageView.widthAnchor.constraint(equalToConstant: 8),
             forwardImageView.heightAnchor.constraint(equalToConstant: 14),
-            forwardImageView.topAnchor.constraint(equalTo: nftCollectionView.topAnchor, constant: 16),
-            forwardImageView.bottomAnchor.constraint(equalTo: nftCollectionView.bottomAnchor, constant: -16),
-            forwardImageView.trailingAnchor.constraint(equalTo: nftCollectionView.trailingAnchor)
+            forwardImageView.topAnchor.constraint(equalTo: nftCollectionContainer.topAnchor, constant: 16),
+            forwardImageView.bottomAnchor.constraint(equalTo: nftCollectionContainer.bottomAnchor, constant: -16),
+            forwardImageView.trailingAnchor.constraint(equalTo: nftCollectionContainer.trailingAnchor)
         ])
     }
     

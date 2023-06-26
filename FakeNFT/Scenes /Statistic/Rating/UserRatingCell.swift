@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UserRatingCell: UITableViewCell, ReuseIdentifying {
+final class UserRatingCell: UITableViewCell, ReuseIdentifying {
         
     private let mainStackView = UIStackView()
     

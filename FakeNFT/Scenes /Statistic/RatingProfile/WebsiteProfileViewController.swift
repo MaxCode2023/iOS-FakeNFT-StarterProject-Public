@@ -35,6 +35,11 @@ final class WebsiteProfileViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        ProgressHUD.dismiss()
+    }
+    
     @objc private func navigateBack() {
         navigationController?.popViewController(animated: true)
     }
