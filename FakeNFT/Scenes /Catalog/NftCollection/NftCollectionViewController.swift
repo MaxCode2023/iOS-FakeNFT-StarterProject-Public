@@ -6,6 +6,7 @@ final class NftCollectionViewController: UIViewController {
     private var collectionViewHeightConstraint = NSLayoutConstraint()
     private var viewModel = NftCollectionViewModel()
     private var nftItems = [NftItem]()
+    private var user: User?
     
     private lazy var scrollView: UIScrollView = {
         let scroll = UIScrollView(frame: view.bounds)
@@ -104,6 +105,12 @@ final class NftCollectionViewController: UIViewController {
             }
         }
         
+        viewModel.$user.bind { [weak self] user in
+            guard let self else { return }
+            self.user = user
+            authorDescriptionButton.setTitle(self.user?.name, for: .normal)
+        }
+        
         viewModel.getNftItems()
         
         setupBackBarButtonItem()
@@ -120,7 +127,7 @@ final class NftCollectionViewController: UIViewController {
     private func config() {
         nftCollectionNameLabel.text = nftCollection.name
         nftCollectionDescription.text = nftCollection.description
-        authorDescriptionButton.setTitle(nftCollection.author, for: .normal)
+        viewModel.getUser(userId: nftCollection.author)
         loadCover(from: nftCollection.cover)
     }
     
@@ -149,8 +156,8 @@ final class NftCollectionViewController: UIViewController {
         }
     }
     
-    @objc private func authorDescriptionButtonTapped(_ sender: UIButton) {
-        guard let userId = sender.titleLabel?.text else { return }
+    @objc private func authorDescriptionButtonTapped() {
+        guard let userId = user?.id else { return }
         let authorDescriptionVC = AuthorDescriptionViewController(userId: userId)
         navigationController?.pushViewController(authorDescriptionVC, animated: true)
     }

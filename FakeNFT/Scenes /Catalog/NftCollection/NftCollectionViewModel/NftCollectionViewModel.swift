@@ -2,9 +2,13 @@ import Foundation
 
 final class NftCollectionViewModel {
     private let nftItemsService: NftItemService = NftItemServiceImpl()
+    private let userService: UserService = UserServiceImpl()
     
     @Observable
     private(set) var nftItems: [NftItem] = []
+    
+    @Observable
+    private(set) var user: User?
     
     @Observable
     private(set) var errorMessage: String? = nil
@@ -25,7 +29,16 @@ final class NftCollectionViewModel {
         })
     }
     
-    func showDescriptionVC(for author: String) {
-        
+    func getUser(userId: String) {
+        userService.getUser(userId: userId) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let user):
+                    self?.user = user
+                case .failure(let error):
+                    self?.errorMessage = error.localizedDescription
+                }
+            }
+        }
     }
 }
