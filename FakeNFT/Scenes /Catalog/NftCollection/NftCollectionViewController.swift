@@ -42,9 +42,10 @@ final class NftCollectionViewController: UIViewController {
         return label
     }()
     
-    private lazy var authorDescriprionButton: UIButton = {
+    private lazy var authorDescriptionButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(authorDescriptionButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -119,7 +120,7 @@ final class NftCollectionViewController: UIViewController {
     private func config() {
         nftCollectionNameLabel.text = nftCollection.name
         nftCollectionDescription.text = nftCollection.description
-        authorDescriprionButton.setTitle(nftCollection.author, for: .normal)
+        authorDescriptionButton.setTitle(nftCollection.author, for: .normal)
         loadCover(from: nftCollection.cover)
     }
     
@@ -148,6 +149,12 @@ final class NftCollectionViewController: UIViewController {
         }
     }
     
+    @objc private func authorDescriptionButtonTapped(_ sender: UIButton) {
+        guard let userId = sender.titleLabel?.text else { return }
+        let authorDescriptionVC = AuthorDescriptionViewController(userId: userId)
+        navigationController?.pushViewController(authorDescriptionVC, animated: true)
+    }
+    
     private func setupBackBarButtonItem() {
         let backButton = UIButton(type: .custom)
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
@@ -170,7 +177,7 @@ final class NftCollectionViewController: UIViewController {
         scrollView.addSubview(nftCoverImageView)
         scrollView.addSubview(nftCollectionNameLabel)
         scrollView.addSubview(authorNftCollectionLabel)
-        scrollView.addSubview(authorDescriprionButton)
+        scrollView.addSubview(authorDescriptionButton)
         scrollView.addSubview(nftCollectionDescription)
         scrollView.addSubview(collectionView)
     }
@@ -180,7 +187,7 @@ final class NftCollectionViewController: UIViewController {
         nftCoverImageView.translatesAutoresizingMaskIntoConstraints = false
         nftCollectionNameLabel.translatesAutoresizingMaskIntoConstraints = false
         authorNftCollectionLabel.translatesAutoresizingMaskIntoConstraints = false
-        authorDescriprionButton.translatesAutoresizingMaskIntoConstraints = false
+        authorDescriptionButton.translatesAutoresizingMaskIntoConstraints = false
         nftCollectionDescription.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -203,8 +210,8 @@ final class NftCollectionViewController: UIViewController {
             authorNftCollectionLabel.topAnchor.constraint(equalTo: nftCollectionNameLabel.bottomAnchor, constant: 13),
             authorNftCollectionLabel.leadingAnchor.constraint(equalTo: nftCollectionNameLabel.leadingAnchor),
             
-            authorDescriprionButton.centerYAnchor.constraint(equalTo: authorNftCollectionLabel.centerYAnchor),
-            authorDescriprionButton.leadingAnchor.constraint(equalTo: authorNftCollectionLabel.trailingAnchor, constant: 5),
+            authorDescriptionButton.centerYAnchor.constraint(equalTo: authorNftCollectionLabel.centerYAnchor),
+            authorDescriptionButton.leadingAnchor.constraint(equalTo: authorNftCollectionLabel.trailingAnchor, constant: 5),
             
             nftCollectionDescription.topAnchor.constraint(equalTo: authorNftCollectionLabel.bottomAnchor, constant: 5),
             nftCollectionDescription.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),

@@ -24,4 +24,8 @@ final class NftCollectionViewModel {
             }
         })
     }
+    
+    func showDescriptionVC(for author: String) {
+        
+    }
 }
