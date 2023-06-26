@@ -1,23 +1,23 @@
 //
-//  MyNftTableViewCell.swift
+//  FavoritesNftCollectionViewCell.swift
 //  FakeNFT
 //
-//  Created by Суворов Дмитрий Владимирович on 25.06.2023.
+//  Created by Суворов Дмитрий Владимирович on 26.06.2023.
 //
 
 import UIKit
 
-final class MyNftTableViewCell: UITableViewCell {
-    static let identifier = "MyNftTableViewCell"
-
+final class FavoritesNftCollectionViewCell : UICollectionViewCell {
+    static let identifier = "FavoritesNftCollectionViewCell"
+    
     private let starCount = 5
-
+    
     private lazy var nftImageView: UIImageView = {
         let nftImageView = UIImageView()
         nftImageView.translatesAutoresizingMaskIntoConstraints = false
         return nftImageView
     }()
-
+    
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = UIFont.bodyBold
@@ -25,24 +25,7 @@ final class MyNftTableViewCell: UITableViewCell {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         return nameLabel
     }()
-
-    private lazy var addInfoLabel: UILabel = {
-        let addInfoLabel = UILabel()
-        addInfoLabel.font = UIFont.caption2
-        addInfoLabel.textColor = UIColor.textPrimary
-        addInfoLabel.translatesAutoresizingMaskIntoConstraints = false
-        return addInfoLabel
-    }()
-
-    private lazy var priceLabel: UILabel = {
-        let priceLabel = UILabel()
-        priceLabel.font = UIFont.caption2
-        priceLabel.textColor = UIColor.textPrimary
-        priceLabel.text = "Цена"
-        priceLabel.translatesAutoresizingMaskIntoConstraints = false
-        return priceLabel
-    }()
-
+    
     private lazy var priceValueLabel: UILabel = {
         let priceValueLabel = UILabel()
         priceValueLabel.font = UIFont.bodyBold
@@ -50,7 +33,7 @@ final class MyNftTableViewCell: UITableViewCell {
         priceValueLabel.translatesAutoresizingMaskIntoConstraints = false
         return priceValueLabel
     }()
-
+    
     private lazy var ratingStackView: UIStackView = {
         let ratingStackView = UIStackView()
         ratingStackView.axis = NSLayoutConstraint.Axis.horizontal
@@ -58,7 +41,7 @@ final class MyNftTableViewCell: UITableViewCell {
         ratingStackView.translatesAutoresizingMaskIntoConstraints = false
         return ratingStackView
     }()
-
+    
     private lazy var infoStackView: UIStackView = {
         let infoStackView = UIStackView()
         infoStackView.axis = NSLayoutConstraint.Axis.vertical
@@ -67,24 +50,17 @@ final class MyNftTableViewCell: UITableViewCell {
         infoStackView.translatesAutoresizingMaskIntoConstraints = false
         return infoStackView
     }()
-
-    private let priceVerticalStackView: UIStackView = {
-        let priceVerticalStackView = UIStackView()
-        priceVerticalStackView.axis = NSLayoutConstraint.Axis.vertical
-        priceVerticalStackView.spacing = 2
-        priceVerticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        return priceVerticalStackView
-    }()
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    
+    // MARK: - LifeCycle
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureUI()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     func bindCell(nftView: NftView) {
         if let image = nftView.nft.images.first,
            let url = URL(string: image) {
@@ -99,34 +75,27 @@ final class MyNftTableViewCell: UITableViewCell {
         nameLabel.text = nftView.nft.name
         priceValueLabel.text = "\(nftView.nft.price) ETH"
     }
-
+    
     private func configureUI() {
         backgroundColor = UIColor.background
-        selectionStyle = UITableViewCell.SelectionStyle.none
-
+        
         infoStackView.addArrangedSubview(nameLabel)
         infoStackView.addArrangedSubview(ratingStackView)
-        infoStackView.addArrangedSubview(addInfoLabel)
-
-        priceVerticalStackView.addArrangedSubview(priceLabel)
-        priceVerticalStackView.addArrangedSubview(priceValueLabel)
-
+        infoStackView.addArrangedSubview(priceValueLabel)
+        
         contentView.addSubview(nftImageView)
         contentView.addSubview(infoStackView)
-        contentView.addSubview(priceVerticalStackView)
-
+        
         NSLayoutConstraint.activate([
-            nftImageView.widthAnchor.constraint(equalToConstant: 108),
-            nftImageView.heightAnchor.constraint(equalToConstant: 108),
-            nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-
+            nftImageView.widthAnchor.constraint(equalToConstant: 80),
+            nftImageView.heightAnchor.constraint(equalToConstant: 80),
+            nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            
             infoStackView.centerYAnchor.constraint(equalTo: nftImageView.centerYAnchor),
-            infoStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
-
-            priceVerticalStackView.centerYAnchor.constraint(equalTo: nftImageView.centerYAnchor),
-            priceVerticalStackView.leadingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -114),
-            priceVerticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+            infoStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 12),
+            infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            infoStackView.heightAnchor.constraint(equalToConstant: 67)
         ])
     }
 }

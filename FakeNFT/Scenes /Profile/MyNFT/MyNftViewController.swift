@@ -100,14 +100,13 @@ final class MyNftViewController: UIViewController {
         case .content(let myNftData):
             placeholderLabel.isHidden = true
             myNftTableView.isHidden = false
-            self.myNfts = myNftData
+            myNfts = myNftData
             myNftTableView.reloadData()
             
         case .error(let errorString):
             presentErrorDialog(message: errorString)
         }
     }
-
 }
 
 extension MyNftViewController: UITableViewDataSource {
