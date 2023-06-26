@@ -34,6 +34,11 @@ final class ProfileRepository {
         nftService.getNftList(nftIds: currentProfile.nfts, onCompletion: onCompletion)
     }
     
+    func getFavoriteNft(onCompletion: @escaping (Result<[Nft], Error>) -> Void) {
+        guard let currentProfile = currentProfile else { return }
+        nftService.getNftList(nftIds: currentProfile.likes, onCompletion: onCompletion)
+    }
+    
     func checkNftIsLiked(nft: Nft) -> Bool {
         guard let currentProfile = currentProfile else { return false }
         return currentProfile.likes.contains(Int(nft.id) ?? -1)
