@@ -7,30 +7,19 @@
 
 import Foundation
 
-final class RatingProfileViewModel {
-    
+class RatingProfileViewModel {
+
     @Observable
-    private(set) var user: User? = nil
-    
+    private(set) var user: User?
+
     @Observable
-    private(set) var isLoading: Bool = false
-    
-    @Observable
-    private(set) var errorMessage: String? = nil
-    
-    private let userService: UserServiceProtocol
-    
-    init(userService: UserServiceProtocol = UserNetworkService()) {
-        self.userService = userService
-    }
-    
+    private(set) var errorMessage: String?
+
+    private let userService: UserService = UserServiceImpl()
+
     func getUser(userId: Int) {
-        isLoading = true
-        
         userService.getUser(userId: userId) { [weak self] result in
             DispatchQueue.main.async {
-                self?.isLoading = false
-                
                 switch result {
                 case .success(let user):
                     self?.user = user
@@ -40,5 +29,5 @@ final class RatingProfileViewModel {
             }
         }
     }
-    
+
 }

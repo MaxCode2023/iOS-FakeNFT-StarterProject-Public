@@ -6,7 +6,7 @@
 //
 
 enum ProfileViewState {
-    
+
     struct ProfileData {
         let name: String
         let description: String
@@ -14,7 +14,7 @@ enum ProfileViewState {
         let website: String
         let cellTitles: [String]
     }
-    
+
     case loading
     case content(ProfileData)
     case error(String)

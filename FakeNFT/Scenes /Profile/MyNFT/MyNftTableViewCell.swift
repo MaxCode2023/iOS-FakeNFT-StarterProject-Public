@@ -11,7 +11,7 @@ final class MyNftTableViewCell: UITableViewCell {
     static let identifier = "MyNftTableViewCell"
 
     private let starCount = 5
-    
+
     private lazy var nftImageView: UIImageView = {
         let nftImageView = UIImageView()
         nftImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -78,32 +78,32 @@ final class MyNftTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bindCell(nft: Nft, isLiked: Bool) {
-        if let image = nft.images.first,
+    func bindCell(nftView: NftView) {
+        if let image = nftView.nft.images.first,
            let url = URL(string: image) {
             nftImageView.loadImage(url: url, cornerRadius: 120)
         }
         for index in 1...starCount {
             let starImageView = UIImageView()
             starImageView.image = UIImage(named: "ratingStar")
-            starImageView.tintColor = nft.rating >= index ? UIColor.yellow : UIColor.lightGray
+            starImageView.tintColor = nftView.nft.rating >= index ? UIColor.yellow : UIColor.lightGray
             ratingStackView.addArrangedSubview(starImageView)
         }
-        nameLabel.text = nft.name
-        priceValueLabel.text = "\(nft.price) ETH"
+        nameLabel.text = nftView.nft.name
+        priceValueLabel.text = "\(nftView.nft.price) ETH"
     }
-    
+
     private func configureUI() {
         backgroundColor = UIColor.background
         selectionStyle = UITableViewCell.SelectionStyle.none
-        
+
         infoStackView.addArrangedSubview(nameLabel)
         infoStackView.addArrangedSubview(ratingStackView)
         infoStackView.addArrangedSubview(addInfoLabel)
@@ -130,4 +130,3 @@ final class MyNftTableViewCell: UITableViewCell {
         ])
     }
 }
-

@@ -7,15 +7,19 @@
 
 import UIKit
 
-final class SortAlertBuilder {
-    
-    private init() {}
-    
-    static func buildSortAlert(
+final class SortAlertPresenter {
+
+    private var viewController: UIViewController
+
+    init(viewController: UIViewController) {
+        self.viewController = viewController
+    }
+
+    func presentSortDialog(
         onNameSort: @escaping () -> Void,
-        onRatingSort: @escaping () -> Void) -> UIAlertController {
+        onRatingSort: @escaping () -> Void) {
             let sortAlertController = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
-            
+
             sortAlertController.addAction(UIAlertAction(title: "По имени", style: .default) { _ in
                 onNameSort()
             })
@@ -23,7 +27,7 @@ final class SortAlertBuilder {
                 onRatingSort()
             })
             sortAlertController.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
-            
-            return sortAlertController
+
+            viewController.present(sortAlertController, animated: true)
         }
 }

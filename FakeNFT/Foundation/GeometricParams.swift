@@ -14,7 +14,7 @@ public struct GeometricParams {
     let cellHorizontalSpacing: CGFloat
     let cellVerticalSpacing: CGFloat
     let paddingWidth: CGFloat
-    
+
     public init(cellCount: Int, leftInset: CGFloat, rightInset: CGFloat, cellHorizontalSpacing: CGFloat, cellVerticalSpacing: CGFloat) {
         self.cellCount = cellCount
         self.leftInset = leftInset

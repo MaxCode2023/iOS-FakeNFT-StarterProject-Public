@@ -12,11 +12,11 @@ import Kingfisher
 final class ProfileViewController: UIViewController {
     private static let countTableRows = 3
     private static let heightTableCell = CGFloat(54)
-    
+
     private let viewModel: ProfileViewModel
-    
-    private var currentTableCellTitles: Array<String> = []
-    
+
+    private var currentTableCellTitles: [String] = []
+
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = UIFont.headline3
@@ -24,7 +24,7 @@ final class ProfileViewController: UIViewController {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         return nameLabel
     }()
-    
+
     private lazy var descriptionLabel: UILabel = {
         let descriptionLabel = UILabel()
         descriptionLabel.font = UIFont.caption2
@@ -33,7 +33,7 @@ final class ProfileViewController: UIViewController {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         return descriptionLabel
     }()
-    
+
     private lazy var urlButton: UIButton = {
         let urlButton = UIButton()
         urlButton.titleLabel?.font = UIFont.caption1
@@ -43,7 +43,7 @@ final class ProfileViewController: UIViewController {
         urlButton.translatesAutoresizingMaskIntoConstraints = false
         return urlButton
     }()
-    
+
     private lazy var avatarImageView: UIImageView = {
         let avatarImageView = UIImageView()
         avatarImageView.layer.masksToBounds = true
@@ -52,7 +52,7 @@ final class ProfileViewController: UIViewController {
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         return avatarImageView
     }()
-    
+
     private lazy var editIcon: UIBarButtonItem = {
         let editIcon = UIBarButtonItem(
             image: UIImage(named: "editIcon"),
@@ -63,7 +63,7 @@ final class ProfileViewController: UIViewController {
         editIcon.tintColor = UIColor.tintPrimary
         return editIcon
     }()
-    
+
     private lazy var profileTableView: UITableView = {
         let profileTableView = UITableView(frame: CGRect.zero, style: UITableView.Style.plain)
         profileTableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
@@ -74,7 +74,7 @@ final class ProfileViewController: UIViewController {
         profileTableView.translatesAutoresizingMaskIntoConstraints = false
         return profileTableView
     }()
-    
+
     init(viewModel: ProfileViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -83,21 +83,23 @@ final class ProfileViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         initObservers()
+        
+        viewModel.onViewCreated()
     }
-    
+
     @objc private func onEditIconClick() {
-        
+
     }
-    
+
     @objc private func onUrlButtonClick() {
-        
+
     }
-    
+
     private func configureUI() {
         view.backgroundColor = UIColor.background
         navigationItem.setRightBarButtonItems([editIcon], animated: true)
@@ -131,15 +133,15 @@ final class ProfileViewController: UIViewController {
             profileTableView.topAnchor.constraint(equalTo: urlButton.bottomAnchor, constant: 44)
         ])
     }
-    
+
     private func initObservers() {
         viewModel.$profileViewState.bind { [weak self] viewState in
             guard let self = self else { return }
-            
+
             self.renderState(viewState: viewState)
         }
     }
-    
+
     private func renderState(viewState: ProfileViewState) {
         switch viewState {
         case .loading:
@@ -150,21 +152,21 @@ final class ProfileViewController: UIViewController {
             showError(errorString: errorString)
         }
     }
-    
+
     private func showProgress() {
         DispatchQueue.main.async {
             UIApplication.shared.windows.first?.isUserInteractionEnabled = false
             ProgressHUD.show()
         }
     }
-    
+
     private func hideProgress() {
         DispatchQueue.main.async {
             UIApplication.shared.windows.first?.isUserInteractionEnabled = false
             ProgressHUD.dismiss()
         }
     }
-    
+
     private func renderProfileData(profile: ProfileViewState.ProfileData) {
         hideProgress()
         nameLabel.text = profile.name
@@ -174,7 +176,7 @@ final class ProfileViewController: UIViewController {
         currentTableCellTitles = profile.cellTitles
         profileTableView.reloadData()
     }
-    
+
     private func showError(errorString: String) {
         hideProgress()
         let alert = UIAlertController(
@@ -196,11 +198,11 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ProfileViewController.countTableRows
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell =
                 tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as? ProfileTableViewCell else { return UITableViewCell() }
-        
+
         let title = currentTableCellTitles[indexPath.row]
         cell.bindCell(label: title)
         return cell
@@ -214,8 +216,7 @@ extension ProfileViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //TODO: - Реализовать логику перехода
+        // TODO: - Реализовать логику перехода
     }
 
 }
-

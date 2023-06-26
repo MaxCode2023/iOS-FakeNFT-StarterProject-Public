@@ -7,29 +7,19 @@
 
 import Foundation
 
-final class ProfileCollectionViewModel {
-    
+class ProfileCollectionViewModel {
+
     @Observable
     private(set) var nftList: [Nft] = []
-    
+
     @Observable
-    private(set) var isLoading: Bool = false
-    
-    @Observable
-    private(set) var errorMessage: String? = nil
-    
-    private let nftService: NftServiceProtocol
-    
-    init(nftService: NftServiceProtocol = NftNetworkService()) {
-        self.nftService = nftService
-    }
-    
+    private(set) var errorMessage: String?
+
+    private let nftService: NftService = NftServiceImpl.shared
+
     func getNftCollection(nftIdList: [Int]) {
-        isLoading = true
-        
         nftService.getNftList(nftIds: nftIdList) { [weak self] result in
             DispatchQueue.main.async {
-                self?.isLoading = false
                 switch result {
                 case .success(let nftList):
                     self?.nftList = nftList
@@ -39,5 +29,5 @@ final class ProfileCollectionViewModel {
             }
         }
     }
-    
+
 }
