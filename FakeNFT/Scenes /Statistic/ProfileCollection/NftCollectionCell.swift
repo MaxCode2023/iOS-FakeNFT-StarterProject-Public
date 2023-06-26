@@ -92,6 +92,7 @@ final class NftCollectionCell: UICollectionViewCell, ReuseIdentifying {
             nftImageView.widthAnchor.constraint(equalToConstant: 108),
             nftImageView.heightAnchor.constraint(equalToConstant: 108),
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            nftImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
             likeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 12),
             likeButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: -12),
@@ -99,14 +100,14 @@ final class NftCollectionCell: UICollectionViewCell, ReuseIdentifying {
             likeButton.heightAnchor.constraint(equalToConstant: 18),
             
             ratingStackView.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 8),
-            ratingStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            ratingStackView.leadingAnchor.constraint(equalTo: nftImageView.leadingAnchor),
             
             nftNameLabel.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: 5),
-            nftNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            nftNameLabel.leadingAnchor.constraint(equalTo: nftImageView.leadingAnchor),
             nftNameLabel.trailingAnchor.constraint(equalTo: addToCartButton.leadingAnchor),
             
             nftPriceLabel.topAnchor.constraint(equalTo: nftNameLabel.bottomAnchor, constant: 4),
-            nftPriceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            nftPriceLabel.leadingAnchor.constraint(equalTo: nftImageView.leadingAnchor),
             nftPriceLabel.trailingAnchor.constraint(equalTo: addToCartButton.leadingAnchor),
             
             addToCartButton.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: 4),
