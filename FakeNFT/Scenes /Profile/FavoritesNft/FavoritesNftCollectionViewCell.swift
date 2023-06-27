@@ -66,12 +66,13 @@ final class FavoritesNftCollectionViewCell: UICollectionViewCell {
            let url = URL(string: image) {
             nftImageView.loadImage(url: url, cornerRadius: 120)
         }
+
         for index in 1...starCount {
-            let starImageView = UIImageView()
-            starImageView.image = UIImage(named: "ratingStar")
+            guard let starImageView =
+                    ratingStackView.arrangedSubviews[index - 1] as? UIImageView else { continue }
             starImageView.tintColor = nftView.nft.rating >= index ? UIColor.yellow : UIColor.lightGray
-            ratingStackView.addArrangedSubview(starImageView)
         }
+
         nameLabel.text = nftView.nft.name
         priceValueLabel.text = "\(nftView.nft.price) ETH"
     }
@@ -97,5 +98,11 @@ final class FavoritesNftCollectionViewCell: UICollectionViewCell {
             infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             infoStackView.heightAnchor.constraint(equalToConstant: 67)
         ])
+        for _ in 1...starCount {
+            let starImageView = UIImageView()
+            starImageView.image = UIImage(named: "ratingStar")
+            starImageView.tintColor = UIColor.lightGray
+            ratingStackView.addArrangedSubview(starImageView)
+        }
     }
 }

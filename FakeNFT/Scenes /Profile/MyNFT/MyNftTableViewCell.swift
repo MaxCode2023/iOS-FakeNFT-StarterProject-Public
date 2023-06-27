@@ -90,11 +90,11 @@ final class MyNftTableViewCell: UITableViewCell {
            let url = URL(string: image) {
             nftImageView.loadImage(url: url, cornerRadius: 120)
         }
+
         for index in 1...starCount {
-            let starImageView = UIImageView()
-            starImageView.image = UIImage(named: "ratingStar")
+            guard let starImageView =
+                    ratingStackView.arrangedSubviews[index - 1] as? UIImageView else { continue }
             starImageView.tintColor = nftView.nft.rating >= index ? UIColor.yellow : UIColor.lightGray
-            ratingStackView.addArrangedSubview(starImageView)
         }
         nameLabel.text = nftView.nft.name
         priceValueLabel.text = "\(nftView.nft.price) ETH"
@@ -128,5 +128,11 @@ final class MyNftTableViewCell: UITableViewCell {
             priceVerticalStackView.leadingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -114),
             priceVerticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
+        for _ in 1...starCount {
+            let starImageView = UIImageView()
+            starImageView.image = UIImage(named: "ratingStar")
+            starImageView.tintColor = UIColor.lightGray
+            ratingStackView.addArrangedSubview(starImageView)
+        }
     }
 }
