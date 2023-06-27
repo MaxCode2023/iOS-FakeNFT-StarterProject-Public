@@ -7,17 +7,17 @@
 
 import UIKit
 
-final class FavoritesNftCollectionViewCell : UICollectionViewCell {
+final class FavoritesNftCollectionViewCell: UICollectionViewCell {
     static let identifier = "FavoritesNftCollectionViewCell"
-    
+
     private let starCount = 5
-    
+
     private lazy var nftImageView: UIImageView = {
         let nftImageView = UIImageView()
         nftImageView.translatesAutoresizingMaskIntoConstraints = false
         return nftImageView
     }()
-    
+
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = UIFont.bodyBold
@@ -25,7 +25,7 @@ final class FavoritesNftCollectionViewCell : UICollectionViewCell {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         return nameLabel
     }()
-    
+
     private lazy var priceValueLabel: UILabel = {
         let priceValueLabel = UILabel()
         priceValueLabel.font = UIFont.bodyBold
@@ -33,7 +33,7 @@ final class FavoritesNftCollectionViewCell : UICollectionViewCell {
         priceValueLabel.translatesAutoresizingMaskIntoConstraints = false
         return priceValueLabel
     }()
-    
+
     private lazy var ratingStackView: UIStackView = {
         let ratingStackView = UIStackView()
         ratingStackView.axis = NSLayoutConstraint.Axis.horizontal
@@ -41,7 +41,7 @@ final class FavoritesNftCollectionViewCell : UICollectionViewCell {
         ratingStackView.translatesAutoresizingMaskIntoConstraints = false
         return ratingStackView
     }()
-    
+
     private lazy var infoStackView: UIStackView = {
         let infoStackView = UIStackView()
         infoStackView.axis = NSLayoutConstraint.Axis.vertical
@@ -50,17 +50,17 @@ final class FavoritesNftCollectionViewCell : UICollectionViewCell {
         infoStackView.translatesAutoresizingMaskIntoConstraints = false
         return infoStackView
     }()
-    
+
     // MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func bindCell(nftView: NftView) {
         if let image = nftView.nft.images.first,
            let url = URL(string: image) {
@@ -75,23 +75,23 @@ final class FavoritesNftCollectionViewCell : UICollectionViewCell {
         nameLabel.text = nftView.nft.name
         priceValueLabel.text = "\(nftView.nft.price) ETH"
     }
-    
+
     private func configureUI() {
         backgroundColor = UIColor.background
-        
+
         infoStackView.addArrangedSubview(nameLabel)
         infoStackView.addArrangedSubview(ratingStackView)
         infoStackView.addArrangedSubview(priceValueLabel)
-        
+
         contentView.addSubview(nftImageView)
         contentView.addSubview(infoStackView)
-        
+
         NSLayoutConstraint.activate([
             nftImageView.widthAnchor.constraint(equalToConstant: 80),
             nftImageView.heightAnchor.constraint(equalToConstant: 80),
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            
+
             infoStackView.centerYAnchor.constraint(equalTo: nftImageView.centerYAnchor),
             infoStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 12),
             infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),

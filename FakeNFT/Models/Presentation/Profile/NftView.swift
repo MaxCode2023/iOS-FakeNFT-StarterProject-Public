@@ -9,4 +9,3 @@ struct NftView {
     let nft: Nft
     let isLiked: Bool
 }
-

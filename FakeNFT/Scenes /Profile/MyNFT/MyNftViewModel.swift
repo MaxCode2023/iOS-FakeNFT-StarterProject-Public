@@ -7,7 +7,7 @@
 
 final class MyNftViewModel {
     private let profileRepository = ProfileRepository.shared
-    
+
     @Observable
     private (set) var myNftViewState: MyNftViewState = MyNftViewState.loading
 
@@ -18,7 +18,7 @@ final class MyNftViewModel {
     private func getMyNftData() {
         profileRepository.getMyNft { [weak self] result in
             guard let self = self else { return }
-            
+
             switch result {
             case .success(let myNfts):
                 self.resolveSuccessMyNftData(myNfts: myNfts)
@@ -27,7 +27,7 @@ final class MyNftViewModel {
             }
         }
     }
-    
+
     private func resolveSuccessMyNftData(myNfts: [Nft]) {
         guard !myNfts.isEmpty else {
             myNftViewState = MyNftViewState.placeholder("У вас ещё нет NFT")

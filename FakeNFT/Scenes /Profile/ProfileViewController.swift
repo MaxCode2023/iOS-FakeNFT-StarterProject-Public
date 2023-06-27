@@ -10,10 +10,9 @@ import ProgressHUD
 import Kingfisher
 
 final class ProfileViewController: UIViewController {
-    private static let countTableRows = 3
     private static let heightTableCell = CGFloat(54)
 
-    private let viewModel: ProfileViewModel
+    private let viewModel = ProfileViewModel()
 
     private var currentTableCellTitles: [String] = []
 
@@ -75,15 +74,6 @@ final class ProfileViewController: UIViewController {
         return profileTableView
     }()
 
-    init(viewModel: ProfileViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -103,6 +93,7 @@ final class ProfileViewController: UIViewController {
     private func configureUI() {
         view.backgroundColor = UIColor.background
         navigationItem.setRightBarButtonItems([editIcon], animated: true)
+        let navigationItem = navigationItem
         view.addSubview(nameLabel)
         view.addSubview(descriptionLabel)
         view.addSubview(urlButton)
@@ -137,8 +128,9 @@ final class ProfileViewController: UIViewController {
     private func initObservers() {
         viewModel.$profileViewState.bind { [weak self] viewState in
             guard let self = self else { return }
-
-            self.renderState(viewState: viewState)
+            DispatchQueue.main.async {
+                self.renderState(viewState: viewState)
+            }
         }
     }
 
@@ -149,22 +141,26 @@ final class ProfileViewController: UIViewController {
         case .content(let profileData):
             renderProfileData(profile: profileData)
         case .error(let errorString):
-            showError(errorString: errorString)
+            renderErrorState(errorString: errorString)
         }
     }
 
     private func showProgress() {
-        DispatchQueue.main.async {
-            UIApplication.shared.windows.first?.isUserInteractionEnabled = false
-            ProgressHUD.show()
-        }
+        profileTableView.isHidden = true
+        UIApplication.shared.windows.first?.isUserInteractionEnabled = false
+        ProgressHUD.show()
     }
 
     private func hideProgress() {
-        DispatchQueue.main.async {
-            UIApplication.shared.windows.first?.isUserInteractionEnabled = false
-            ProgressHUD.dismiss()
-        }
+        profileTableView.isHidden = false
+        UIApplication.shared.windows.first?.isUserInteractionEnabled = true
+        ProgressHUD.dismiss()
+    }
+
+    private func renderErrorState(errorString: String) {
+        hideProgress()
+        profileTableView.isHidden = true
+        presentErrorDialog(message: errorString)
     }
 
     private func renderProfileData(profile: ProfileViewState.ProfileData) {
@@ -175,21 +171,6 @@ final class ProfileViewController: UIViewController {
         avatarImageView.kf.setImage(with: URL(string: profile.avatar))
         currentTableCellTitles = profile.cellTitles
         profileTableView.reloadData()
-    }
-
-    private func showError(errorString: String) {
-        hideProgress()
-        let alert = UIAlertController(
-            title: "Что-то пошло не так",
-            message: errorString,
-            preferredStyle: .alert)
-
-        let action = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
-            self?.dismiss(animated: true)
-        }
-        alert.addAction(action)
-
-        present(alert, animated: true, completion: nil)
     }
 
     private func navigateToMyNft() {
@@ -208,12 +189,14 @@ final class ProfileViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ProfileViewController.countTableRows
+        return currentTableCellTitles.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell =
-                tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as? ProfileTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: ProfileTableViewCell.identifier,
+            for: indexPath
+        ) as? ProfileTableViewCell else { return UITableViewCell() }
 
         let title = currentTableCellTitles[indexPath.row]
         cell.bindCell(label: title)
@@ -228,7 +211,8 @@ extension ProfileViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: - Задача на рефакторинг: вынести логику перехода в отдельную сущность, куда переходить вынести во ViewModel
+        // TODO: - Вынести логику перехода в отдельную сущность
+        // TODO: - Вынести определение перехода во ViewModel
         switch indexPath.row {
         case 0: navigateToMyNft()
         case 1: navigateToFavoriteNft()

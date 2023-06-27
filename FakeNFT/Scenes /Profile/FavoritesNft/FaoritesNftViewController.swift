@@ -9,9 +9,9 @@ import UIKit
 
 final class FavoritesNftViewController: UIViewController {
     private let viewModel: FavoriteNftViewModel
-    
+
     private var favoriteNfts: [NftView] = []
-    
+
     private lazy var favoriteNftCollectionView: UICollectionView = {
         let favoriteNftCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         favoriteNftCollectionView.register(FavoritesNftCollectionViewCell.self,
@@ -30,7 +30,7 @@ final class FavoritesNftViewController: UIViewController {
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         return placeholderLabel
     }()
-    
+
     init(viewModel: FavoriteNftViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -39,15 +39,15 @@ final class FavoritesNftViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         initObservers()
-        
+
         viewModel.onViewCreated()
     }
-    
+
     private func configureUI() {
         title = "Избранные NFT"
         view.backgroundColor = UIColor.background
@@ -58,12 +58,12 @@ final class FavoritesNftViewController: UIViewController {
             favoriteNftCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             favoriteNftCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             favoriteNftCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
+
             placeholderLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             placeholderLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-    
+
     private func initObservers() {
         viewModel.$favoriteNftViewState.bind { [weak self] viewState in
             guard let self = self else { return }
@@ -75,19 +75,19 @@ final class FavoritesNftViewController: UIViewController {
     private func renderState(viewState: FavoriteNftViewState) {
         switch viewState {
         case .loading: break
-            //не обрабатываем пока
-            
+            // не обрабатываем пока
+
         case .placeholder(let placeholderText):
             favoriteNftCollectionView.isHidden = true
             placeholderLabel.isHidden = false
             placeholderLabel.text = placeholderText
-            
+
         case .content(let favoriteNftData):
             placeholderLabel.isHidden = true
             favoriteNftCollectionView.isHidden = false
             favoriteNfts = favoriteNftData
             favoriteNftCollectionView.reloadData()
-            
+
         case .error(let errorString):
             presentErrorDialog(message: errorString)
         }
