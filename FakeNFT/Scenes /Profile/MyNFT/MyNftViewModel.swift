@@ -15,7 +15,22 @@ final class MyNftViewModel {
         getMyNftData()
     }
 
+    func onLikeTapped(nftView: NftView) {
+        myNftViewState = MyNftViewState.loading
+        profileRepository.toggleLikeNft(nftId: nftView.nft.id) { [weak self] result in
+            guard let self = self else { return }
+
+            switch result {
+            case .success(let myNfts):
+                self.resolveSuccessMyNftData(myNfts: myNfts)
+            case .failure:
+                self.myNftViewState = MyNftViewState.error("Не удалось обновить данные NFT:(")
+            }
+        }
+    }
+
     private func getMyNftData() {
+        myNftViewState = MyNftViewState.loading
         profileRepository.getMyNft { [weak self] result in
             guard let self = self else { return }
 
@@ -35,7 +50,7 @@ final class MyNftViewModel {
         }
         myNftViewState = MyNftViewState.content(
             myNfts.map { myNft in
-                NftView(nft: myNft, isLiked: self.profileRepository.checkNftIsLiked(nft: myNft))
+                NftView(nft: myNft, isLiked: self.profileRepository.checkNftIsLiked(nftId: myNft.id))
             }
         )
     }

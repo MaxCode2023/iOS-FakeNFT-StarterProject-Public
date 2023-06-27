@@ -7,7 +7,6 @@
 
 import UIKit
 import ProgressHUD
-import Kingfisher
 
 final class ProfileViewController: UIViewController {
     private static let heightTableCell = CGFloat(54)
@@ -93,7 +92,6 @@ final class ProfileViewController: UIViewController {
     private func configureUI() {
         view.backgroundColor = UIColor.background
         navigationItem.setRightBarButtonItems([editIcon], animated: true)
-        let navigationItem = navigationItem
         view.addSubview(nameLabel)
         view.addSubview(descriptionLabel)
         view.addSubview(urlButton)
