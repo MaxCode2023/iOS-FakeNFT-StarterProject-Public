@@ -111,6 +111,7 @@ final class MyNftTableViewCell: UITableViewCell {
         likeButton.tintColor = nftView.isLiked ? UIColor.red : UIColor.white
         nameLabel.text = nftView.nft.name
         priceValueLabel.text = "\(nftView.nft.price) ETH"
+        addInfoLabel.text = nftView.addInfo
     }
 
     @objc private func onLikeButtonClick() {

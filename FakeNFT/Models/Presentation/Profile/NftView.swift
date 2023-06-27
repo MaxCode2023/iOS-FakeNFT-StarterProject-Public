@@ -8,4 +8,5 @@
 struct NftView {
     let nft: Nft
     let isLiked: Bool
+    let addInfo: String = "от John Doe"
 }
