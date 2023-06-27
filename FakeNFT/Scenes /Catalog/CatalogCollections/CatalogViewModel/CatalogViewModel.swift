@@ -17,7 +17,27 @@ final class CatalogViewModel {
         self.alertModel = alertModel
     }
     
+    func getNftCollections() {
+        UIBlockingProgressHUD.show()
+        nftCollectionsService.getNftCollections(onCompletion: { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let nftCollections):
+                    UIBlockingProgressHUD.dismiss()
+                    self?.nftCollections = nftCollections
+                case .failure(let error):
+                    UIBlockingProgressHUD.dismiss()
+                    self?.errorMessage = error.localizedDescription
+                }
+            }
+        })
+    }
+    
     func showAlertToSort() {
+        alertModel = createAlert()
+    }
+    
+    private func createAlert() -> AlertModel {
         let alertModel = AlertModel(
             title: nil,
             message: "SORTING".localized,
@@ -33,23 +53,7 @@ final class CatalogViewModel {
             cancelCompletion: nil
         )
         
-        self.alertModel = alertModel
-    }
-    
-    func getNftCollections() {
-        UIBlockingProgressHUD.show()
-        nftCollectionsService.getNftCollections(onCompletion: { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let nftCollections):
-                    UIBlockingProgressHUD.dismiss()
-                    self?.nftCollections = nftCollections
-                case .failure(let error):
-                    UIBlockingProgressHUD.dismiss()
-                    self?.errorMessage = error.localizedDescription
-                }
-            }
-        })
+        return alertModel
     }
     
     private func sortByName() {

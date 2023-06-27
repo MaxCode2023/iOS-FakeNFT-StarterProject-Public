@@ -1,5 +1,4 @@
 import UIKit
-import Kingfisher
 
 final class CatalogTableViewCell: UITableViewCell {
     static let identifier = "catalogCell"
@@ -60,19 +59,7 @@ final class CatalogTableViewCell: UITableViewCell {
             return
         }
         
-        nftCollectionCoverImageView.kf.indicatorType = .activity
-        nftCollectionCoverImageView.kf.setImage(
-            with: url,
-            options: [.cacheSerializer(FormatIndicatedCacheSerializer.png)]
-        ) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(_):
-                nftCollectionCoverImageView.kf.indicatorType = .none
-            case .failure(_):
-                nftCollectionCoverImageView.kf.indicatorType = .none
-            }
-        }
+        nftCollectionCoverImageView.setImage(from: url)
     }
     
     private func addConstraints() {

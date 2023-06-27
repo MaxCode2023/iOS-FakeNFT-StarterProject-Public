@@ -20,15 +20,18 @@ final class AuthorDescriptionViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        viewModel.$user.bind { [weak self] user in
-            guard let self, let stringUrl = user?.website else { return }
-            configWebView(with: stringUrl)
-        }
-        
+        bind()
         viewModel.getUser(userId: userId)
         setupBackBarButtonItem()
         addSubViews()
         addConstraints()
+    }
+    
+    private func bind() {
+        viewModel.$user.bind { [weak self] user in
+            guard let self, let stringUrl = user?.website else { return }
+            configWebView(with: stringUrl)
+        }
     }
     
     private func setupBackBarButtonItem() {

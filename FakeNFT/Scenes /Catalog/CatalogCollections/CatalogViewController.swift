@@ -27,6 +27,14 @@ final class CatalogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bind()
+        viewModel.getNftCollections()
+        setupSortButton()
+        addSubViews()
+        addConstraints()
+    }
+    
+    private func bind() {
         viewModel.$alertModel.bind { [weak self] alertModel in
             guard let self, let alertModel else { return }
             AlertPresenter().show(controller: self, model: alertModel)
@@ -39,11 +47,6 @@ final class CatalogViewController: UIViewController {
                 self.tableView.reloadData()
             }, completion: nil)
         }
-        
-        viewModel.getNftCollections()
-        setupSortButton()
-        addSubViews()
-        addConstraints()
     }
     
     @objc

@@ -1,5 +1,4 @@
 import UIKit
-import Kingfisher
 
 final class NftCollectionViewController: UIViewController {
     private var nftCollection: NftCollection
@@ -94,6 +93,21 @@ final class NftCollectionViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
         view.backgroundColor = .white
         
+        bind()
+        viewModel.getNftItems()
+        
+        setupBackBarButtonItem()
+        addSubViews()
+        addConstraints()
+        config()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionViewHeightConstraint.constant = collectionView.collectionViewLayout.collectionViewContentSize.height
+    }
+    
+    private func bind() {
         viewModel.$nftItems.bind { [weak self] nftItems in
             guard let self else { return }
             self.nftItems = nftItems.filter { self.nftCollection.nfts.contains($0.id) }
@@ -110,18 +124,6 @@ final class NftCollectionViewController: UIViewController {
             self.user = user
             authorDescriptionButton.setTitle(self.user?.name, for: .normal)
         }
-        
-        viewModel.getNftItems()
-        
-        setupBackBarButtonItem()
-        addSubViews()
-        addConstraints()
-        config()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        collectionViewHeightConstraint.constant = collectionView.collectionViewLayout.collectionViewContentSize.height
     }
     
     private func config() {
@@ -141,19 +143,7 @@ final class NftCollectionViewController: UIViewController {
             return
         }
         
-        nftCoverImageView.kf.indicatorType = .activity
-        nftCoverImageView.kf.setImage(
-            with: url,
-            options: [.cacheSerializer(FormatIndicatedCacheSerializer.png)]
-        ) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(_):
-                nftCoverImageView.kf.indicatorType = .none
-            case .failure(_):
-                nftCoverImageView.kf.indicatorType = .none
-            }
-        }
+        nftCoverImageView.setImage(from: url)
     }
     
     @objc private func authorDescriptionButtonTapped() {

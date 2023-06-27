@@ -1,5 +1,4 @@
 import UIKit
-import Kingfisher
 
 final class NftCollectionViewCell: UICollectionViewCell {
     static let identifier = "collectionCell"
@@ -90,19 +89,7 @@ final class NftCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        nftImageView.kf.indicatorType = .activity
-        nftImageView.kf.setImage(
-            with: url,
-            options: [.cacheSerializer(FormatIndicatedCacheSerializer.png)]
-        ) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(_):
-                nftImageView.kf.indicatorType = .none
-            case .failure(_):
-                nftImageView.kf.indicatorType = .none
-            }
-        }
+        nftImageView.setImage(from: url)
     }
     
     private func setupRating(nft: NftItem) {

@@ -53,6 +53,7 @@
 		A33BB2352A49AE6B00B8D3BC /* UserServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33BB2342A49AE6B00B8D3BC /* UserServiceImpl.swift */; };
 		A33BB2372A49AEB000B8D3BC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33BB2362A49AEB000B8D3BC /* User.swift */; };
 		A33BB23A2A49AF2000B8D3BC /* AuthorDescriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33BB2392A49AF2000B8D3BC /* AuthorDescriptionViewModel.swift */; };
+		A33BB23C2A4ACEBA00B8D3BC /* UImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33BB23B2A4ACEBA00B8D3BC /* UImageView+Extensions.swift */; };
 		A3D77A6A2A44737700B142D2 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D77A692A44737700B142D2 /* UIFont+Extensions.swift */; };
 		A3FB9E9F2A4331F200491E7D /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB9E9E2A4331F200491E7D /* CatalogViewController.swift */; };
 		A3FB9EA12A4421D400491E7D /* CatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB9EA02A4421D400491E7D /* CatalogTableViewCell.swift */; };
@@ -126,6 +127,7 @@
 		A33BB2342A49AE6B00B8D3BC /* UserServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceImpl.swift; sourceTree = "<group>"; };
 		A33BB2362A49AEB000B8D3BC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A33BB2392A49AF2000B8D3BC /* AuthorDescriptionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorDescriptionViewModel.swift; sourceTree = "<group>"; };
+		A33BB23B2A4ACEBA00B8D3BC /* UImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UImageView+Extensions.swift"; sourceTree = "<group>"; };
 		A3D77A692A44737700B142D2 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		A3FB9E9C2A43200B00491E7D /* catalog_plan.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = catalog_plan.md; sourceTree = "<group>"; };
 		A3FB9E9E2A4331F200491E7D /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				A3D77A692A44737700B142D2 /* UIFont+Extensions.swift */,
+				A33BB23B2A4ACEBA00B8D3BC /* UImageView+Extensions.swift */,
 				A3133F462A447C2F00342E6B /* AlertPresenter.swift */,
 				A3133F4A2A447EDD00342E6B /* Observable.swift */,
 				A3133F4E2A44835800342E6B /* String+Extensions.swift */,
@@ -633,6 +636,7 @@
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				A3133F582A44CAFF00342E6B /* NftCollectionService.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
+				A33BB23C2A4ACEBA00B8D3BC /* UImageView+Extensions.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
