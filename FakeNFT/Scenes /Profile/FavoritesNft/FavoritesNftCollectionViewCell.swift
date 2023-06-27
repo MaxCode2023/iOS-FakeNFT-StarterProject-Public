@@ -12,6 +12,8 @@ final class FavoritesNftCollectionViewCell: UICollectionViewCell {
 
     private let starCount = 5
 
+    private var likeButtonAction: (() -> Void)?
+
     private lazy var nftImageView: UIImageView = {
         let nftImageView = UIImageView()
         nftImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,6 +24,7 @@ final class FavoritesNftCollectionViewCell: UICollectionViewCell {
         let likeButton = UIButton()
         likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         likeButton.tintColor = UIColor.white
+        likeButton.addTarget(self, action: #selector(onLikeButtonClick), for: .touchUpInside)
         likeButton.translatesAutoresizingMaskIntoConstraints = false
         return likeButton
     }()
@@ -59,7 +62,6 @@ final class FavoritesNftCollectionViewCell: UICollectionViewCell {
         return infoStackView
     }()
 
-    // MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -69,7 +71,8 @@ final class FavoritesNftCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bindCell(nftView: NftView) {
+    func bindCell(nftView: NftView, likeButtonAction: @escaping (() -> Void)) {
+        self.likeButtonAction = likeButtonAction
         if let image = nftView.nft.images.first,
            let url = URL(string: image) {
             nftImageView.loadImage(url: url, cornerRadius: 120)
@@ -84,6 +87,10 @@ final class FavoritesNftCollectionViewCell: UICollectionViewCell {
         likeButton.tintColor = nftView.isLiked ? UIColor.red : UIColor.white
         nameLabel.text = nftView.nft.name
         priceValueLabel.text = "\(nftView.nft.price) ETH"
+    }
+
+    @objc private func onLikeButtonClick() {
+        likeButtonAction?()
     }
 
     private func configureUI() {

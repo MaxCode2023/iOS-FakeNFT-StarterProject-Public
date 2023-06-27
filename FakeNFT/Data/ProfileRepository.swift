@@ -12,7 +12,6 @@ final class ProfileRepository {
     private let nftService: NftService = NftServiceImpl.shared
 
     private var currentProfile: Profile?
-    private var currentMyNft: [Nft] = []
 
     private init() {}
 
@@ -30,7 +29,7 @@ final class ProfileRepository {
         }
     }
 
-    func toggleLikeNft(nftId: String, onCompletion: @escaping (Result<[Nft], Error>) -> Void) {
+    func toggleLikeNft(nftId: String, onCompletion: @escaping (Result<Profile, Error>) -> Void) {
         guard let currentProfile = currentProfile else { return }
         let isNeedLike = !checkNftIsLiked(nftId: nftId)
         var currentlikes = currentProfile.likes
@@ -45,34 +44,13 @@ final class ProfileRepository {
             nfts: currentProfile.nfts,
             likes: currentlikes
         )
-        updateProfile(newProfile: newProfile) { [weak self] result in
-            guard let self = self else { return }
-
-            switch result {
-            case .success:
-                // По успешному обновлению лайка возвращаем во ViewModel кэшированные Nft так как они не поменялись
-                // Изначально попробовал по успешному состоянию запрашивать NFT заново, но часто 429 стреляла и + лишняя нагрузка на сеть
-                onCompletion(.success(self.currentMyNft))
-            case .failure(let error):
-                onCompletion(.failure(error))
-            }
-        }
+        updateProfile(newProfile: newProfile, onCompletion: onCompletion)
     }
 
     func getMyNft(onCompletion: @escaping (Result<[Nft], Error>) -> Void) {
         guard let currentProfile = currentProfile else { return }
         let idNfts = currentProfile.nfts.map { nftString in Int(nftString) ?? -1 }
-        nftService.getNftList(nftIds: idNfts) { [weak self] result in
-            guard let self = self else { return }
-
-            switch result {
-            case .success(let nfts):
-                self.currentMyNft = nfts
-            case .failure:
-                self.currentMyNft = []
-            }
-            onCompletion(result)
-        }
+        nftService.getNftList(nftIds: idNfts, onCompletion: onCompletion)
     }
 
     func getFavoriteNft(onCompletion: @escaping (Result<[Nft], Error>) -> Void) {

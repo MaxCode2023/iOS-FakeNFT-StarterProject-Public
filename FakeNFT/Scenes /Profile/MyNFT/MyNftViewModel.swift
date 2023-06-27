@@ -11,6 +11,8 @@ final class MyNftViewModel {
     @Observable
     private (set) var myNftViewState: MyNftViewState = MyNftViewState.loading
 
+    private var currentMyNfts: [Nft] = []
+
     func onViewCreated() {
         getMyNftData()
     }
@@ -21,8 +23,8 @@ final class MyNftViewModel {
             guard let self = self else { return }
 
             switch result {
-            case .success(let myNfts):
-                self.resolveSuccessMyNftData(myNfts: myNfts)
+            case .success:
+                self.resolveSuccessMyNftData(myNfts: self.currentMyNfts)
             case .failure:
                 self.myNftViewState = MyNftViewState.error("Не удалось обновить данные NFT:(")
             }
@@ -48,6 +50,7 @@ final class MyNftViewModel {
             myNftViewState = MyNftViewState.placeholder("У вас ещё нет NFT")
             return
         }
+        currentMyNfts = myNfts
         myNftViewState = MyNftViewState.content(
             myNfts.map { myNft in
                 NftView(nft: myNft, isLiked: self.profileRepository.checkNftIsLiked(nftId: myNft.id))

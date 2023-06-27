@@ -96,10 +96,6 @@ final class MyNftTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @objc private func onLikeButtonClick() {
-        likeButtonAction?()
-    }
-
     func bindCell(nftView: NftView, likeButtonAction: @escaping (() -> Void)) {
         self.likeButtonAction = likeButtonAction
         if let image = nftView.nft.images.first,
@@ -115,6 +111,10 @@ final class MyNftTableViewCell: UITableViewCell {
         likeButton.tintColor = nftView.isLiked ? UIColor.red : UIColor.white
         nameLabel.text = nftView.nft.name
         priceValueLabel.text = "\(nftView.nft.price) ETH"
+    }
+
+    @objc private func onLikeButtonClick() {
+        likeButtonAction?()
     }
 
     private func configureUI() {
