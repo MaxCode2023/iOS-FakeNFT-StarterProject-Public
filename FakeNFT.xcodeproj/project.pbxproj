@@ -54,6 +54,7 @@
 		62CB02192A4A2DC600B84274 /* NftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CB02182A4A2DC600B84274 /* NftView.swift */; };
 		62CB021B2A4A307800B84274 /* FavoriteNftViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CB021A2A4A307800B84274 /* FavoriteNftViewModel.swift */; };
 		62CB021F2A4AEB8400B84274 /* UpdateProfileRequset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CB021E2A4AEB8400B84274 /* UpdateProfileRequset.swift */; };
+		62CB02212A4B8D5700B84274 /* profile_plan.md in Resources */ = {isa = PBXBuildFile; fileRef = 62CB02202A4B8D5700B84274 /* profile_plan.md */; };
 		B203B0A62A41FAA5008D474B /* _swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B203B0A52A41FAA5008D474B /* _swiftlint.yml */; };
 		B203B0AF2A41FE11008D474B /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0AE2A41FE11008D474B /* RatingViewController.swift */; };
 		B203B0BA2A42146D008D474B /* UserRatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0B92A42146D008D474B /* UserRatingCell.swift */; };
@@ -140,6 +141,7 @@
 		62CB02182A4A2DC600B84274 /* NftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftView.swift; sourceTree = "<group>"; };
 		62CB021A2A4A307800B84274 /* FavoriteNftViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNftViewModel.swift; sourceTree = "<group>"; };
 		62CB021E2A4AEB8400B84274 /* UpdateProfileRequset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileRequset.swift; sourceTree = "<group>"; };
+		62CB02202A4B8D5700B84274 /* profile_plan.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = profile_plan.md; sourceTree = "<group>"; };
 		B203B0A52A41FAA5008D474B /* _swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = _swiftlint.yml; sourceTree = "<group>"; };
 		B203B0AE2A41FE11008D474B /* RatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
 		B203B0B92A42146D008D474B /* UserRatingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRatingCell.swift; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 		B2BAE4922A40C94000951719 /* Decomposition */ = {
 			isa = PBXGroup;
 			children = (
+				62CB02202A4B8D5700B84274 /* profile_plan.md */,
 				B2BAE4932A40C95C00951719 /* statitic_plan.md */,
 			);
 			path = Decomposition;
@@ -636,6 +639,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
+				62CB02212A4B8D5700B84274 /* profile_plan.md in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 				3F68069E29CBBAF100B4F915 /* Main.storyboard in Resources */,
 				B2BAE4942A40C95C00951719 /* statitic_plan.md in Resources */,
