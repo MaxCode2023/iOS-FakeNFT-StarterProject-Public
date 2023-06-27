@@ -11,7 +11,7 @@ class NftServiceImpl: NftService {
     static let shared = NftServiceImpl()
 
     private let client = DefaultNetworkClient()
-    
+
     private init() { }
 
     func getNftList(nftIds: [Int], onCompletion: @escaping (Result<[Nft], Error>) -> Void) {

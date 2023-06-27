@@ -16,6 +16,7 @@ final class ProfileViewModel {
     }
 
     private func getProfileData() {
+        profileViewState = ProfileViewState.loading
         profileRepository.getProfile { [weak self] result in
             guard let self = self else { return }
 

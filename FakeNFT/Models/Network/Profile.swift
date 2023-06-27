@@ -11,6 +11,6 @@ struct Profile: Decodable {
     let description: String
     let avatar: String
     let website: String
-    let nfts: [Int]
-    let likes: [Int]
+    let nfts: [String]
+    let likes: [String]
 }

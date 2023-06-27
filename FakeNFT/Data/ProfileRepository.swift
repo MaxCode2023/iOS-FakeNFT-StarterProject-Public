@@ -10,8 +10,8 @@ final class ProfileRepository {
 
     private let profileService: ProfileService = ProfileService.shared
     private let nftService: NftService = NftServiceImpl.shared
-    
-    private var currentProfile: Profile? = nil
+
+    private var currentProfile: Profile?
 
     private init() {}
 
@@ -28,19 +28,21 @@ final class ProfileRepository {
             onCompletion(result)
         }
     }
-    
+
     func getMyNft(onCompletion: @escaping (Result<[Nft], Error>) -> Void) {
         guard let currentProfile = currentProfile else { return }
-        nftService.getNftList(nftIds: currentProfile.nfts, onCompletion: onCompletion)
+        let idNfts = currentProfile.nfts.map { nftString in Int(nftString) ?? -1 }
+        nftService.getNftList(nftIds: idNfts, onCompletion: onCompletion)
     }
-    
+
     func getFavoriteNft(onCompletion: @escaping (Result<[Nft], Error>) -> Void) {
         guard let currentProfile = currentProfile else { return }
-        nftService.getNftList(nftIds: currentProfile.likes, onCompletion: onCompletion)
+        let idNfts = currentProfile.likes.map { nftString in Int(nftString) ?? -1 }
+        nftService.getNftList(nftIds: idNfts, onCompletion: onCompletion)
     }
-    
+
     func checkNftIsLiked(nft: Nft) -> Bool {
         guard let currentProfile = currentProfile else { return false }
-        return currentProfile.likes.contains(Int(nft.id) ?? -1)
+        return currentProfile.likes.contains(nft.id)
     }
 }
