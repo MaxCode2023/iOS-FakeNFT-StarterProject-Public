@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class FavoritesNftViewController: UIViewController {
     private let viewModel: FavoriteNftViewModel
@@ -67,30 +68,45 @@ final class FavoritesNftViewController: UIViewController {
     private func initObservers() {
         viewModel.$favoriteNftViewState.bind { [weak self] viewState in
             guard let self = self else { return }
-
-            self.renderState(viewState: viewState)
+            DispatchQueue.main.async {
+                self.renderState(viewState: viewState)
+            }
         }
     }
 
     private func renderState(viewState: FavoriteNftViewState) {
         switch viewState {
-        case .loading: break
-            // не обрабатываем пока
+        case .loading:
+            showProgress()
 
         case .placeholder(let placeholderText):
+            hideProgress()
             favoriteNftCollectionView.isHidden = true
             placeholderLabel.isHidden = false
             placeholderLabel.text = placeholderText
 
         case .content(let favoriteNftData):
+            hideProgress()
             placeholderLabel.isHidden = true
             favoriteNftCollectionView.isHidden = false
             favoriteNfts = favoriteNftData
             favoriteNftCollectionView.reloadData()
 
         case .error(let errorString):
+            hideProgress()
             presentErrorDialog(message: errorString)
         }
+    }
+
+    private func showProgress() {
+        placeholderLabel.isHidden = true
+        UIApplication.shared.windows.first?.isUserInteractionEnabled = false
+        ProgressHUD.show()
+    }
+
+    private func hideProgress() {
+        UIApplication.shared.windows.first?.isUserInteractionEnabled = true
+        ProgressHUD.dismiss()
     }
 
 }
@@ -112,7 +128,9 @@ extension FavoritesNftViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         let nft = favoriteNfts[indexPath.row]
-        cell.bindCell(nftView: nft)
+        cell.bindCell(nftView: nft) { [weak self] in
+            self?.viewModel.onLikeTapped(nftView: nft)
+        }
         return cell
     }
 }
