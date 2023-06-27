@@ -18,6 +18,14 @@ final class MyNftTableViewCell: UITableViewCell {
         return nftImageView
     }()
 
+    private lazy var likeButton: UIButton = {
+        let likeButton = UIButton()
+        likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        likeButton.tintColor = UIColor.white
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        return likeButton
+    }()
+
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = UIFont.bodyBold
@@ -96,6 +104,7 @@ final class MyNftTableViewCell: UITableViewCell {
                     ratingStackView.arrangedSubviews[index - 1] as? UIImageView else { continue }
             starImageView.tintColor = nftView.nft.rating >= index ? UIColor.yellow : UIColor.lightGray
         }
+        likeButton.tintColor = nftView.isLiked ? UIColor.red : UIColor.white
         nameLabel.text = nftView.nft.name
         priceValueLabel.text = "\(nftView.nft.price) ETH"
     }
@@ -112,6 +121,7 @@ final class MyNftTableViewCell: UITableViewCell {
         priceVerticalStackView.addArrangedSubview(priceValueLabel)
 
         contentView.addSubview(nftImageView)
+        contentView.addSubview(likeButton)
         contentView.addSubview(infoStackView)
         contentView.addSubview(priceVerticalStackView)
 
@@ -120,6 +130,11 @@ final class MyNftTableViewCell: UITableViewCell {
             nftImageView.heightAnchor.constraint(equalToConstant: 108),
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+
+            likeButton.widthAnchor.constraint(equalToConstant: 21),
+            likeButton.heightAnchor.constraint(equalToConstant: 21),
+            likeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 5),
+            likeButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: -5),
 
             infoStackView.centerYAnchor.constraint(equalTo: nftImageView.centerYAnchor),
             infoStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),

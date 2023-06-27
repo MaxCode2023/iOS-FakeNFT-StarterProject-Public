@@ -18,6 +18,14 @@ final class FavoritesNftCollectionViewCell: UICollectionViewCell {
         return nftImageView
     }()
 
+    private lazy var likeButton: UIButton = {
+        let likeButton = UIButton()
+        likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        likeButton.tintColor = UIColor.white
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        return likeButton
+    }()
+
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = UIFont.bodyBold
@@ -73,6 +81,7 @@ final class FavoritesNftCollectionViewCell: UICollectionViewCell {
             starImageView.tintColor = nftView.nft.rating >= index ? UIColor.yellow : UIColor.lightGray
         }
 
+        likeButton.tintColor = nftView.isLiked ? UIColor.red : UIColor.white
         nameLabel.text = nftView.nft.name
         priceValueLabel.text = "\(nftView.nft.price) ETH"
     }
@@ -85,6 +94,7 @@ final class FavoritesNftCollectionViewCell: UICollectionViewCell {
         infoStackView.addArrangedSubview(priceValueLabel)
 
         contentView.addSubview(nftImageView)
+        contentView.addSubview(likeButton)
         contentView.addSubview(infoStackView)
 
         NSLayoutConstraint.activate([
@@ -92,6 +102,11 @@ final class FavoritesNftCollectionViewCell: UICollectionViewCell {
             nftImageView.heightAnchor.constraint(equalToConstant: 80),
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+
+            likeButton.widthAnchor.constraint(equalToConstant: 21),
+            likeButton.heightAnchor.constraint(equalToConstant: 21),
+            likeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 5),
+            likeButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: -5),
 
             infoStackView.centerYAnchor.constraint(equalTo: nftImageView.centerYAnchor),
             infoStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 12),
