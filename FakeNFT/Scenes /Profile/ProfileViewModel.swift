@@ -22,18 +22,30 @@ final class ProfileViewModel {
 
             switch result {
             case .success(let profile):
-                self.profileViewState = ProfileViewState.content(.init(
-                    name: profile.name,
-                    description: profile.description,
-                    avatar: profile.avatar,
-                    website: profile.website,
-                    cellTitles: [
-                        "Мои NFT (\(profile.nfts.count))", "Избранные NFT (\(profile.likes.count))", "О разработчике"
-                    ]
-                ))
+                self.resolveUpdatedProfileInfo(profile: profile)
+                self.observeFutherProfileUpdates()
             case .failure:
                 self.profileViewState = ProfileViewState.error("Не удалось загрузить данные профиля:(")
             }
         }
+    }
+
+    private func observeFutherProfileUpdates() {
+        profileRepository.$currentProfile.bind { [weak self] profile in
+            guard let self = self, let profile = profile else { return }
+            self.resolveUpdatedProfileInfo(profile: profile)
+        }
+    }
+
+    private func resolveUpdatedProfileInfo(profile: Profile) {
+        profileViewState = ProfileViewState.content(.init(
+            name: profile.name,
+            description: profile.description,
+            avatar: profile.avatar,
+            website: profile.website,
+            cellTitles: [
+                "Мои NFT (\(profile.nfts.count))", "Избранные NFT (\(profile.likes.count))", "О разработчике"
+            ]
+        ))
     }
 }

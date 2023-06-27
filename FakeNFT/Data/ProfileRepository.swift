@@ -11,7 +11,8 @@ final class ProfileRepository {
     private let profileService: ProfileService = ProfileService.shared
     private let nftService: NftService = NftServiceImpl.shared
 
-    private var currentProfile: Profile?
+    @Observable
+    private (set) var currentProfile: Profile?
 
     private init() {}
 
