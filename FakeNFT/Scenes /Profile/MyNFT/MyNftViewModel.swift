@@ -12,9 +12,28 @@ final class MyNftViewModel {
     private (set) var myNftViewState: MyNftViewState = MyNftViewState.loading
 
     private var currentMyNfts: [Nft] = []
+    private var isAscendingSort = true
 
     func onViewCreated() {
         getMyNftData()
+    }
+
+    func sortMyNftByPrice() {
+        currentMyNfts.sort { isAscendingSort ? $0.price < $1.price : $0.price > $1.price }
+        resolveSuccessMyNftData(myNfts: currentMyNfts)
+        isAscendingSort = !isAscendingSort
+    }
+
+    func sortMyNftByRating() {
+        currentMyNfts.sort { isAscendingSort ? $0.rating < $1.rating : $0.rating > $1.rating }
+        resolveSuccessMyNftData(myNfts: currentMyNfts)
+        isAscendingSort = !isAscendingSort
+    }
+
+    func sortMyNftByName() {
+        currentMyNfts.sort { isAscendingSort ? $0.name < $1.name : $0.name > $1.name }
+        resolveSuccessMyNftData(myNfts: currentMyNfts)
+        isAscendingSort = !isAscendingSort
     }
 
     func onLikeTapped(nftView: NftView) {
