@@ -5,7 +5,7 @@
 //  Created by Суворов Дмитрий Владимирович on 23.06.2023.
 //
 
-struct Profile: Decodable {
+struct Profile: Codable {
     let id: String
     let name: String
     let description: String

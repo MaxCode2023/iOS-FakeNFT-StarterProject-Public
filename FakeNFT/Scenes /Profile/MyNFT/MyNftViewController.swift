@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class MyNftViewController: UIViewController {
     private let viewModel: MyNftViewModel
@@ -82,30 +83,45 @@ final class MyNftViewController: UIViewController {
     private func initObservers() {
         viewModel.$myNftViewState.bind { [weak self] viewState in
             guard let self = self else { return }
-
-            self.renderState(viewState: viewState)
+            DispatchQueue.main.async {
+                self.renderState(viewState: viewState)
+            }
         }
     }
 
     private func renderState(viewState: MyNftViewState) {
         switch viewState {
-        case .loading: break
-            // не обрабатываем пока
+        case .loading:
+            showProgress()
 
         case .placeholder(let placeholderText):
+            hideProgress()
             myNftTableView.isHidden = true
             placeholderLabel.isHidden = false
             placeholderLabel.text = placeholderText
 
         case .content(let myNftData):
+            hideProgress()
             placeholderLabel.isHidden = true
             myNftTableView.isHidden = false
             myNfts = myNftData
             myNftTableView.reloadData()
 
         case .error(let errorString):
+            hideProgress()
             presentErrorDialog(message: errorString)
         }
+    }
+
+    private func showProgress() {
+        placeholderLabel.isHidden = true
+        UIApplication.shared.windows.first?.isUserInteractionEnabled = false
+        ProgressHUD.show()
+    }
+
+    private func hideProgress() {
+        UIApplication.shared.windows.first?.isUserInteractionEnabled = true
+        ProgressHUD.dismiss()
     }
 }
 
@@ -121,8 +137,9 @@ extension MyNftViewController: UITableViewDataSource {
         ) as? MyNftTableViewCell else { return UITableViewCell() }
 
         let nft = myNfts[indexPath.row]
-        cell.bindCell(nftView: nft)
-        // TODO: - логика по тапу на лайк
+        cell.bindCell(nftView: nft) { [weak self] in
+            self?.viewModel.onLikeTapped(nftView: nft)
+        }
         return cell
     }
 
