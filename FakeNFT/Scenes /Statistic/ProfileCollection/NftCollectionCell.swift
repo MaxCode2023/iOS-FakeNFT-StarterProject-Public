@@ -12,29 +12,72 @@ final class NftCollectionCell: UICollectionViewCell, ReuseIdentifying {
     var delegate: NftCollectionCellDelegate? = nil
     var nft: Nft? = nil
     
-    private let nftImageView = UIImageView()
-    private let likeButton = UIButton()
-    private let ratingStackView = UIStackView()
     private let starCount = 5
-    private let nftNameLabel = UILabel()
-    private let nftPriceLabel = UILabel()
-    private let addToCartButton = UIButton()
-    
     private var isLiked = false
+    
+    private var nftImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 12
+        return imageView
+    }()
+    
+    private var likeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "likeDisabledIcon"), for: .normal)
+        button.addTarget(self, action: #selector(likeTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private var ratingStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 2
+        return stackView
+    }()
+    
+    private var nftNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .bodyBold
+        label.textColor = .YPBlack
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private var nftPriceLabel: UILabel = {
+        let label = UILabel()
+        label.font = .caption3
+        label.textColor = .YPBlack
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private var addToCartButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "cartIcon"), for: .normal)
+        button.addTarget(self, action: #selector(addToCartTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addViews()
+        setUpConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     func configure(nft: Nft) {
         self.nft = nft
-        
-        addViews()
-        setUpConstraints()
         
         if let image = nft.images.first,
            let url = URL(string: image) {
             nftImageView.loadImage(url: url, cornerRadius: 120)
         }
         
-        ratingStackView.axis = .horizontal
-        ratingStackView.spacing = 2
+        ratingStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         for index in 1...starCount {
             let starImageView = UIImageView()
             let imageName = nft.rating >= index ? "starIcon" : "starDisabledIcon"
@@ -42,21 +85,8 @@ final class NftCollectionCell: UICollectionViewCell, ReuseIdentifying {
             ratingStackView.addArrangedSubview(starImageView)
         }
         
-        nftNameLabel.text = nft.name
-        nftNameLabel.font = .bodyBold
-        nftNameLabel.textColor = .YPBlack
-        nftNameLabel.numberOfLines = 1
-        
         nftPriceLabel.text = "\(nft.price) ETH"
-        nftPriceLabel.font = .caption3
-        nftPriceLabel.textColor = .YPBlack
-        nftPriceLabel.numberOfLines = 1
-        
-        addToCartButton.setImage(UIImage(named: "cartIcon"), for: .normal)
-        addToCartButton.addTarget(self, action: #selector(addToCartTapped), for: .touchUpInside)
-        
-        likeButton.setImage(UIImage(named: "likeDisabledIcon"), for: .normal)
-        likeButton.addTarget(self, action: #selector(likeTapped), for: .touchUpInside)
+        nftNameLabel.text = nft.name
     }
     
     @objc private func addToCartTapped() {

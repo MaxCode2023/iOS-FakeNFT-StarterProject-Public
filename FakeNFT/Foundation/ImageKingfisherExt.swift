@@ -10,9 +10,8 @@ import UIKit
 
 extension UIImageView {
     func loadImage(url: URL, cornerRadius: CGFloat) {
-        let processor = RoundCornerImageProcessor(cornerRadius: cornerRadius)
         self.kf.setImage(
             with: url,
-            options: [.processor(processor), .cacheSerializer(FormatIndicatedCacheSerializer.png)])
+            options: [.cacheSerializer(FormatIndicatedCacheSerializer.png)])
     }
 }

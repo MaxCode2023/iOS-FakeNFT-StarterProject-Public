@@ -8,22 +8,67 @@
 import UIKit
 
 final class UserRatingCell: UITableViewCell, ReuseIdentifying {
-        
-    private let mainStackView = UIStackView()
     
-    private let indexLabel = UILabel()
-    private let backgroundCardView = UIView()
-    private let avatarImageView = UIImageView()
-    private let nameLabel = UILabel()
-    private let ratingScoreLabel = UILabel()
+    private lazy var mainStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.alignment = .center
+        return stackView
+    }()
     
-    func configure(index: Int, user: User?) {
+    private lazy var indexLabel: UILabel = {
+        let label = UILabel()
+        label.font = .caption1
+        label.textColor = .YPBlack
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private lazy var backgroundCardView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .YPLightGrey
+        view.layer.cornerRadius = 12
+        return view
+    }()
+    
+    private lazy var avatarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 14
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+    private lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .headline3
+        label.textColor = .YPBlack
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private lazy var ratingScoreLabel: UILabel = {
+        let label = UILabel()
+        label.font = .headline3
+        label.textColor = .YPBlack
+        label.numberOfLines = 1
+        label.textAlignment = .right
+        return label
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         
         addViews()
         setUpConstraints()
-        configureViews()
-        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(index: Int, user: User?) {
         indexLabel.text = "\(index + 1)"
         nameLabel.text = user?.name
         ratingScoreLabel.text = user?.rating
@@ -32,28 +77,6 @@ final class UserRatingCell: UITableViewCell, ReuseIdentifying {
            let avatarUrl = URL(string: avatarUrl) {
             avatarImageView.loadImage(url: avatarUrl, cornerRadius: 100)
         }
-    }
-    
-    private func configureViews() {
-        mainStackView.axis = .horizontal
-        mainStackView.spacing = 8
-        mainStackView.alignment = .center
-        
-        backgroundCardView.backgroundColor = .YPLightGrey
-        backgroundCardView.layer.cornerRadius = 12
-        
-        indexLabel.font = .caption1
-        indexLabel.textColor = .YPBlack
-        indexLabel.numberOfLines = 1
-        
-        nameLabel.font = .headline3
-        nameLabel.textColor = .YPBlack
-        nameLabel.numberOfLines = 1
-        
-        ratingScoreLabel.font = .headline3
-        ratingScoreLabel.textColor = .YPBlack
-        ratingScoreLabel.numberOfLines = 1
-        ratingScoreLabel.textAlignment = .right
     }
     
     private func addViews() {
