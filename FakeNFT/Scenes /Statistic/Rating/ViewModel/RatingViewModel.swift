@@ -13,13 +13,24 @@ final class RatingViewModel {
     private(set) var userList: [User] = []
     
     @Observable
+    private(set) var isLoading: Bool = false
+    
+    @Observable
     private(set) var errorMessage: String? = nil
     
-    private let userService: UserService = UserServiceImpl()
+    private let userService: UserServiceProtocol
+    
+    init(userService: UserServiceProtocol = UserNetworkService()) {
+        self.userService = userService
+    }
     
     func getUserList() {
+        isLoading = true
+        
         userService.getUserList { [weak self] result in
             DispatchQueue.main.async {
+                self?.isLoading = false
+                
                 switch result {
                 case .success(let userList):
                     let sortedList = self?.sortByRating(userList: userList) ?? []

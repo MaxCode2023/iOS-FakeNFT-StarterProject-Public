@@ -32,8 +32,8 @@
 		B203B0AF2A41FE11008D474B /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0AE2A41FE11008D474B /* RatingViewController.swift */; };
 		B203B0B12A41FEC3008D474B /* GetUserListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0B02A41FEC3008D474B /* GetUserListRequest.swift */; };
 		B203B0B42A420C09008D474B /* GetUserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0B32A420C09008D474B /* GetUserRequest.swift */; };
-		B203B0B62A420E61008D474B /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0B52A420E61008D474B /* UserService.swift */; };
-		B203B0B82A420EF2008D474B /* UserServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0B72A420EF2008D474B /* UserServiceImpl.swift */; };
+		B203B0B62A420E61008D474B /* UserServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0B52A420E61008D474B /* UserServiceProtocol.swift */; };
+		B203B0B82A420EF2008D474B /* UserNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0B72A420EF2008D474B /* UserNetworkService.swift */; };
 		B203B0BA2A42146D008D474B /* UserRatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0B92A42146D008D474B /* UserRatingCell.swift */; };
 		B2A849552A4602A0009B1837 /* NftCollectionCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A849542A4602A0009B1837 /* NftCollectionCellDelegate.swift */; };
 		B2BAE4942A40C95C00951719 /* statitic_plan.md in Resources */ = {isa = PBXBuildFile; fileRef = B2BAE4932A40C95C00951719 /* statitic_plan.md */; };
@@ -50,8 +50,8 @@
 		E677BF112A45961C00082538 /* GeometricParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E677BF102A45961C00082538 /* GeometricParams.swift */; };
 		E690B4B92A447FCC009E223B /* Nft.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690B4B82A447FCC009E223B /* Nft.swift */; };
 		E690B4BB2A44804C009E223B /* GetNftRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690B4BA2A44804C009E223B /* GetNftRequest.swift */; };
-		E690B4BE2A4480A1009E223B /* NftService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690B4BD2A4480A1009E223B /* NftService.swift */; };
-		E690B4C02A4480AA009E223B /* NftServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690B4BF2A4480AA009E223B /* NftServiceImpl.swift */; };
+		E690B4BE2A4480A1009E223B /* NftServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690B4BD2A4480A1009E223B /* NftServiceProtocol.swift */; };
+		E690B4C02A4480AA009E223B /* NftNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690B4BF2A4480AA009E223B /* NftNetworkService.swift */; };
 		E6CF57D42A42FF9600E0C8AB /* RatingProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CF57D32A42FF9600E0C8AB /* RatingProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -100,8 +100,8 @@
 		B203B0AE2A41FE11008D474B /* RatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
 		B203B0B02A41FEC3008D474B /* GetUserListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserListRequest.swift; sourceTree = "<group>"; };
 		B203B0B32A420C09008D474B /* GetUserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserRequest.swift; sourceTree = "<group>"; };
-		B203B0B52A420E61008D474B /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
-		B203B0B72A420EF2008D474B /* UserServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceImpl.swift; sourceTree = "<group>"; };
+		B203B0B52A420E61008D474B /* UserServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceProtocol.swift; sourceTree = "<group>"; };
+		B203B0B72A420EF2008D474B /* UserNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetworkService.swift; sourceTree = "<group>"; };
 		B203B0B92A42146D008D474B /* UserRatingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRatingCell.swift; sourceTree = "<group>"; };
 		B2A849542A4602A0009B1837 /* NftCollectionCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftCollectionCellDelegate.swift; sourceTree = "<group>"; };
 		B2BAE4932A40C95C00951719 /* statitic_plan.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = statitic_plan.md; sourceTree = "<group>"; };
@@ -118,8 +118,8 @@
 		E677BF102A45961C00082538 /* GeometricParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometricParams.swift; sourceTree = "<group>"; };
 		E690B4B82A447FCC009E223B /* Nft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nft.swift; sourceTree = "<group>"; };
 		E690B4BA2A44804C009E223B /* GetNftRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNftRequest.swift; sourceTree = "<group>"; };
-		E690B4BD2A4480A1009E223B /* NftService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftService.swift; sourceTree = "<group>"; };
-		E690B4BF2A4480AA009E223B /* NftServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftServiceImpl.swift; sourceTree = "<group>"; };
+		E690B4BD2A4480A1009E223B /* NftServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftServiceProtocol.swift; sourceTree = "<group>"; };
+		E690B4BF2A4480AA009E223B /* NftNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftNetworkService.swift; sourceTree = "<group>"; };
 		E6CF57D32A42FF9600E0C8AB /* RatingProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -413,8 +413,8 @@
 		E6F0F9FF2A4989C500DCCD44 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				B203B0B52A420E61008D474B /* UserService.swift */,
-				B203B0B72A420EF2008D474B /* UserServiceImpl.swift */,
+				B203B0B52A420E61008D474B /* UserServiceProtocol.swift */,
+				B203B0B72A420EF2008D474B /* UserNetworkService.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -422,8 +422,8 @@
 		E6F0FA002A4989C900DCCD44 /* Nft */ = {
 			isa = PBXGroup;
 			children = (
-				E690B4BD2A4480A1009E223B /* NftService.swift */,
-				E690B4BF2A4480AA009E223B /* NftServiceImpl.swift */,
+				E690B4BD2A4480A1009E223B /* NftServiceProtocol.swift */,
+				E690B4BF2A4480AA009E223B /* NftNetworkService.swift */,
 			);
 			path = Nft;
 			sourceTree = "<group>";
@@ -595,13 +595,13 @@
 				B2A849552A4602A0009B1837 /* NftCollectionCellDelegate.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
-				B203B0B62A420E61008D474B /* UserService.swift in Sources */,
+				B203B0B62A420E61008D474B /* UserServiceProtocol.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				E663CDC82A42F09E00C7A1C4 /* RatingViewModel.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				E677BF0F2A458BCB00082538 /* NftCollectionCell.swift in Sources */,
-				E690B4BE2A4480A1009E223B /* NftService.swift in Sources */,
+				E690B4BE2A4480A1009E223B /* NftServiceProtocol.swift in Sources */,
 				E6CF57D42A42FF9600E0C8AB /* RatingProfileViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				B2F49EDF2A46E3FC00977654 /* ImageKingfisherExt.swift in Sources */,
@@ -610,7 +610,7 @@
 				B203B0B12A41FEC3008D474B /* GetUserListRequest.swift in Sources */,
 				B203B0AA2A41FD5D008D474B /* User.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
-				B203B0B82A420EF2008D474B /* UserServiceImpl.swift in Sources */,
+				B203B0B82A420EF2008D474B /* UserNetworkService.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				E65913202A440A14007E6B58 /* WebsiteProfileViewController.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
@@ -625,7 +625,7 @@
 				E690B4B92A447FCC009E223B /* Nft.swift in Sources */,
 				E61F0E592A49550F00AEB57A /* SortAlertBuilder.swift in Sources */,
 				B203B0B42A420C09008D474B /* GetUserRequest.swift in Sources */,
-				E690B4C02A4480AA009E223B /* NftServiceImpl.swift in Sources */,
+				E690B4C02A4480AA009E223B /* NftNetworkService.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				B2EE81EB2A4365E7003822E3 /* ViewControllerAlertExt.swift in Sources */,
 			);

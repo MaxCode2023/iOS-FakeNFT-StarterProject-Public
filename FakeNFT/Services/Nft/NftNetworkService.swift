@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NftServiceImpl: NftService {
+class NftNetworkService: NftServiceProtocol {
     
     private let client = DefaultNetworkClient()
     

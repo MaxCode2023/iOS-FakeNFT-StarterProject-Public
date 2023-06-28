@@ -78,7 +78,7 @@ final class NftCollectionCell: UICollectionViewCell, ReuseIdentifying {
         }
         
         ratingStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        for index in 1...starCount {
+        for index in 0..<starCount {
             let starImageView = UIImageView()
             let imageName = nft.rating >= index ? "starIcon" : "starDisabledIcon"
             starImageView.image = UIImage(named: imageName)

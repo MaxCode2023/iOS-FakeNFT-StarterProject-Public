@@ -55,7 +55,6 @@ final class ProfileCollectionViewController: UIViewController {
         setUpConstraints()
         
         bind()
-        ProgressHUD.show()
         viewModel.getNftCollection(nftIdList: nftIds)
     }
     
@@ -65,13 +64,18 @@ final class ProfileCollectionViewController: UIViewController {
     
     private func bind() {
         viewModel.$nftList.bind(action: { [weak self] nftList in
-            ProgressHUD.dismiss()
             self?.nftList = nftList
             self?.nftCollectionView.reloadData()
         })
         viewModel.$errorMessage.bind { [weak self] errorMessage in
-            ProgressHUD.dismiss()
             self?.presentErrorDialog(message: errorMessage)
+        }
+        viewModel.$isLoading.bind { isLoading in
+            if isLoading {
+                ProgressHUD.show()
+            } else {
+                ProgressHUD.dismiss()
+            }
         }
     }
     

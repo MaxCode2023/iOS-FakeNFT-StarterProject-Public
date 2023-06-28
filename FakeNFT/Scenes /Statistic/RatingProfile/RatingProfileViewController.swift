@@ -105,13 +105,11 @@ final class RatingProfileViewController: UIViewController {
         setUpConstraints()
         
         bind()
-        ProgressHUD.show()
         viewModel.getUser(userId: userId)
     }
     
     private func bind() {
         viewModel.$user.bind { [weak self] user in
-            ProgressHUD.dismiss()
             if let user = user {
                 self?.updateUserInfo(user: user)
             } else {
@@ -119,8 +117,14 @@ final class RatingProfileViewController: UIViewController {
             }
         }
         viewModel.$errorMessage.bind { [weak self] errorMessage in
-            ProgressHUD.dismiss()
             self?.presentErrorDialog(message: errorMessage)
+        }
+        viewModel.$isLoading.bind { isLoading in
+            if isLoading {
+                ProgressHUD.show()
+            } else {
+                ProgressHUD.dismiss()
+            }
         }
     }
     

@@ -42,19 +42,23 @@ final class RatingViewController: UIViewController {
         setUpConstraints()
         
         bind()
-        ProgressHUD.show()
         viewModel.getUserList()
     }
     
     private func bind() {
         viewModel.$userList.bind { [weak self] userList in
-            ProgressHUD.dismiss()
             self?.userList = userList
             self?.ratingTableView.reloadData()
         }
         viewModel.$errorMessage.bind { [weak self] errorMessage in
-            ProgressHUD.dismiss()
             self?.presentErrorDialog(message: errorMessage)
+        }
+        viewModel.$isLoading.bind { isLoading in
+            if isLoading {
+                ProgressHUD.show()
+            } else {
+                ProgressHUD.dismiss()
+            }
         }
     }
     
