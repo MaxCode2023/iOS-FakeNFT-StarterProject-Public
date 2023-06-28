@@ -51,6 +51,8 @@ final class FavoritesNftViewController: UIViewController {
 
     private func configureUI() {
         title = "Избранные NFT"
+        navigationController?.navigationBar.tintColor = UIColor.YPBlack
+        navigationController?.navigationBar.topItem?.title = ""
         view.backgroundColor = UIColor.background
         view.addSubview(favoriteNftCollectionView)
         view.addSubview(placeholderLabel)
