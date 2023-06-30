@@ -28,6 +28,10 @@ final class ProfileViewModel {
         profileViewRoute = ProfileViewRoute.toUrl(url)
     }
 
+    func onEditButtonClick() {
+        profileViewRoute = ProfileViewRoute.toEdit
+    }
+
     private func getProfileData() {
         profileViewState = ProfileViewState.loading
         profileRepository.getProfile { [weak self] result in
