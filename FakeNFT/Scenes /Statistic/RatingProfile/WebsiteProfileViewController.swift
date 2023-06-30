@@ -11,10 +11,19 @@ import ProgressHUD
 
 final class WebsiteProfileViewController: UIViewController {
 
-    var websiteUrl: URL?
+    private let websiteUrl: URL
 
     private let webView = WKWebView()
     private let backButton = UIButton()
+
+    init(websiteUrl: URL) {
+        self.websiteUrl = websiteUrl
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,15 +33,19 @@ final class WebsiteProfileViewController: UIViewController {
         setUpConstraints()
         configureViews()
 
-        if let websiteUrl = websiteUrl {
-            ProgressHUD.show()
-            webView.navigationDelegate = self
+        ProgressHUD.show()
+        webView.navigationDelegate = self
 
-            DispatchQueue.main.async { [weak self] in
-                let request = URLRequest(url: websiteUrl)
-                self?.webView.load(request)
-            }
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let request = URLRequest(url: self.websiteUrl)
+            self.webView.load(request)
         }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {

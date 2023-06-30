@@ -4,6 +4,7 @@
 //
 //  Created by Суворов Дмитрий Владимирович on 23.06.2023.
 //
+import Foundation
 
 final class ProfileViewModel {
     private let profileRepository = ProfileRepository.shared
@@ -11,8 +12,20 @@ final class ProfileViewModel {
     @Observable
     private (set) var profileViewState: ProfileViewState = ProfileViewState.loading
 
+    @Observable
+    private (set) var profileViewRoute: ProfileViewRoute?
+
+    private var currentProfile: Profile?
+
     func onViewCreated() {
         getProfileData()
+    }
+
+    func onUrlButtonClick() {
+        guard let currentProfile = currentProfile,
+              let url = URL(string: currentProfile.website) else { return }
+
+        profileViewRoute = ProfileViewRoute.toUrl(url)
     }
 
     private func getProfileData() {
@@ -38,6 +51,7 @@ final class ProfileViewModel {
     }
 
     private func resolveUpdatedProfileInfo(profile: Profile) {
+        self.currentProfile = profile
         profileViewState = ProfileViewState.content(.init(
             name: profile.name,
             description: profile.description,

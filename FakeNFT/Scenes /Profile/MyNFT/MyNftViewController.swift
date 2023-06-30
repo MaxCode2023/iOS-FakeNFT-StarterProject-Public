@@ -68,6 +68,7 @@ final class MyNftViewController: UIViewController {
 
     private func configureUI() {
         title = "Мои NFT"
+        navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.navigationBar.tintColor = UIColor.YPBlack
         navigationController?.navigationBar.topItem?.title = ""
         view.backgroundColor = UIColor.background

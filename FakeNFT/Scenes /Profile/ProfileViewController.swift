@@ -86,7 +86,7 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func onUrlButtonClick() {
-
+        viewModel.onUrlButtonClick()
     }
 
     private func configureUI() {
@@ -130,6 +130,13 @@ final class ProfileViewController: UIViewController {
                 self.renderState(viewState: viewState)
             }
         }
+
+        viewModel.$profileViewRoute.bind { [weak self] route in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.navigateTo(to: route)
+            }
+        }
     }
 
     private func renderState(viewState: ProfileViewState) {
@@ -140,6 +147,14 @@ final class ProfileViewController: UIViewController {
             renderProfileData(profile: profileData)
         case .error(let errorString):
             renderErrorState(errorString: errorString)
+        }
+    }
+
+    private func navigateTo(to: ProfileViewRoute?) {
+        guard let to = to else { return }
+        switch to {
+        case .toUrl(let url):
+            navigateToWebSite(url: url)
         }
     }
 
@@ -181,6 +196,11 @@ final class ProfileViewController: UIViewController {
         let viewModel = FavoriteNftViewModel()
         let favoriteNftVc = FavoritesNftViewController(viewModel: viewModel)
         navigationController?.pushViewController(favoriteNftVc, animated: true)
+    }
+
+    private func navigateToWebSite(url: URL) {
+        let websiteVc = WebsiteProfileViewController(websiteUrl: url)
+        navigationController?.pushViewController(websiteVc, animated: true)
     }
 }
 
