@@ -117,8 +117,7 @@ final class RatingProfileViewController: UIViewController {
     @objc private func navigateToWebsite() {
         if let websiteUrl = user?.website,
            let websiteUrl = URL(string: websiteUrl) {
-            let vc = WebsiteProfileViewController()
-            vc.websiteUrl = websiteUrl
+            let vc = WebsiteProfileViewController(websiteUrl: websiteUrl)
             navigationController?.pushViewController(vc, animated: true)
         } else {
             presentErrorDialog(message: nil)
