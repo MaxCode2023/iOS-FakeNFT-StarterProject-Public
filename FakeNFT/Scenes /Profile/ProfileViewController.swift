@@ -82,7 +82,7 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func onEditIconClick() {
-
+        viewModel.onEditButtonClick()
     }
 
     @objc private func onUrlButtonClick() {
@@ -134,7 +134,7 @@ final class ProfileViewController: UIViewController {
         viewModel.$profileViewRoute.bind { [weak self] route in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                self.navigateTo(to: route)
+                self.navigateTo(destination: route)
             }
         }
     }
@@ -150,11 +150,13 @@ final class ProfileViewController: UIViewController {
         }
     }
 
-    private func navigateTo(to: ProfileViewRoute?) {
-        guard let to = to else { return }
-        switch to {
+    private func navigateTo(destination: ProfileViewRoute?) {
+        guard let destination = destination else { return }
+        switch destination {
         case .toUrl(let url):
             navigateToWebSite(url: url)
+        case .toEdit:
+            navigateToEditProfile()
         }
     }
 
@@ -201,6 +203,12 @@ final class ProfileViewController: UIViewController {
     private func navigateToWebSite(url: URL) {
         let websiteVc = WebsiteProfileViewController(websiteUrl: url)
         navigationController?.pushViewController(websiteVc, animated: true)
+    }
+
+    private func navigateToEditProfile() {
+        let viewModel = EditProfileViewModel()
+        let editProfileVC = EditProfileViewController(viewModel: viewModel)
+        present(editProfileVC, animated: true)
     }
 }
 
