@@ -10,12 +10,15 @@ import UIKit
 final class EditProfileViewController: UIViewController {
 
     private let viewModel: EditProfileViewModel
+    private var currentProfileData: EditProfileViewState.EditProfileData?
 
     private lazy var avatarImageView: UIImageView = {
         let avatarImageView = UIImageView()
         avatarImageView.layer.masksToBounds = true
         avatarImageView.layer.cornerRadius = 35
         avatarImageView.clipsToBounds = true
+        avatarImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showAvatarChangeAlert)))
+        avatarImageView.isUserInteractionEnabled = true
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         return avatarImageView
     }()
@@ -133,6 +136,22 @@ final class EditProfileViewController: UIViewController {
     }
 
     @objc
+    private func showAvatarChangeAlert() {
+        let alert = UIAlertController(title: "Сменить автар", message: "Введите новый URL", preferredStyle: .alert)
+
+        alert.addTextField { [weak self] textField in
+            guard let self = self, let currentAvatar = self.currentProfileData?.avatar else { return }
+            textField.text = currentAvatar
+        }
+        let alertAction = UIAlertAction(title: "OK", style: .default, handler: { [weak self] (_) in
+            self?.viewModel.updateAvatar(newAvatar: alert.textFields?[0].text)
+        })
+        alert.addAction(alertAction)
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    @objc
     private func onCloseButtonClick() {
         dismiss(animated: true)
     }
@@ -205,6 +224,8 @@ final class EditProfileViewController: UIViewController {
 
         switch viewState {
         case .content(let editProfileData):
+            currentProfileData = editProfileData
+
             nameTextField.text = editProfileData.name
             descriptionTextField.text = editProfileData.description
             avatarImageView.kf.setImage(with: URL(string: editProfileData.avatar))

@@ -51,8 +51,19 @@ final class EditProfileViewModel {
     }
 
     func updateAvatar(newAvatar: String?) {
-        guard let newAvatar = newAvatar else { return }
+        guard let newAvatar = newAvatar, newAvatar.isValidURL else { return }
         self.newAvatar = newAvatar
+
+        // обвноляем UI аватарки
+        if let currentProfile {
+            let editProfileData = EditProfileViewState.EditProfileData(
+                name: currentProfile.name,
+                description: currentProfile.description,
+                avatar: newAvatar,
+                website: currentProfile.website
+            )
+            editProfileViewState = EditProfileViewState.content(editProfileData)
+        }
     }
 
     func updateWebsite(newWebsite: String?) {
