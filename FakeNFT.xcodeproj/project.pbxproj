@@ -59,6 +59,7 @@
 		62CB02262A4F20BE00B84274 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CB02252A4F20BE00B84274 /* EditProfileViewController.swift */; };
 		62CB02282A4F20E800B84274 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CB02272A4F20E800B84274 /* EditProfileViewModel.swift */; };
 		62CB022A2A55A29400B84274 /* EditProfileViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CB02292A55A29400B84274 /* EditProfileViewState.swift */; };
+		62CB022E2A56BA5900B84274 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62CB022D2A56BA5900B84274 /* StringUtils.swift */; };
 		B203B0A62A41FAA5008D474B /* _swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B203B0A52A41FAA5008D474B /* _swiftlint.yml */; };
 		B203B0AF2A41FE11008D474B /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0AE2A41FE11008D474B /* RatingViewController.swift */; };
 		B203B0BA2A42146D008D474B /* UserRatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B203B0B92A42146D008D474B /* UserRatingCell.swift */; };
@@ -150,6 +151,7 @@
 		62CB02252A4F20BE00B84274 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		62CB02272A4F20E800B84274 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		62CB02292A55A29400B84274 /* EditProfileViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewState.swift; sourceTree = "<group>"; };
+		62CB022D2A56BA5900B84274 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
 		A3FB9E9C2A43200B00491E7D /* catalog_plan.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = catalog_plan.md; sourceTree = "<group>"; };
 		B203B0A52A41FAA5008D474B /* _swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = _swiftlint.yml; sourceTree = "<group>"; };
 		B203B0AE2A41FE11008D474B /* RatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 				B2EE81EA2A4365E7003822E3 /* ViewControllerAlertExt.swift */,
 				B2F49EDE2A46E3FC00977654 /* ImageKingfisherExt.swift */,
 				E677BF102A45961C00082538 /* GeometricParams.swift */,
+				62CB022D2A56BA5900B84274 /* StringUtils.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -747,6 +750,7 @@
 				62CB02092A49E9AA00B84274 /* GetProfileRequest.swift in Sources */,
 				62CB02282A4F20E800B84274 /* EditProfileViewModel.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				62CB022E2A56BA5900B84274 /* StringUtils.swift in Sources */,
 				62CB022A2A55A29400B84274 /* EditProfileViewState.swift in Sources */,
 				B203B0BA2A42146D008D474B /* UserRatingCell.swift in Sources */,
 				62CB01E62A49E89A00B84274 /* MyNftTableViewCell.swift in Sources */,

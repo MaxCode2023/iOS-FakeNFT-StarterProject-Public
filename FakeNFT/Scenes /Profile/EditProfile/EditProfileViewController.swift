@@ -112,6 +112,11 @@ final class EditProfileViewController: UIViewController {
         viewModel.onViewDidLoad()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel.onViewWillDisappear()
+        super.viewWillDisappear(animated)
+    }
+
     @objc
     private func onNameChanged(_ sender: UITextInput) {
         viewModel.updateName(newName: nameTextField.text)

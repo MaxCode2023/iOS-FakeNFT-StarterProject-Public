@@ -52,6 +52,12 @@ final class ProfileViewModel {
             guard let self = self, let profile = profile else { return }
             self.resolveUpdatedProfileInfo(profile: profile)
         }
+        profileRepository.$isProfileUpdating.bind { [weak self] isUpdating in
+            guard let self = self else { return }
+            if isUpdating {
+                self.profileViewState = ProfileViewState.loading
+            }
+        }
     }
 
     private func resolveUpdatedProfileInfo(profile: Profile) {
