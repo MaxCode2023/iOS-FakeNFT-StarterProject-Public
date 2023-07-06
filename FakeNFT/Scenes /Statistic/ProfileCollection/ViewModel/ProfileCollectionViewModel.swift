@@ -15,7 +15,7 @@ class ProfileCollectionViewModel {
     @Observable
     private(set) var errorMessage: String?
 
-    private let nftService: NftService = NftServiceImpl.shared
+    private let nftService: NftServiceProtocol = NftServiceImpl.shared
 
     func getNftCollection(nftIdList: [Int]) {
         nftService.getNftList(nftIds: nftIdList) { [weak self] result in

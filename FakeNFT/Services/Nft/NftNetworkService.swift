@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NftServiceImpl: NftService {
+class NftServiceImpl: NftServiceProtocol {
     static let shared = NftServiceImpl()
 
     private let client = DefaultNetworkClient()

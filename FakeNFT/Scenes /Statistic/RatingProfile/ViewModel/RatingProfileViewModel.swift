@@ -15,7 +15,7 @@ class RatingProfileViewModel {
     @Observable
     private(set) var errorMessage: String?
 
-    private let userService: UserService = UserServiceImpl()
+    private let userService: UserServiceProtocol = UserServiceImpl()
 
     func getUser(userId: Int) {
         userService.getUser(userId: userId) { [weak self] result in

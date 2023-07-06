@@ -5,7 +5,7 @@
 //  Created by macOS on 20.06.2023.
 //
 
-class UserServiceImpl: UserService {
+class UserServiceImpl: UserServiceProtocol {
 
     private let client = DefaultNetworkClient()
 
