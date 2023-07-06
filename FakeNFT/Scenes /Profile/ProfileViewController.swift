@@ -208,7 +208,8 @@ final class ProfileViewController: UIViewController {
     private func navigateToEditProfile() {
         let viewModel = EditProfileViewModel()
         let editProfileVC = EditProfileViewController(viewModel: viewModel)
-        present(editProfileVC, animated: true)
+        let editProfileNC = UINavigationController(rootViewController: editProfileVC)
+        present(editProfileNC, animated: true)
     }
 }
 
