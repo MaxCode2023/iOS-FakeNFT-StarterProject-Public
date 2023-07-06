@@ -44,6 +44,7 @@ final class RatingViewController: UIViewController {
     }
 
     private func configureViews() {
+        view.backgroundColor = UIColor.white
         ratingTableView.dataSource = self
         ratingTableView.delegate = self
         ratingTableView.register(UserRatingCell.self)
