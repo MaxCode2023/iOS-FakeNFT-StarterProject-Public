@@ -14,6 +14,9 @@ final class ProfileRepository {
     @Observable
     private (set) var currentProfile: Profile?
 
+    @Observable
+    private (set) var isProfileUpdating: Bool = false
+
     private init() {}
 
     func getProfile(onCompletion: @escaping (Result<Profile, Error>) -> Void) {
@@ -72,9 +75,11 @@ final class ProfileRepository {
     }
 
     func updateProfile(newProfile: Profile, onCompletion: @escaping (Result<Profile, Error>) -> Void) {
+        isProfileUpdating = true
         profileService.updateProfile(newProfile: newProfile) { [weak self] result in
             guard let self = self else { return }
 
+            self.isProfileUpdating = false
             switch result {
             case .success(let profile):
                 self.currentProfile = profile

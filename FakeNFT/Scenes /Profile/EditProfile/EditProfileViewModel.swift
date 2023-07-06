@@ -10,6 +10,11 @@ final class EditProfileViewModel {
 
     private let currentProfile: Profile?
 
+    private var newName: String = ""
+    private var newDescription: String = ""
+    private var newAvatar: String = ""
+    private var newWebsite: String = ""
+
     @Observable
     private (set) var editProfileViewState: EditProfileViewState?
 
@@ -21,20 +26,38 @@ final class EditProfileViewModel {
         loadCurrentProfileData()
     }
 
+    func onViewWillDisappear() {
+        guard let currentProfile = currentProfile else { return }
+        let nameChange = newName != currentProfile.name
+        let descriptionChange = newDescription != currentProfile.description
+        let avatarChange = newAvatar != currentProfile.avatar && newAvatar.isValidURL
+        let websiteChange = newWebsite != currentProfile.website && newWebsite.isValidURL
+
+        let needUpdate = nameChange || descriptionChange || avatarChange || websiteChange
+
+        if needUpdate {
+            safeUpdateProfile()
+        }
+    }
+
     func updateName(newName: String?) {
-        print("\(newName)")
+        guard let newName = newName else { return }
+        self.newName = newName
     }
 
     func updateDescription(newDescription: String?) {
-        print("\(newDescription)")
+        guard let newDescription = newDescription else { return }
+        self.newDescription = newDescription
     }
 
     func updateAvatar(newAvatar: String?) {
-        print("\(newAvatar)")
+        guard let newAvatar = newAvatar else { return }
+        self.newAvatar = newAvatar
     }
 
     func updateWebsite(newWebsite: String?) {
-        print("\(newWebsite)")
+        guard let newWebsite = newWebsite else { return }
+        self.newWebsite = newWebsite
     }
 
     private func loadCurrentProfileData() {
@@ -46,5 +69,31 @@ final class EditProfileViewModel {
             website: currentProfile.website
         )
         editProfileViewState = EditProfileViewState.content(editProfileData)
+        newName = currentProfile.name
+        newDescription = currentProfile.description
+        newAvatar = currentProfile.avatar
+        newWebsite = currentProfile.website
+    }
+
+    private func safeUpdateProfile() {
+        guard let currentProfile else { return }
+        var safeNewAvatar = newAvatar
+        if !newAvatar.isValidURL {
+            safeNewAvatar = currentProfile.avatar
+        }
+        var safeWebsite = newWebsite
+        if !newWebsite.isValidURL {
+            safeWebsite = currentProfile.website
+        }
+        let newProfile = Profile(
+            id: currentProfile.id,
+            name: newName,
+            description: newDescription,
+            avatar: safeNewAvatar,
+            website: safeWebsite,
+            nfts: currentProfile.nfts,
+            likes: currentProfile.likes
+        )
+        profileRepository.updateProfile(newProfile: newProfile) { _ in }
     }
 }
