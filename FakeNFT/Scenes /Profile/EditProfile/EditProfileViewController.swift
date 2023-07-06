@@ -35,7 +35,14 @@ final class EditProfileViewController: UIViewController {
         nameTextField.textColor = UIColor.textPrimary
         nameTextField.backgroundColor = UIColor.YPLightGrey
         nameTextField.layer.cornerRadius = 12
+        nameTextField.addTarget(self, action: #selector(onNameChanged), for: UIControl.Event.allEditingEvents)
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
+
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: nameTextField.frame.height))
+        nameTextField.leftView = paddingView
+        nameTextField.rightView = paddingView
+        nameTextField.leftViewMode = .always
+        nameTextField.rightViewMode = .always
         return nameTextField
     }()
 
@@ -48,12 +55,15 @@ final class EditProfileViewController: UIViewController {
         return descriptionTitleLabel
     }()
 
-    private lazy var descriptionTextField: UITextField = {
-        let descriptionTextField = UITextField()
+    private lazy var descriptionTextField: UITextView = {
+        let descriptionTextField = UITextView()
         descriptionTextField.font = UIFont.bodyRegular
         descriptionTextField.textColor = UIColor.textPrimary
         descriptionTextField.backgroundColor = UIColor.YPLightGrey
         descriptionTextField.layer.cornerRadius = 12
+        descriptionTextField.delegate = self
+        descriptionTextField.isScrollEnabled = false
+        descriptionTextField.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: -16)
         descriptionTextField.translatesAutoresizingMaskIntoConstraints = false
         return descriptionTextField
     }()
@@ -73,7 +83,14 @@ final class EditProfileViewController: UIViewController {
         urlTextField.textColor = UIColor.textPrimary
         urlTextField.backgroundColor = UIColor.YPLightGrey
         urlTextField.layer.cornerRadius = 12
+        urlTextField.addTarget(self, action: #selector(onUrlChanged), for: UIControl.Event.allEditingEvents)
         urlTextField.translatesAutoresizingMaskIntoConstraints = false
+
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: urlTextField.frame.height))
+        urlTextField.leftView = paddingView
+        urlTextField.rightView = paddingView
+        urlTextField.leftViewMode = .always
+        urlTextField.rightViewMode = .always
         return urlTextField
     }()
 
@@ -90,9 +107,33 @@ final class EditProfileViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureUI()
+        initObservers()
+
+        viewModel.onViewDidLoad()
+    }
+
+    @objc
+    private func onNameChanged(_ sender: UITextInput) {
+        viewModel.updateName(newName: nameTextField.text)
+    }
+
+    @objc
+    private func onDescriptionChanged(_ sender: UITextInput) {
+        viewModel.updateDescription(newDescription: descriptionTextField.text)
+    }
+
+    @objc
+    private func onUrlChanged(_ sender: UITextInput) {
+        viewModel.updateWebsite(newWebsite: urlTextField.text)
+    }
+
+    @objc
+    private func onCloseButtonClick() {
+        dismiss(animated: true)
     }
 
     private func configureUI() {
+        configureNavigationBar()
         view.addSubview(avatarImageView)
         view.addSubview(nameTitleLabel)
         view.addSubview(nameTextField)
@@ -123,7 +164,6 @@ final class EditProfileViewController: UIViewController {
             descriptionTextField.topAnchor.constraint(equalTo: descriptionTitleLabel.bottomAnchor, constant: 19),
             descriptionTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             descriptionTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            descriptionTextField.heightAnchor.constraint(equalToConstant: 44),
 
             urlTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             urlTitleLabel.topAnchor.constraint(equalTo: descriptionTextField.bottomAnchor, constant: 24),
@@ -133,5 +173,43 @@ final class EditProfileViewController: UIViewController {
             urlTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             urlTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
+    }
+
+    private func configureNavigationBar() {
+        let closeButton = UIBarButtonItem(
+            image: UIImage(named: "closeIcon"),
+            style: .plain,
+            target: self,
+            action: #selector(onCloseButtonClick)
+        )
+        closeButton.tintColor = UIColor.YPBlack
+        navigationItem.setRightBarButton(closeButton, animated: true)
+    }
+
+    private func initObservers() {
+        viewModel.$editProfileViewState.bind { [weak self] viewState in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.renderState(viewState: viewState)
+            }
+        }
+    }
+
+    private func renderState(viewState: EditProfileViewState?) {
+        guard let viewState = viewState else { return }
+
+        switch viewState {
+        case .content(let editProfileData):
+            nameTextField.text = editProfileData.name
+            descriptionTextField.text = editProfileData.description
+            avatarImageView.kf.setImage(with: URL(string: editProfileData.avatar))
+            urlTextField.text = editProfileData.website
+        }
+    }
+}
+
+extension EditProfileViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        viewModel.updateDescription(newDescription: descriptionTextField.text)
     }
 }
