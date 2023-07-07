@@ -16,6 +16,8 @@ final class FavoritesNftCollectionViewCell: UICollectionViewCell {
 
     private lazy var nftImageView: UIImageView = {
         let nftImageView = UIImageView()
+        nftImageView.clipsToBounds = true
+        nftImageView.layer.cornerRadius = 12
         nftImageView.translatesAutoresizingMaskIntoConstraints = false
         return nftImageView
     }()
