@@ -1,14 +1,14 @@
 import UIKit
 import WebKit
-import ProgressHUD
 
 final class AuthorDescriptionViewController: UIViewController {
     private let userId: String
-    private let viewModel = AuthorDescriptionViewModel()
+    private let viewModel: AuthorDescriptionViewModel
     private let webView = WKWebView()
     
-    init(userId: String) {
+    init(userId: String, viewModel: AuthorDescriptionViewModel = AuthorDescriptionViewModel()) {
         self.userId = userId
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,6 +32,14 @@ final class AuthorDescriptionViewController: UIViewController {
             guard let self, let stringUrl = user?.website else { return }
             configWebView(with: stringUrl)
         }
+        
+        viewModel.$isLoading.bind { isLoading in
+            if isLoading {
+                UIBlockingProgressHUD.show()
+            } else {
+                UIBlockingProgressHUD.dismiss()
+            }
+        }
     }
     
     private func setupBackBarButtonItem() {
@@ -52,7 +60,6 @@ final class AuthorDescriptionViewController: UIViewController {
     
     private func configWebView(with urlString: String) {
         webView.navigationDelegate = self
-        UIBlockingProgressHUD.show()
         DispatchQueue.main.async { [weak self] in
             guard let self, let url = URL(string: urlString) else { return }
             let request = URLRequest(url: url)
@@ -78,6 +85,6 @@ final class AuthorDescriptionViewController: UIViewController {
 
 extension AuthorDescriptionViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        UIBlockingProgressHUD.dismiss()
+        viewModel.finishLoading()
     }
 }

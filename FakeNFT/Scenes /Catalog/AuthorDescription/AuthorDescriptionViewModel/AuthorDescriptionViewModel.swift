@@ -1,7 +1,7 @@
 import Foundation
 
 final class AuthorDescriptionViewModel {
-    private let userService: UserService = UserServiceImpl()
+    private let userService: UserService
     
     @Observable
     private(set) var user: User?
@@ -9,7 +9,15 @@ final class AuthorDescriptionViewModel {
     @Observable
     private(set) var errorMessage: String? = nil
     
+    @Observable
+    private(set) var isLoading: Bool = false
+    
+    init(userService: UserService = UserService()) {
+        self.userService = userService
+    }
+    
     func getUser(userId: String) {
+        isLoading = true
         userService.getUser(userId: userId) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -20,5 +28,9 @@ final class AuthorDescriptionViewModel {
                 }
             }
         }
+    }
+    
+    func finishLoading() {
+        isLoading = false
     }
 }

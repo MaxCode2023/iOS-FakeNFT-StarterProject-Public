@@ -1,7 +1,7 @@
 import UIKit
 
 final class NftCollectionViewCell: UICollectionViewCell {
-    static let identifier = "collectionCell"
+    static let identifier = String(describing: NftCollectionViewCell.self)
     private var isLiked = false
     private var isAddToCart = false
     

@@ -3,7 +3,7 @@ import UIKit
 final class NftCollectionViewController: UIViewController {
     private var nftCollection: NftCollection
     private var collectionViewHeightConstraint = NSLayoutConstraint()
-    private var viewModel = NftCollectionViewModel()
+    private var viewModel: NftCollectionViewModel
     private var nftItems = [NftItem]()
     private var user: User?
     
@@ -35,7 +35,7 @@ final class NftCollectionViewController: UIViewController {
     
     private lazy var authorNftCollectionLabel: UILabel = {
         let label = UILabel()
-        label.text = "AUTHOR_OF_COLLECTION".localized
+        label.text = "catalog.nft_collection_vc.author_of_collection".localized
         label.font = UIFont.appFont(.regular, withSize: 13)
         label.textColor = .black
         
@@ -78,8 +78,9 @@ final class NftCollectionViewController: UIViewController {
         return collectionView
     }()
     
-    init(nftCollection: NftCollection) {
+    init(nftCollection: NftCollection, viewModel: NftCollectionViewModel = NftCollectionViewModel()) {
         self.nftCollection = nftCollection
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -123,6 +124,14 @@ final class NftCollectionViewController: UIViewController {
             guard let self else { return }
             self.user = user
             authorDescriptionButton.setTitle(self.user?.name, for: .normal)
+        }
+        
+        viewModel.$isLoading.bind { isLoading in
+            if isLoading {
+                UIBlockingProgressHUD.show()
+            } else {
+                UIBlockingProgressHUD.dismiss()
+            }
         }
     }
     

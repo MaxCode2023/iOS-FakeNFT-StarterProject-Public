@@ -47,6 +47,14 @@ final class CatalogViewController: UIViewController {
                 self.tableView.reloadData()
             }, completion: nil)
         }
+        
+        viewModel.$isLoading.bind { isLoading in
+            if isLoading {
+                UIBlockingProgressHUD.show()
+            } else {
+                UIBlockingProgressHUD.dismiss()
+            }
+        }
     }
     
     @objc

@@ -1,8 +1,8 @@
 import Foundation
 
 final class NftCollectionViewModel {
-    private let nftItemsService: NftItemService = NftItemServiceImpl()
-    private let userService: UserService = UserServiceImpl()
+    private let nftItemsService: NftItemService
+    private let userService: UserService
     
     @Observable
     private(set) var nftItems: [NftItem] = []
@@ -13,18 +13,29 @@ final class NftCollectionViewModel {
     @Observable
     private(set) var errorMessage: String? = nil
     
+    @Observable
+    private(set) var isLoading: Bool = false
+    
+    init(
+        nftItemsService: NftItemService = NftItemService(),
+        userService: UserService = UserService()
+    ) {
+        self.nftItemsService = nftItemsService
+        self.userService = userService
+    }
+    
     func getNftItems() {
-        UIBlockingProgressHUD.show()
+        isLoading = true
         nftItemsService.getNftItems(onCompletion: { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let nftItems):
-                    UIBlockingProgressHUD.dismiss()
                     self?.nftItems = nftItems
                 case .failure(let error):
-                    UIBlockingProgressHUD.dismiss()
                     self?.errorMessage = error.localizedDescription
                 }
+                
+                self?.isLoading = false
             }
         })
     }
