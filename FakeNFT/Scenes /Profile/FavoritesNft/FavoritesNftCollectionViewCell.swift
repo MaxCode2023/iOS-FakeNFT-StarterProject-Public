@@ -120,7 +120,7 @@ final class FavoritesNftCollectionViewCell: UICollectionViewCell {
             infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             infoStackView.heightAnchor.constraint(equalToConstant: 67)
         ])
-        for _ in 1...starCount {
+        for _ in 0..<starCount {
             let starImageView = UIImageView()
             starImageView.image = UIImage(named: "ratingStar")
             starImageView.tintColor = UIColor.lightGray

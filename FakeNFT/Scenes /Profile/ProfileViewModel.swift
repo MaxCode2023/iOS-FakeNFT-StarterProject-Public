@@ -32,6 +32,18 @@ final class ProfileViewModel {
         profileViewRoute = ProfileViewRoute.toEdit
     }
 
+    func onMyNftClick() {
+        profileViewRoute = ProfileViewRoute.toMyNft
+    }
+
+    func onFavoriteNftClick() {
+        profileViewRoute = ProfileViewRoute.toFavoriteNft
+    }
+
+    func onAboutDeveloperClick() {
+        onUrlButtonClick()
+    }
+
     private func getProfileData() {
         profileViewState = ProfileViewState.loading
         profileRepository.getProfile { [weak self] result in

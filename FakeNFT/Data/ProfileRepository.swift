@@ -53,13 +53,13 @@ final class ProfileRepository {
 
     func getMyNft(onCompletion: @escaping (Result<[Nft], Error>) -> Void) {
         guard let currentProfile = currentProfile else { return }
-        let idNfts = currentProfile.nfts.map { nftString in Int(nftString) ?? -1 }
+        let idNfts = currentProfile.nfts.map { Int($0) ?? -1 }
         nftService.getNftList(nftIds: idNfts, onCompletion: onCompletion)
     }
 
     func getFavoriteNft(onCompletion: @escaping (Result<[Nft], Error>) -> Void) {
         guard let currentProfile = currentProfile else { return }
-        let idNfts = currentProfile.likes.map { nftString in Int(nftString) ?? -1 }
+        let idNfts = currentProfile.likes.map { Int($0) ?? -1 }
         nftService.getNftList(nftIds: idNfts, onCompletion: onCompletion)
     }
 

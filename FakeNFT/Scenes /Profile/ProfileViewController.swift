@@ -155,6 +155,10 @@ final class ProfileViewController: UIViewController {
         switch destination {
         case .toUrl(let url):
             navigateToWebSite(url: url)
+        case .toMyNft:
+            navigateToMyNft()
+        case .toFavoriteNft:
+            navigateToFavoriteNft()
         case .toEdit:
             navigateToEditProfile()
         }
@@ -238,11 +242,10 @@ extension ProfileViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: - Вынести логику перехода в отдельную сущность
-        // TODO: - Вынести определение перехода во ViewModel
         switch indexPath.row {
-        case 0: navigateToMyNft()
-        case 1: navigateToFavoriteNft()
+        case 0: viewModel.onMyNftClick()
+        case 1: viewModel.onFavoriteNftClick()
+        case 2: viewModel.onAboutDeveloperClick()
         default: return
         }
     }

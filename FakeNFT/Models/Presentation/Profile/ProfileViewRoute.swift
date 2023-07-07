@@ -8,5 +8,7 @@ import Foundation
 
 enum ProfileViewRoute {
     case toUrl(URL)
+    case toMyNft
+    case toFavoriteNft
     case toEdit
 }
