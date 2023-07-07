@@ -10,59 +10,61 @@ import ProgressHUD
 
 final class RatingViewController: UIViewController {
 
-    private let sortButton = UIButton()
-    private let ratingTableView = UITableView()
+    private lazy var sortButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "sortIcon"), for: .normal)
+        button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var ratingTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UserRatingCell.self)
+        tableView.separatorStyle = .none
+
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(refreshRating), for: .valueChanged)
+        return tableView
+    }()
 
     private let viewModel = RatingViewModel()
-    private var sortAlertPresenter: SortAlertPresenter?
+    private var sortAlert: UIAlertController?
 
     private var userList: [User] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.sortAlertPresenter = SortAlertPresenter(viewController: self)
+        initSortAlert()
 
         addViews()
         setUpConstraints()
-        configureViews()
 
         bind()
-        ProgressHUD.show()
         viewModel.getUserList()
     }
 
     private func bind() {
         viewModel.$userList.bind { [weak self] userList in
-            ProgressHUD.dismiss()
             self?.userList = userList
             self?.ratingTableView.reloadData()
         }
         viewModel.$errorMessage.bind { [weak self] errorMessage in
-            ProgressHUD.dismiss()
             self?.presentErrorDialog(message: errorMessage)
+        }
+        viewModel.$isLoading.bind { isLoading in
+            if isLoading {
+                ProgressHUD.show()
+            } else {
+                ProgressHUD.dismiss()
+            }
         }
     }
 
-    private func configureViews() {
-        view.backgroundColor = UIColor.white
-        ratingTableView.dataSource = self
-        ratingTableView.delegate = self
-        ratingTableView.register(UserRatingCell.self)
-        ratingTableView.separatorStyle = .none
-
-        ratingTableView.refreshControl = UIRefreshControl()
-        ratingTableView.refreshControl?.addTarget(self, action: #selector(refreshRating), for: .valueChanged)
-
-        sortButton.setImage(UIImage(named: "sortIcon"), for: .normal)
-        sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
-    }
-
     @objc private func sortButtonTapped() {
-        sortAlertPresenter?.presentSortDialog(onNameSort: { [weak self] in
-            self?.viewModel.sortByName()
-        }, onRatingSort: { [weak self] in
-            self?.viewModel.sortByRating()
-        })
+        guard let sortAlert else { return }
+        present(sortAlert, animated: true)
     }
 
     @objc private func refreshRating() {
@@ -90,6 +92,14 @@ final class RatingViewController: UIViewController {
             ratingTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             ratingTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+
+    private func initSortAlert() {
+        sortAlert = SortAlertBuilder.buildSortAlert(onNameSort: { [weak self] in
+            self?.viewModel.sortByName()
+        }, onRatingSort: { [weak self] in
+            self?.viewModel.sortByRating()
+        })
     }
 
 }

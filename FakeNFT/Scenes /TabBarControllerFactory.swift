@@ -33,6 +33,7 @@ final class TabBarControllerFactory {
 
         let statisticsNavController = UINavigationController(rootViewController: RatingViewController())
         statisticsNavController.navigationBar.isHidden = true
+        statisticsNavController.view.backgroundColor = UIColor.white
         statisticsNavController.tabBarItem = UITabBarItem(
             title: "Статистика",
             image: UIImage(systemName: "flag.2.crossed.fill"),

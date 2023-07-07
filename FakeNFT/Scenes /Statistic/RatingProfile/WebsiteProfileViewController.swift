@@ -13,8 +13,18 @@ final class WebsiteProfileViewController: UIViewController {
 
     private let websiteUrl: URL
 
-    private let webView = WKWebView()
-    private let backButton = UIButton()
+    private lazy var webView: WKWebView = {
+        let webView = WKWebView()
+        webView.navigationDelegate = self
+        return webView
+    }()
+
+    private lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "backIcon"), for: .normal)
+        button.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
+        return button
+    }()
 
     init(websiteUrl: URL) {
         self.websiteUrl = websiteUrl
@@ -31,21 +41,13 @@ final class WebsiteProfileViewController: UIViewController {
 
         addViews()
         setUpConstraints()
-        configureViews()
 
         ProgressHUD.show()
-        webView.navigationDelegate = self
-
         DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
+            guard let self = self else { return }
             let request = URLRequest(url: self.websiteUrl)
             self.webView.load(request)
         }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,11 +57,6 @@ final class WebsiteProfileViewController: UIViewController {
 
     @objc private func navigateBack() {
         navigationController?.popViewController(animated: true)
-    }
-
-    private func configureViews() {
-        backButton.setImage(UIImage(named: "backIcon"), for: .normal)
-        backButton.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
     }
 
     private func addViews() {

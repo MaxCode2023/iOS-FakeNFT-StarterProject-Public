@@ -15,26 +15,46 @@ final class ProfileCollectionViewController: UIViewController {
     private let viewModel = ProfileCollectionViewModel()
     private var nftList: [Nft] = []
 
-    private let backButton = UIButton()
-    private let titleLabel = UILabel()
+    private var backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "backIcon"), for: .normal)
+        button.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
+        return button
+    }()
 
-    private var nftCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .bodyBold
+        label.textColor = .YPBlack
+        label.text = "Коллекция NFT"
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        return label
+    }()
+
+    private var nftCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.register(NftCollectionCell.self)
+        return collectionView
+    }()
+
     private let params: GeometricParams = GeometricParams(cellCount: 3,
-                                                          leftInset: 0,
-                                                          rightInset: 0,
-                                                          cellHorizontalSpacing: 9,
+                                                          leftInset: 9,
+                                                          rightInset: 9,
+                                                          cellHorizontalSpacing: 0,
                                                           cellVerticalSpacing: 8)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
 
+        nftCollectionView.delegate = self
+        nftCollectionView.dataSource = self
+
         addViews()
         setUpConstraints()
-        configureViews()
 
         bind()
-        ProgressHUD.show()
         viewModel.getNftCollection(nftIdList: nftIds)
     }
 
@@ -44,29 +64,19 @@ final class ProfileCollectionViewController: UIViewController {
 
     private func bind() {
         viewModel.$nftList.bind(action: { [weak self] nftList in
-            ProgressHUD.dismiss()
             self?.nftList = nftList
             self?.nftCollectionView.reloadData()
         })
         viewModel.$errorMessage.bind { [weak self] errorMessage in
-            ProgressHUD.dismiss()
             self?.presentErrorDialog(message: errorMessage)
         }
-    }
-
-    private func configureViews() {
-        backButton.setImage(UIImage(named: "backIcon"), for: .normal)
-        backButton.addTarget(self, action: #selector(navigateBack), for: .touchUpInside)
-
-        titleLabel.font = .bodyBold
-        titleLabel.textColor = .YPBlack
-        titleLabel.text = "Коллекция NFT"
-        titleLabel.numberOfLines = 1
-        titleLabel.textAlignment = .center
-
-        nftCollectionView.delegate = self
-        nftCollectionView.dataSource = self
-        nftCollectionView.register(NftCollectionCell.self)
+        viewModel.$isLoading.bind { isLoading in
+            if isLoading {
+                ProgressHUD.show()
+            } else {
+                ProgressHUD.dismiss()
+            }
+        }
     }
 
     private func addViews() {

@@ -10,7 +10,6 @@ import ProgressHUD
 
 final class MyNftViewController: UIViewController {
     private let viewModel: MyNftViewModel
-    private var sortAlertPresenter: SortAlertPresenter?
 
     private var myNfts: [NftView] = []
 
@@ -44,8 +43,6 @@ final class MyNftViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        sortAlertPresenter = SortAlertPresenter(viewController: self)
-
         configureUI()
         initObservers()
 
@@ -53,7 +50,7 @@ final class MyNftViewController: UIViewController {
     }
 
     @objc private func onSortButtonClick() {
-        sortAlertPresenter?.presentSortDialog(
+        let alert = SortAlertBuilder.buildSortAlert(
             onPriceSort: { [weak self] in
                 self?.viewModel.sortMyNftByPrice()
             },
@@ -64,6 +61,7 @@ final class MyNftViewController: UIViewController {
                 self?.viewModel.sortMyNftByName()
             }
         )
+        present(alert, animated: true)
     }
 
     private func configureUI() {

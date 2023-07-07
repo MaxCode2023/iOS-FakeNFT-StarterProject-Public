@@ -7,36 +7,31 @@
 
 import UIKit
 
-final class SortAlertPresenter {
+final class SortAlertBuilder {
 
-    private var viewController: UIViewController
+    private init() {}
 
-    init(viewController: UIViewController) {
-        self.viewController = viewController
-    }
-
-    func presentSortDialog(
+    static func buildSortAlert(
         onNameSort: @escaping () -> Void,
-        onRatingSort: @escaping () -> Void
-    ) {
-        let sortAlertController = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        onRatingSort: @escaping () -> Void) -> UIAlertController {
+            let sortAlertController = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
 
-        sortAlertController.addAction(UIAlertAction(title: "По имени", style: .default) { _ in
-            onNameSort()
-        })
-        sortAlertController.addAction(UIAlertAction(title: "По рейтингу", style: .default) { _ in
-            onRatingSort()
-        })
-        sortAlertController.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
+            sortAlertController.addAction(UIAlertAction(title: "По имени", style: .default) { _ in
+                onNameSort()
+            })
+            sortAlertController.addAction(UIAlertAction(title: "По рейтингу", style: .default) { _ in
+                onRatingSort()
+            })
+            sortAlertController.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
 
-        viewController.present(sortAlertController, animated: true)
-    }
+            return sortAlertController
+        }
 
-    func presentSortDialog(
+    static func buildSortAlert(
         onPriceSort: @escaping () -> Void,
         onRatingSort: @escaping () -> Void,
         onNameSort: @escaping () -> Void
-    ) {
+    ) -> UIAlertController {
         let sortAlertController = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
 
         sortAlertController.addAction(UIAlertAction(title: "По цене", style: .default) { _ in
@@ -50,6 +45,6 @@ final class SortAlertPresenter {
         })
         sortAlertController.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
 
-        viewController.present(sortAlertController, animated: true)
+        return sortAlertController
     }
 }
