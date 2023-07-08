@@ -127,11 +127,7 @@ final class NftCollectionViewController: UIViewController {
         }
         
         viewModel.$isLoading.bind { isLoading in
-            if isLoading {
-                UIBlockingProgressHUD.show()
-            } else {
-                UIBlockingProgressHUD.dismiss()
-            }
+            isLoading ? UIBlockingProgressHUD.show() : UIBlockingProgressHUD.dismiss()
         }
     }
     
