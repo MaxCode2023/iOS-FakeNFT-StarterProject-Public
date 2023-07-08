@@ -4,7 +4,7 @@ final class NftCollectionViewController: UIViewController {
     private var nftCollection: NftCollection
     private var collectionViewHeightConstraint = NSLayoutConstraint()
     private var viewModel: NftCollectionViewModel
-    private var nftItems = [NftItem]()
+    private var nftItems = [Nft]()
     private var user: User?
     
     private lazy var scrollView: UIScrollView = {

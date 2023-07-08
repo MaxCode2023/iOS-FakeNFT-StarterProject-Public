@@ -71,7 +71,7 @@ final class NftCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func config(with nft: NftItem) {
+    func config(with nft: Nft) {
         nftNameLabel.text = nft.name
         priceNftLabel.text = String(nft.price) + " ETH"
         setupRating(nft: nft)
@@ -92,7 +92,7 @@ final class NftCollectionViewCell: UICollectionViewCell {
         nftImageView.setImage(from: url)
     }
     
-    private func setupRating(nft: NftItem) {
+    private func setupRating(nft: Nft) {
         (1...nft.rating).forEach { _ in
             let imageView = UIImageView(image: UIImage(named: "star.full"))
             starsStackView.addArrangedSubview(imageView)
