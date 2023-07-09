@@ -47,16 +47,6 @@ final class TabBarControllerFactory {
         ]
         tabBarController.selectedIndex = 1
 
-        tabBarController.tabBar.backgroundColor = UIColor.white
-        tabBarController.tabBar.isTranslucent = false
-
-        let tabBarAppearance = UITabBarAppearance()
-        tabBarAppearance.configureWithOpaqueBackground()
-        tabBarAppearance.backgroundColor = UIColor.white
-        tabBarAppearance.shadowImage = nil
-        tabBarAppearance.shadowColor = nil
-
-        tabBarController.tabBar.standardAppearance = tabBarAppearance
         return tabBarController
     }
 }
