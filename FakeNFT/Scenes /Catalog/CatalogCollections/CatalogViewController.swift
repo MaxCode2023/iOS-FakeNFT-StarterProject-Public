@@ -26,6 +26,7 @@ final class CatalogViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         
         bind()
         viewModel.getNftCollections()
@@ -60,7 +61,7 @@ final class CatalogViewController: UIViewController {
     
     private func setupSortButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "sort"),
+            image: UIImage(named: "sortIcon"),
             style: .plain,
             target: self,
             action: #selector(sortButtonTapped)

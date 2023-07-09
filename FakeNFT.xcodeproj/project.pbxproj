@@ -673,9 +673,9 @@
 		B20D80942A59DDE0006905BF /* NftCollection */ = {
 			isa = PBXGroup;
 			children = (
-				B20D80952A59DDE0006905BF /* NftCollectionViewCell.swift */,
 				B20D80962A59DDE0006905BF /* NftCollectionViewModel */,
 				B20D80982A59DDE0006905BF /* NftCollectionViewController.swift */,
+				B20D80952A59DDE0006905BF /* NftCollectionViewCell.swift */,
 			);
 			path = NftCollection;
 			sourceTree = "<group>";

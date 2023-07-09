@@ -42,7 +42,7 @@ final class AuthorDescriptionViewController: UIViewController {
         let backButton = UIButton(type: .custom)
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         
-        let backButtonImageView = UIImageView(image: UIImage(named: "backButton"))
+        let backButtonImageView = UIImageView(image: UIImage(named: "backIcon"))
         let imageSize = CGSize(width: 24, height: 24)
         backButtonImageView.frame = CGRect(origin: .zero, size: imageSize)
         backButton.addSubview(backButtonImageView)

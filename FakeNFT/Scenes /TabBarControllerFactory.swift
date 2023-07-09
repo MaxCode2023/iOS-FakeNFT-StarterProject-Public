@@ -48,7 +48,6 @@ final class TabBarControllerFactory {
         tabBarController.selectedIndex = 1
 
         tabBarController.tabBar.backgroundColor = UIColor.white
-        tabBarController.tabBar.tintColor = UIColor.blue
         tabBarController.tabBar.isTranslucent = false
 
         let tabBarAppearance = UITabBarAppearance()

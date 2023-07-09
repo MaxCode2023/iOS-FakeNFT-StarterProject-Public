@@ -1,7 +1,7 @@
 import UIKit
 
 final class CatalogTableViewCell: UITableViewCell {
-    static let identifier = "catalogCell"
+    static let identifier = String(describing: CatalogTableViewCell.self)
     
     private lazy var nftCollectionCoverImageView: UIImageView = {
         let imageView = UIImageView()
@@ -14,7 +14,7 @@ final class CatalogTableViewCell: UITableViewCell {
     
     private lazy var nftCollectionNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.appFont(.bold, withSize: 17)
+        label.font = .bodyBold
         label.textColor = .black
         
         return label
@@ -22,7 +22,7 @@ final class CatalogTableViewCell: UITableViewCell {
     
     private lazy var nftCollectionCountLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.appFont(.bold, withSize: 17)
+        label.font = .bodyBold
         label.textColor = .black
         
         return label
