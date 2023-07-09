@@ -4,7 +4,7 @@ final class NftCollectionViewController: UIViewController {
     private var nftCollection: NftCollection
     private var collectionViewHeightConstraint = NSLayoutConstraint()
     private var viewModel: NftCollectionViewModel
-    private var nftItems = [NftItem]()
+    private var nftItems = [Nft]()
     private var user: User?
     
     private lazy var scrollView: UIScrollView = {
@@ -27,7 +27,7 @@ final class NftCollectionViewController: UIViewController {
     
     private lazy var nftCollectionNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.appFont(.bold, withSize: 22)
+        label.font = .headline3
         label.textColor = .black
         
         return label
@@ -36,7 +36,7 @@ final class NftCollectionViewController: UIViewController {
     private lazy var authorNftCollectionLabel: UILabel = {
         let label = UILabel()
         label.text = "catalog.nft_collection_vc.author_of_collection".localized
-        label.font = UIFont.appFont(.regular, withSize: 13)
+        label.font = .caption2
         label.textColor = .black
         
         return label
@@ -45,6 +45,7 @@ final class NftCollectionViewController: UIViewController {
     private lazy var authorDescriptionButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .clear
+        button.titleLabel?.font = .caption1
         button.addTarget(self, action: #selector(authorDescriptionButtonTapped), for: .touchUpInside)
         
         return button
@@ -57,7 +58,7 @@ final class NftCollectionViewController: UIViewController {
         textView.contentInsetAdjustmentBehavior = .never
         textView.textContainerInset = .zero
         textView.textContainer.lineFragmentPadding = 0
-        textView.font = UIFont.appFont(.regular, withSize: 13)
+        textView.font = .caption2
         textView.textAlignment = .left
         textView.textColor = .black
         
@@ -161,7 +162,7 @@ final class NftCollectionViewController: UIViewController {
         let backButton = UIButton(type: .custom)
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         
-        let backButtonImageView = UIImageView(image: UIImage(named: "backButton"))
+        let backButtonImageView = UIImageView(image: UIImage(named: "backIcon"))
         let imageSize = CGSize(width: 24, height: 24)
         backButtonImageView.frame = CGRect(origin: .zero, size: imageSize)
         backButton.addSubview(backButtonImageView)

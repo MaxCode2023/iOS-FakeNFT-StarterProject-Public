@@ -5,7 +5,7 @@ final class NftCollectionViewModel {
     private let userService: UserService
     
     @Observable
-    private(set) var nftItems: [NftItem] = []
+    private(set) var nftItems: [Nft] = []
     
     @Observable
     private(set) var user: User?

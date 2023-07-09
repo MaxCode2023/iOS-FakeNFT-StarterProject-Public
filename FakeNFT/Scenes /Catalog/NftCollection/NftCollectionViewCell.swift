@@ -27,7 +27,7 @@ final class NftCollectionViewCell: UICollectionViewCell {
     
     private lazy var nftNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.appFont(.bold, withSize: 17)
+        label.font = .bodyBold
         label.textColor = .black
         
         return label
@@ -35,7 +35,7 @@ final class NftCollectionViewCell: UICollectionViewCell {
     
     private lazy var priceNftLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.appFont(.medium, withSize: 10)
+        label.font = .caption3
         label.textColor = .black
         
         return label
@@ -45,7 +45,7 @@ final class NftCollectionViewCell: UICollectionViewCell {
         let button = UIButton(type: .system)
         button.backgroundColor = .clear
         button.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
-        button.setImage(UIImage(named: "cart.empty"), for: .normal)
+        button.setImage(UIImage(named: "cartIcon"), for: .normal)
         button.tintColor = .black
         
         return button
@@ -55,7 +55,7 @@ final class NftCollectionViewCell: UICollectionViewCell {
         let button = UIButton(type: .custom)
         button.backgroundColor = .clear
         button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
-        button.setImage(UIImage(named: "like.empty"), for: .normal)
+        button.setImage(UIImage(named: "likeDisabledIcon"), for: .normal)
         
         return button
     }()
@@ -71,7 +71,7 @@ final class NftCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func config(with nft: NftItem) {
+    func config(with nft: Nft) {
         nftNameLabel.text = nft.name
         priceNftLabel.text = String(nft.price) + " ETH"
         setupRating(nft: nft)
@@ -92,15 +92,15 @@ final class NftCollectionViewCell: UICollectionViewCell {
         nftImageView.setImage(from: url)
     }
     
-    private func setupRating(nft: NftItem) {
+    private func setupRating(nft: Nft) {
         (1...nft.rating).forEach { _ in
-            let imageView = UIImageView(image: UIImage(named: "star.full"))
+            let imageView = UIImageView(image: UIImage(named: "starIcon"))
             starsStackView.addArrangedSubview(imageView)
         }
         
         if nft.rating < 5 {
             (1...(5 - nft.rating)).forEach { _ in
-                let imageView = UIImageView(image: UIImage(named: "star.empty"))
+                let imageView = UIImageView(image: UIImage(named: "starDisabledIcon"))
                 starsStackView.addArrangedSubview(imageView)
             }
         }
@@ -108,13 +108,13 @@ final class NftCollectionViewCell: UICollectionViewCell {
     
     @objc private func cartButtonTapped() {
         isAddToCart.toggle()
-        let imageName = isAddToCart ? "cart.full" : "cart.empty"
+        let imageName = isAddToCart ? "cartIconFull" : "cartIcon"
         cartButton.setImage(UIImage(named: imageName), for: .normal)
     }
     
     @objc private func likeButtonTapped() {
         isLiked.toggle()
-        let imageName = isLiked ? "like.full" : "like.empty"
+        let imageName = isLiked ? "likeIcon" : "likeDisabledIcon"
         likeButton.setImage(UIImage(named: imageName), for: .normal)
     }
     
@@ -156,8 +156,8 @@ final class NftCollectionViewCell: UICollectionViewCell {
             cartButton.heightAnchor.constraint(equalToConstant: 40),
             cartButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
             
-            likeButton.topAnchor.constraint(equalTo: contentView.topAnchor),
-            likeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            likeButton.centerYAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            likeButton.centerXAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
         ])
     }
 }
