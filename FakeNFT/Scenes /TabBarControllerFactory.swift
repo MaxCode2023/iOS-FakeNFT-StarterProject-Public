@@ -17,7 +17,7 @@ final class TabBarControllerFactory {
             tag: 0
         )
 
-        let catalogueNavController = UINavigationController(rootViewController: CatalogueViewController())
+        let catalogueNavController = UINavigationController(rootViewController: CatalogViewController(viewModel: CatalogViewModel(alertModel: nil)))
         catalogueNavController.tabBarItem = UITabBarItem(
             title: "Каталог",
             image: UIImage(systemName: "rectangle.stack.fill"),
@@ -47,17 +47,6 @@ final class TabBarControllerFactory {
         ]
         tabBarController.selectedIndex = 1
 
-        tabBarController.tabBar.backgroundColor = UIColor.white
-        tabBarController.tabBar.tintColor = UIColor.blue
-        tabBarController.tabBar.isTranslucent = false
-
-        let tabBarAppearance = UITabBarAppearance()
-        tabBarAppearance.configureWithOpaqueBackground()
-        tabBarAppearance.backgroundColor = UIColor.white
-        tabBarAppearance.shadowImage = nil
-        tabBarAppearance.shadowColor = nil
-
-        tabBarController.tabBar.standardAppearance = tabBarAppearance
         return tabBarController
     }
 }
