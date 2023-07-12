@@ -1,0 +1,8 @@
+//MARK: - NFT-Catalog VC
+"catalog.catalog_vc.sorting" = "Сортировка";
+"catalog.catalog_vc.by_name" = "По названию";
+"catalog.catalog_vc.by_count" = "По количеству NFT";
+"catalog.catalog_vc.close" = "Закрыть";
+
+//MARK: - NFT-Collection VC
+"catalog.nft_collection_vc.author_of_collection" = "Автор коллекции:";
