@@ -7,5 +7,7 @@ https://disk.yandex.ru/i/oS_awtuhC1eEmQ
 
 Реализованы: 
 Каталог -  https://github.com/DmitriiMM
+
 Профиль - https://github.com/dmisuvorov
+
 Статистика - https://github.com/MaxCode2023
